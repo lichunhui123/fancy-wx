@@ -1,0 +1,40 @@
+<view>
+    <view class="top_tip" wx:if="{{!noPhone&&!noData}}">亲，您手机尾号{{phoneSub}}的以下快件请带我回家～</view>
+    <view class="top_tip" wx:if="{{!noPhone&&noData}}">亲，您手机尾号{{phoneSub}}没有待取快件，快去指尖生活派首页逛逛吧~</view>
+    <view class="top_tip" wx:if="{{noPhone}}">亲，请先绑定手机号才能取件哦～</view>
+    <view class="content">
+        <view wx:for="{{list}}" wx:for-item="item" wx:key="{{index}}" wx:if="{{phone&&list&&list.length>0}}">
+            <view class="list_branches">{{item.mecName}}</view>
+            <view class="list_par" wx:if="{{item.list}}">
+                <view class="list {{(index<list.length-1&&inx==item.list.length-1)?'no_border':''}}" wx:for="{{item.list}}" wx:for-item="val" wx:for-index="inx" wx:key="{{val.id}}"  bindtap="select" data-id="{{val.id}}">
+                    <view class="select_icon">
+                        <image src="{{val.choice?'../../image/afterSelect.png':'../../image/beforeSelect.png'}}"/>
+                    </view>
+                    <view class="list_desc">
+                        <view class="list_name"><text class="name">{{val.carrierName}}</text><text class="odd_number">单号：{{val.expressCode}}</text></view>
+                        <view class="list_name"><text class="cargonum">货架号：</text><text class="cargonumn">{{val.cargo}}</text><text class="name">取件码：</text><text class="take_code">{{val.putawaySerialNumber}}</text></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!--无结果-->
+        <view class="no_list" wx:if="{{noData&&!noPhone}}">
+            <image src="../../image/nodata.png"/>
+            <view class="no_text">亲，当前没有您待取件信息呢！</view>
+        </view>
+        <!--未绑定手机-->
+        <view class="no_phone" wx:if="{{noPhone}}">
+            <image src="../../image/nodata.png"/>
+            <view class="no_text">您未绑定手机号，无法取件</view>
+            <view class="no_button" bindtap="bindPhone">去绑定</view>
+        </view>
+    </view>
+    <view class="bottom" wx:if="{{phone&&list&&list.length>0}}">
+        <view class="bottom_btn {{buttonState?'active':''}}" bindtap="signForFn">签收</view>
+    </view>
+    <!-- 用户授权登录 -->
+    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+    <!-- 用户授权登录 -->
+    <!--成长值 积分 toast-->
+    <growth-value-toast wx:if="{{showGrowthValueToast}}" growth="{{growth}}" credits="{{credits}}"></growth-value-toast>
+</view>

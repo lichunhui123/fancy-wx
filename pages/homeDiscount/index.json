@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "我的卡券",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+  
+}

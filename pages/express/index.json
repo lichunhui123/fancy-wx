@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "select-express": "./selectExpress/index",
+    "select-weight": "./selectWeight/index",
+    "volume": "./volume/index"
+  },
+  "navigationBarTitleText": "通知快递",
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "fillAddress":"./mask/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "指尖水管家",
+  "onReachBottomDistance": 0
+}

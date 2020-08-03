@@ -1,0 +1,12 @@
+<!-- 用户授权登录 -->
+<view class="growthValueToast">
+    <view wx:if="{{growth}}" class="growthValue" animation="{{animationData}}">
+        <image src="../../image/growthValue.png" class="img"/>
+        <view class="title">成长值+{{growth}}</view>
+    </view>
+    <view wx:if="{{credits}}" class="growthValue" animation="{{animationData}}" style="bottom:20rpx">
+        <image src="../../image/growthValue.png" class="img"/>
+        <view class="title">积分+{{credits}}</view>
+    </view>
+</view>
+<!-- 用户授权登录 -->

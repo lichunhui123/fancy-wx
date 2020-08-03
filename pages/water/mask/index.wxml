@@ -1,0 +1,11 @@
+<!--pages/water/mask/index.wxml-->
+<view class="waterMask" catchtouchmove="true"  catchtap="chooseAddresst">
+  <view class="conent">
+    <image src="../../../image/filladdress.png"></image>
+    <view class="addBox">
+      <view class="add_titlet">请先填写收货地址</view>
+      <view class="add_title">以便为您匹配可配送的水商品哦~</view>
+      <view class="add_address" catchtap="chooseAddress">填写地址</view>
+    </view>
+  </view>
+</view>

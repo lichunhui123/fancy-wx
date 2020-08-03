@@ -1,0 +1,19 @@
+<!--pages/shoppingOrder/deliveryTime/index.wxml-->
+<view class="deliveryTimeWrap">
+  <view class="top" catchtap="topClick"></view>
+  <view class="content">
+    <view class="title">配送时间</view>
+    <view class="timesbox">
+      <view class="timeLeft">
+        <view class="timeLeft_item {{choosedate==index?'timeLeft_active':''}}" catchtap="chooseDate" wx:for="{{lists}}" wx:key="index" data-inda="{{index}}">{{item.ldate}}  {{item.lweekChina}}</view>
+      </view>
+      <scroll-view scroll-y="true" class="scroll" scroll-top="{{scrtop}}">
+      <view class="timeRight">
+        <block wx:for="{{list}}" wx:key="index">
+          <view class="tiemRight_item {{choosetime==index?'tiemRight_active':''}}" catchtap="chooseTime" data-ind="{{index}}" data-datime="{{item}}">{{item}}{{item=='尽快送达'?'':':00'}}<image src="../../../image/delivetime.png" wx:if="{{choosetime==index}}"></image></view>
+        </block>
+      </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

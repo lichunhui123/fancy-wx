@@ -1,0 +1,164 @@
+/* pages/personalWaterDiscount/index.wxss */
+
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  background: #f8f8f8;
+}
+
+.waterdiscount {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.water_item {
+  width: 710rpx;
+  min-height: 200rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+
+.content {
+  width: 710rpx;
+  min-height: 155rpx;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content image {
+  width: 116rpx;
+  height: 116rpx;
+  margin-right: 20rpx;
+}
+
+.useexplain {
+  height: 44rpx;
+  border-top: 2rpx dashed #ebebeb;
+  font-size: 24rpx;
+  color: #999;
+  box-sizing: border-box;
+  padding-right: 30rpx;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+.useexplain::after{
+  content: '';
+  width: 13rpx;
+  height: 26rpx;
+  border-radius: 0 13rpx 13rpx 0;
+  background: #f8f8f8;
+  position: absolute;
+  top: -13rpx;
+  left: 0rpx;
+  z-index: 999;
+}
+.useexplain::before{
+  content: '';
+  width: 13rpx;
+  height: 26rpx;
+  border-radius: 13rpx 0 0 13rpx;
+  background: #f8f8f8;
+  position: absolute;
+  top: -13rpx;
+  right: 0rpx;
+  z-index: 999;
+}
+.explain {
+  width: 120rpx;
+  height: 44rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.useexplain image {
+  width: 10rpx;
+  height: 10rpx;
+  margin-left: 10rpx;
+}
+
+.useTitle {
+  height: 146rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx 10rpx 30rpx;
+}
+
+.useTitle_con {
+  width: 650rpx;
+  min-height: 136rpx;
+  background: #f8f8f8;
+  border-radius: 10rpx;
+  font-size: 24rpx;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 20rpx;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.word {
+  width: 360rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.nowuse {
+  width: 141rpx;
+  height: 66rpx;
+  background: #f2922f;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 66rpx;
+}
+
+.discountNum {
+  font-size: 24rpx;
+  color: #999;
+}
+.nologin{
+  width: 100%;
+  background: #f8f8f8;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nologin .goodnodata{
+  width: 450rpx;
+  height:450rpx;
+  margin: 82rpx auto 20rpx;
+}
+.notitle{
+  font-size: 24rpx;
+  color: #333333;
+}
+.addbottom{
+  width: 188rpx;
+  height: 70rpx;
+  background: #f8f8f8;
+  border: 2rpx solid #F2922F;
+  border-radius: 34rpx;
+  color: #F2922F;
+  font-size: 26rpx;
+  text-align: center;
+  line-height: 70rpx;
+  margin-top: 20rpx;
+}

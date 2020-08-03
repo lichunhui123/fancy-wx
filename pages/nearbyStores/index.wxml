@@ -1,0 +1,38 @@
+<view>
+  <map
+      id="map"
+      show-location="true"
+      longitude="{{longitude}}"
+      latitude="{{latitude}}"
+      scale="14"
+      controls="{{controls}}"
+      bindcontroltap="controltap"
+      markers="{{markers}}"
+      bindmarkertap="markertap"
+      bindcallouttap="callouttap"
+      bindregionchange="regionchange"
+      style="width: 100%; height: 100vh"
+  >
+    <cover-view class="searchBtn" bindtap="goSearch">
+      <cover-image src="../../image/searchBtn.png"></cover-image>
+    </cover-view>
+    <cover-view class="backCenter" bindtap="moveToLocation">
+      <cover-image src="../../image/moveLocation.png"></cover-image>
+    </cover-view>
+    <cover-view class="storeContent" wx:if="{{storeName}}">
+      <cover-view class="line"></cover-view>
+      <cover-view class="navigation" bindtap="navigation">
+        <cover-image class="navigationIcon" src="../../image/navigationIcon.png"></cover-image>
+        <cover-view class="navigationTitle">{{distance}}</cover-view>
+      </cover-view>
+      <cover-view class="storeTitle">{{storeName}}</cover-view>
+      <cover-view class="location">
+        <cover-image class="locationIcon" src="../../image/locationIcon.png"></cover-image>
+        <cover-view class="locationAddress">{{address}}</cover-view>
+      </cover-view>
+      <cover-view class="operation">
+        <cover-view class="operationItem" wx:for="{{sceneNames}}" wx:key="index">{{item}}</cover-view>
+      </cover-view>
+    </cover-view>
+  </map>
+</view>

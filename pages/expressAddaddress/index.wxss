@@ -1,0 +1,134 @@
+/* pages/addAddress/index.wxss */
+
+html, page {
+  width: 100%;
+  height: 100%;
+}
+
+.address_wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.address_section {
+  flex: 1;
+  overflow: hidden;
+}
+
+.address_item {
+  width: 720rpx;
+  height: 100rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  margin-left: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.address_item2 {
+  width: 720rpx;
+  height: 100rpx;
+  margin-left: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.address_item3 {
+  width: 720rpx;
+  height: 100rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  margin-left: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.address_item4 {
+  width: 720rpx;
+  min-height: 260rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  margin-left: 30rpx;
+}
+
+.add_name {
+  color: #999;
+  font-size: 28rpx;
+  padding-right: 60rpx;
+}
+
+.add_tel {
+  color: #999;
+  font-size: 28rpx;
+  padding-right: 60rpx;
+}
+
+.area {
+  color: #999;
+  font-size: 30rpx;
+  padding-right: 60rpx;
+}
+
+.detadd {
+  color: #999;
+  font-size: 30rpx;
+  padding: 20rpx 0 10rpx 0;
+}
+
+.address_item input, .address_item2 input {
+  width: 574rpx;
+  height: 100rpx;
+  font-size: 28rpx;
+  color: #333;
+  font-family: '楷体';
+}
+
+.addcity {
+  color: #c6c6c6;
+  font-size: 30rpx;
+}
+
+.addcity1 {
+  color: #333;
+  font-size: 30rpx;
+}
+
+.address_item4 textarea {
+  width: 690rpx;
+  height: 190rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.inpcolor {
+  color: #c6c6c6;
+}
+
+.section_bo {
+  width: 100%;
+  height: 20rpx;
+  background: #f8f8f8;
+}
+
+.save_address {
+  width: 100%;
+  height: 100rpx;
+  background: #ddd;
+  text-align: center;
+  line-height: 100rpx;
+  color: #fff;
+  font-size: 32rpx;
+}
+
+.active_sub {
+  width: 100%;
+  height: 100rpx;
+  background: #f2922f;
+  text-align: center;
+  line-height: 100rpx;
+  color: #fff;
+  font-size: 32rpx;
+}

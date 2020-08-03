@@ -1,0 +1,133 @@
+/* pages/addressbook/index.wxss */
+
+html, page {
+  width: 100%;
+  height: 100%;
+}
+
+.address_wrap {
+  width: 100%;
+  height: 100%;
+  border-top: 1rpx solid #ebebeb;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.address_list {
+  flex: 1;
+  overflow-y: scroll;
+}
+.nodata{
+  margin-top: 82rpx;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.nodata image{
+  width:450rpx;
+  height:450rpx;
+  margin-bottom: 20rpx;
+}
+.nodata text{
+  font-size: 24rpx;
+  color:#333333;
+}
+.adds_left {
+  width: 560rpx;
+  height: 140rpx;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.address_name {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.address_name2 {
+  font-size: 32rpx;
+  color: #666;
+  padding-left: 10rpx;
+}
+
+.address_word {
+  font-size: 24rpx;
+  color: #999;
+  height: 35rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detailadds {
+  padding-left: 10rpx;
+}
+
+.addseditt {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 50rpx;
+}
+.addsedit {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.add_address {
+  width: 100%;
+  height: 100rpx;
+  background: #f2922f;
+  text-align: center;
+  line-height: 100rpx;
+  color: #fff;
+  font-size: 32rpx;
+}
+
+/* 左滑删除
+ */
+
+.item-list {
+  position: relative;
+  width: 720rpx;
+  height: 140rpx;
+  margin-left: 30rpx;
+}
+.item-info{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #ebebeb;
+}
+
+.item-info {
+  z-index: 2;
+  background: white;
+  transition: left 0s linear;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.item-oper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.oper-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140rpx;
+  height: 140rpx;
+  z-index: 1;
+  color: white;
+  background: #f2922f;
+}

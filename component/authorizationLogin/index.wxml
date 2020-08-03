@@ -1,0 +1,16 @@
+<!-- 用户授权登录 -->
+<view wx:if="{{!hasUserInfo}}">
+    <view class='loginPopout' wx:if="{{canIUse}}">
+        <view class='PopoutCenter'>
+            <view class='footerTitle'>
+                <image class="footerimg" src="../../image/footerLogo.png"></image>
+                <view class="footerText">指尖生活派</view>
+            </view>
+            <view class='groupbuySlogan'>社区生活服务平台</view>
+            <button class='getUserInfoButton' type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信登录</button>
+        </view>
+    </view>
+    <!--成长值 积分 toast-->
+    <growth-value-toast wx:if="{{showGrowthValueToast}}" growth="{{growth}}" credits="{{credits}}"></growth-value-toast>
+</view>
+<!-- 用户授权登录 -->

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "authorization-login": "/component/authorizationLogin/index"
+  },
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

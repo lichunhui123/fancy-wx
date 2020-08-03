@@ -1,0 +1,90 @@
+.searchHeader{
+    width:100%;
+    height:110rpx;
+    box-sizing: border-box;
+    border-bottom:1px solid #EBEBEB;
+    position:fixed;
+    top:0;
+    background: #fff;
+}
+.searchIcon{
+    position:absolute;
+    left:60rpx;
+    top:40rpx;
+    width:30rpx;
+    height:30rpx;
+    z-index: 1;
+}
+.searchInput{
+    position:absolute;
+    left:30rpx;
+    top:21rpx;
+    border:none;
+    background: #EEEEEE;
+    border-radius: 47px;
+    width:690rpx;
+    height:68rpx;
+    box-sizing: border-box;
+    padding:0 70rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+}
+.deleteIcon{
+    position:absolute;
+    right:60rpx;
+    top:35rpx;
+    width:40rpx;
+    height:40rpx;
+    z-index: 1;
+}
+.storeListBody{
+    padding-top: 110rpx;
+}
+.storeList{
+    box-sizing: border-box;
+    margin:0 29rpx;
+    border-bottom:1px solid #EBEBEB;
+}
+.storeName{
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #333333;
+    line-height: 38rpx;
+    margin-top: 20rpx;
+}
+.storeAddress{
+    margin-top: 11rpx;
+    margin-bottom: 19rpx;
+}
+.addressIcon{
+    width:24rpx;
+    height:32rpx;
+    float:left;
+    margin-right: 10rpx;
+}
+.addressName{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #999999;
+    line-height: 32rpx;
+}
+.nodata{
+    width:100%;
+    padding-top: 82rpx;
+    text-align: center;
+}
+.nodataImg{
+    width:450rpx;
+    height:450rpx;
+    margin:0 auto;
+}
+.nodatTitle{
+    font-size: 24rpx;
+    color: #333333;
+}
+.bottom{
+    font-size:24rpx;
+    color:#999999;
+    padding:48rpx 0;
+    text-align:center;
+}

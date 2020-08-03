@@ -1,0 +1,15 @@
+<view class="select_express" catchtouchmove="movetan">
+    <view class="mask_bg {{show?'show':'hide'}}"></view>
+    <view class="mask_con {{show?'mask_show':''}}">
+        <view class="mask_top">
+            <view class="mask_title">选择快递公司</view>
+            <view class="mask_del" bindtap="close"><image src="../../../image/deleteIcon.png"></image></view>
+        </view>
+        <view class="mask_center">
+            <view wx:for="{{expressData}}" wx:key="index" class="mask_list {{item.carrierId==expressCompany.carrierId?'mask_active':''}}" data-carrier-id="{{item.carrierId}}" bindtap="expressClick">
+                <image data-carrier-id="{{item.carrierId}}" bindtap="expressClick" src="{{item.carrierCode}}"></image>
+                <text data-carrier-id="{{item.carrierId}}" bindtap="expressClick">{{item.carrierName}}</text>
+            </view>
+        </view>
+    </view>
+</view>

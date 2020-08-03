@@ -1,0 +1,26 @@
+<view class="select_express" catchtouchmove="movetan">
+    <view class="mask_bg {{show?'show':'hide'}}"></view>
+    <view class="mask_con {{show?'mask_show':''}}">
+        <view class="mask_top">
+            <view class="mask_title">体积</view>
+            <view class="mask_del" bindtap="close"><image src="../../../image/deleteIcon.png"></image></view>
+        </view>
+        <view class="mask_center">
+            <view class="mask_input">
+                <view><input type="number" value="{{long}}" placeholder="1~100" bindinput="changeInput" data-max="100" data-value="long"/></view>
+                <view>长(cm)</view>
+            </view>
+            <image class="mask_symbol" src="../../../image/multiplication.png"/>
+            <view class="mask_input">
+                <view><input type="number" value="{{width}}" placeholder="1~70" bindinput="changeInput" data-max="70" data-value="width"/></view>
+                <view>宽(cm)</view>
+            </view>
+            <image class="mask_symbol" src="../../../image/multiplication.png"/>
+            <view class="mask_input">
+                <view><input type="number" value="{{height}}" placeholder="1~70" bindinput="changeInput" data-max="70" data-value="height"/></view>
+                <view>高(cm)</view>
+            </view>
+        </view>
+        <view class="mask_bottom" bindtap="sure">确定</view>
+    </view>
+</view>

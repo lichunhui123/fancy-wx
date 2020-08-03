@@ -1,0 +1,25 @@
+<!--pages/homeCommunitySeach/index.wxml-->
+<view class="comm_seach">
+    <view class="search">
+      <view class="seachinp"><image src="../../image/search.png"></image>
+        <text decode="true">{{city?city:'北京市'}}&nbsp;-&nbsp;</text><input class="inp" placeholder="请输入社区名或取货地址" bindinput="inpwatch" value="{{inpValue}}" focus="true"></input>
+        <image src="../../image/deleteIcon.png" class="delinp" wx:if="{{inpValue}}" bindtap="delInp"></image>
+      </view>
+    </view>
+    <view class="community_item" wx:for="{{listData}}" wx:key="index" bindtap="nearbyClick" data-itdata="{{item}}">
+        <view class="coitem_left"><image src="../../image/pintu.png" wx:if="{{enterType==10}}"></image><image src="../../image/cloudtu.png" wx:if="{{enterType==20}}"></image> </view>
+        <view class="coitem_right">
+          <view class="coitem_name"><view>{{item.siteName}}</view><view class="distance">距离您{{item.distance}}</view></view>
+          <view class="coitem_title" wx:if="{{enterType==10}}">团长：{{item.colonel}}</view>
+          <view class="coitem_address">取货地区：{{item.deliveryAddress}}</view>
+          <image src="../../image/localist.png" class="locaright"></image>
+        </view>
+      </view>
+
+      <view class='nullData' wx:if="{{nodataimg&&listData.length==0}}">
+      <view class='nullcenter'>
+        <image class='nullimg' src='../../image/search_no_data.png'></image>
+        <view class='nullTitle'>查询无结果，换个词试试~</view>
+      </view>
+    </view>
+</view>

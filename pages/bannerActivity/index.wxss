@@ -1,0 +1,136 @@
+.top_pic{
+    font-size: 0;
+}
+.top_pic image{
+   width:100%;
+}
+.activity_height{
+    height:88rpx;
+}
+.activity_title{
+    height:88rpx;
+    display: flex;
+    align-items: center;
+    position:absolute;
+    left:50%;
+    transform: translateX(-50%);
+}
+.activity_title image{
+    width:54rpx;
+    height:32rpx;
+}
+.activity_title text{
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #333333;
+    margin:0 20.7rpx;
+    line-height: 32rpx;
+}
+.goods_con{
+    display: flex;
+    flex-wrap:wrap;
+    border-top:1rpx solid #EBEBEB;
+}
+.goods_list{
+    height:530rpx;
+    position:relative;
+    width:50%;
+    border-bottom:1rpx solid #EBEBEB;
+    border-right:1rpx solid #EBEBEB;
+    box-sizing: border-box;
+}
+.goods_list:nth-child(even){
+    border-right:none;
+}
+.goods_pic{
+    width:298.6rpx;
+    height:299.7rpx;
+    margin:20rpx 0 0 37rpx;
+}
+.goods_name{
+    margin: 13.3rpx 20rpx 0 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 42rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.goods_num{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 24rpx;
+    margin-top: 13rpx;
+    margin-left: 30rpx;
+}
+.goods_price{
+    font-size: 0;
+    position:absolute;
+    left:30rpx;
+    bottom:20rpx;
+}
+.price_symbol{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #EF0000;
+    line-height: 28rpx;
+}
+.price{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #EF0000;
+    line-height: 36rpx;
+}
+.badPrice{
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 24rpx;
+    text-decoration: line-through;
+    margin-left: 10rpx;
+}
+.goods_car{
+    width:76rpx;
+    height:76rpx;
+    position:absolute;
+    bottom:4rpx;
+    right:6rpx;
+}
+.goods_bottom{
+    background: #F5F5F5;
+    height:20rpx;
+}
+.all_car{
+    width:72rpx;
+    height:72rpx;
+    position:fixed;
+    bottom:160rpx;
+    left:30rpx;
+}
+.all_car image{
+    width:72rpx;
+    height:72rpx;
+}
+.all_car view{
+    border-radius: 50%;
+    background: #F2922F;
+    position: absolute;
+    right:0;
+    top:0;
+    font-family: PingFangSC-Regular;
+    font-size: 16rpx;
+    color: #FFFFFF;
+    text-align: center;
+}
+.one_car{
+    width:24rpx;
+    height:24rpx;
+    line-height: 24rpx;
+}
+.more_car{
+    padding:4rpx 7rpx;
+}

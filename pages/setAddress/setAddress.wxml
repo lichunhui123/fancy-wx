@@ -1,0 +1,22 @@
+<view class="setaddress">
+  <view class="admin_login"  wx:if="{{!showCity}}">
+    <view class="login_item">
+      <view class="login_title">账号</view>
+      <view class="login_input"><input bindinput="changeUserName" type="number" value="{{userName}}" placeholder="请输入管理员账号"/></view>
+    </view>
+    <view class="login_item">
+      <view class="login_title">密码</view>
+      <view class="login_input"><input bindinput="changePwd" type="password" value="{{password}}" placeholder="输入密码"/></view>
+    </view>
+    <button class="login_btn" bindtap="loginSubmit">确定</button>
+  </view>
+  <view class="select_city" wx:if="{{showCity}}">
+    <view class="select_title"><view class="select_line"></view><text>请选择城市</text></view>
+    <view class="select_list">
+      <view wx:for="{{citydata}}" wx:key="index" data-index="{{index}}" class="select_item {{item.active?'active':''}}" bindtap='selectCity' style="{{item.cityName.length>5?'width:450rpx':''}}">
+        {{item.cityName}}
+      </view>
+    </view>
+    <button class="login_btn" bindtap="gotoIndex">确定切换</button>
+  </view>
+</view>

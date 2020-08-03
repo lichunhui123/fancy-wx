@@ -1,0 +1,77 @@
+page{
+    border-top:1rpx solid #EBEBEB;
+}
+.site_list{
+    padding:27rpx 37rpx 27rpx 0;
+    margin-left: 30rpx;
+    border-bottom: 1rpx solid #EBEBEB;
+    display: flex;
+    align-items: center;
+}
+.list_left{
+    width:530rpx;
+}
+.list_name{
+    display: flex;
+    align-items: center;
+}
+.mecName{
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 28rpx;
+    max-width: 300rpx;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.distance{
+    border: 1rpx solid #F2922F;
+    border-radius: 17rpx;
+    height:34rpx;
+    font-size: 24rpx;
+    line-height: 34rpx;
+    color: #F2922F;
+    padding:0 10rpx;
+    margin-left: 20rpx;
+    text-align: center;
+    box-sizing: border-box;
+}
+.nearest{
+    width:82rpx;
+    height:34rpx;
+    background: #F2922F;
+    border-radius: 17rpx;
+    font-size: 24rpx;
+    line-height: 34rpx;
+    color: #FFFFFF;
+    text-align: center;
+    margin-left: 14rpx;
+}
+.list_address{
+    font-size: 24rpx;
+    color: #999999;
+    height:24rpx;
+    line-height: 24rpx;
+    margin-top: 11rpx;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.list_center{
+    width:54rpx;
+    height:54rpx;
+    margin-left:5rpx;
+}
+.list_center image{
+    width:54rpx;
+    height:54rpx;
+}
+.list_right{
+    width:54rpx;
+    height:54rpx;
+    margin-left:40rpx;
+}
+.list_right image{
+    width:54rpx;
+    height:54rpx;
+}

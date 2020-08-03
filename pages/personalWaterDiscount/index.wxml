@@ -1,0 +1,35 @@
+<!--pages/personalWaterDiscount/index.wxml-->
+<view class="waterdiscount">
+  <view class="water_item" wx:for="{{waterTicket}}" wx:key="{{index}}" wx:if="{{waterTicket.length>0}}">
+    <view class="content">
+      <view class="left">
+        <image src="https://img.goola.cn/{{item.goodsPic}}"></image>
+        <view class="word">
+          <view>{{item.skuName}}</view>
+          <view>规格：{{item.goodsSpec}}</view>
+          <view class="discountNum">数量：{{item.surplusNum}}</view>
+        </view>
+      </view>
+      <view class="nowuse" bindtap="nowUse" data-skucode="{{item.skuCode}}">立即使用</view>
+    </view>
+    <view>
+      <view class="useexplain">
+        <view bindtap="explainClick" class="explain" data-ind="{{index}}">使用说明
+          <image src="../../image/{{item.explainShow?'shoptop':'shopbottom'}}.png"></image>
+        </view>
+      </view>
+      <view class="useTitle" wx:if="{{item.explainShow}}">
+        <view class="useTitle_con">
+          <view>1.水票仅可在当前水站有该商品时使用；</view>
+          <view>2.超过配送范围的不可以使用；</view>
+          <view>3.水票购买后退票请拨打400-135-2403；</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="nologin" wx:if="{{noData&&waterTicket.length<1}}">
+      <image src="../../image/nodata.png" class="goodnodata"></image>
+      <view class="notitle">暂无可用水票，去首页逛逛吧！</view>
+      <view class="addbottom" catchtap="tobuyWater">点击去购买</view>
+    </view>
+</view>

@@ -1,0 +1,93 @@
+<!--pages/location/index.wxml-->
+<view class="locationWrap">
+    <view class="search">
+      <view class="seachinp" bindtap="seachClick"><image src="../../image/search.png"></image>
+        <text decode="true">{{city?city:'北京市'}}&nbsp;-&nbsp;</text><text class="searchplace">请输入社区名或取货地址</text>
+      </view>
+    </view>
+    <view class="header">
+      <image src="../../image/personal_top.png" class="head_img"></image>
+      <view class="current_comm" wx:if="{{enterType==10&&presentAddress}}" bindtap="homeback">
+        <view class="current_img" catchtap="setAddress">
+          <image src="../../image/current.png"></image>
+        </view>
+        <view class="current_title">当前社区</view>
+        <view class="current_name">{{presentAddress.siteName}}</view>
+        <view class="current_address">取货地区：{{presentAddress.deliveryAddress}}</view>
+      </view>
+      <view class="place" wx:if="{{enterType==10&&!presentAddress}}">
+        <image src="../../image/currentno.png" class="place_img" catchtap="setAddress"></image>
+        <view class="current_place">当前位置</view>
+        <view class="current_adds">{{LocalAddress.address}}</view>
+        <view class="chooseformer">请选择您的社区</view>
+      </view>
+
+      <view class="current_comm" wx:if="{{enterType==20&&currentCloudShop}}" bindtap="homeback">
+        <view class="current_img" catchtap="setAddress">
+          <image src="../../image/current.png"></image>
+        </view>
+        <view class="current_title">当前社区</view>
+        <view class="current_name">{{currentCloudShop.siteName}}</view>
+        <view class="current_address">取货地区：{{currentCloudShop.deliveryAddress}}</view>
+      </view>
+      <view class="place" wx:if="{{enterType==20&&!currentCloudShop}}">
+        <image src="../../image/currentno.png" class="place_img" catchtap="setAddress"></image>
+        <view class="current_place">当前位置</view>
+        <view class="current_adds">{{LocalAddress.address}}</view>
+        <view class="chooseformer">请选择您的社区</view>
+      </view>
+    </view>
+
+    <view class="formerly" wx:if="{{enterType==10&&historyAddress!=null}}">
+      <view class="formerly_top">
+        <image src="../../image/localeft.png"></image>
+        <text class="formerly_title">曾用社区</text>
+        <image src="../../image/locaright.png"></image>
+      </view>
+      <view class="community_item ce" bindtap="historyComm" data-hisdata="{{historyAddress}}">
+        <view class="coitem_left"><image src="../../image/pintu.png"></image> </view>
+        <view class="coitem_right">
+          <view class="coitem_name">{{historyAddress.siteName}}</view>
+          <view class="coitem_title">团长：{{historyAddress.colonel}}</view>
+          <view class="coitem_address">取货地区：{{historyAddress.deliveryAddress}}</view>
+          <image src="../../image/localist.png" class="locaright"></image>
+        </view>
+      </view>
+    </view>
+    <view class="formerly" wx:if="{{enterType==20&&historyCloudShop!=null}}">
+      <view class="formerly_top">
+        <image src="../../image/localeft.png"></image>
+        <text class="formerly_title">曾用社区</text>
+        <image src="../../image/locaright.png"></image>
+      </view>
+      <view class="community_item ce" bindtap="historyComm" data-hisdata="{{historyCloudShop}}">
+        <view class="coitem_left"><image src="../../image/cloudtu.png"></image> </view>
+        <view class="coitem_right">
+          <view class="coitem_name">{{historyCloudShop.siteName}}</view>
+          <view class="coitem_title" wx:if="{{enterType==10}}">团长：{{historyCloudShop.colonel}}</view>
+          <view class="coitem_address">取货地区：{{historyCloudShop.deliveryAddress}}</view>
+          <image src="../../image/localist.png" class="locaright"></image>
+        </view>
+      </view>
+    </view>
+    <view class="noHu" wx:if="{{historyAddress!=null||historyCloudShop!=null}}"></view>
+    <view class="near_formerly">
+      <view class="formerly_top">
+        <image src="../../image/localeft.png"></image>
+        <text class="formerly_title">附近社区</text>
+        <image src="../../image/locaright.png"></image>
+      </view>
+      <view class="community_item" wx:for="{{listData}}" wx:key="index" bindtap="nearbyClick" data-itdata="{{item}}">
+        <view class="coitem_left"><image src="../../image/cloudtu.png" wx:if="{{enterType==20}}"></image><image src="../../image/pintu.png" wx:if="{{enterType==10}}"></image> </view>
+        <view class="coitem_right">
+          <view class="coitem_name">
+            <view class="coitem_siteName">{{item.siteName}}</view>
+            <view class="distance">距离您{{item.distance}}</view>
+          </view>
+          <view class="coitem_title" wx:if="{{enterType==10}}">团长：{{item.colonel}}</view>
+          <view class="coitem_address">取货地区：{{item.deliveryAddress}}</view>
+          <image src="../../image/localist.png" class="locaright"></image>
+        </view>
+      </view>
+    </view>
+</view>

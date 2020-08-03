@@ -1,0 +1,50 @@
+/* 授权信息框样式 */
+.loginPopout{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.PopoutCenter{
+  width: 590rpx;
+  height: 360rpx;
+  background: #fff;
+  text-align: center;
+  padding:30rpx;
+  box-sizing: border-box;
+  padding-top: 50rpx;
+}
+.PopoutCenter .footerTitle{
+  width: 214rpx;
+  margin-bottom: 30rpx;
+}
+.PopoutCenter .footerText{
+  font-size: 32rpx;
+}
+.PopoutCenter .groupbuySlogan{
+  font-size: 32rpx;
+}
+.getUserInfoButton{
+  margin-top: 50rpx;
+}
+.footerTitle{
+  width: 150rpx;
+  height: 50rpx;
+  margin:0 auto;
+  font-size: 24rpx;
+  color:#333;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  margin-bottom: 6rpx;
+}
+.footerimg{
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 10rpx;
+}

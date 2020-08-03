@@ -1,0 +1,42 @@
+<!--pages/waterAddaddress/index.wxml-->
+<view class="addWrap">
+  <view class="personxin" bindtap="textfocus">
+    <view class="name">姓名
+      <input placeholder="请输入姓名" placeholder-class="place" value="{{addsName}}" bindinput="inpName" maxlength="15"></input>
+    </view>
+    <view class="tel">电话
+      <input type="number" placeholder="请输入电话号码" placeholder-class="place" value="{{addsTel}}" bindinput="inpTel" maxlength="11"></input>
+    </view>
+  </view>
+  <view class="city">
+    <view class="province" bindtap="textfocus">
+      <view class="prov_left" bindtap="chooseAddress">省市区
+        <text class="componh" wx:if="{{!province&&!city&&!area}}">请选择省市区</text>
+        <view class="compon" wx:else><text class="citys">{{province}}-{{city}}</text><text class="cityst">-{{area}}</text></view>
+      </view>
+      <view class="locator" bindtap="locator">
+        <image src="../../image/wateraddgps.png"></image>
+      </view>
+    </view>
+    <view class="detailAddress">
+      <view class="detailtitle">详细地址</view>
+      <textarea type="text" placeholder="请输入详细地址" placeholder-class="place" wx:if="{{inpshow}}" value="{{inpcon}}" bindinput="inpmonitor" class="textarea" maxlength="30"/>
+    </view>
+    <view class="setdefault" wx:if="{{toler!=3}}">
+      <text>设为默认地址</text>
+      <myswitch value="{{switch1}}" bind:change="onChange"></myswitch>
+    </view>
+  </view>
+  <view class="regin {{toler==3?'reginTo':''}}" wx:if="{{reginShow}}">
+    <view class="regin_item" wx:for="{{getRegion}}" wx:key="{{index}}">
+      <view class="regin_item_left"><image src="../../image/watergps.png"></image></view>
+      <view class="regin_item_right" catchtap="reginClick" data-reginitem="{{item}}">
+        <view class="regin_title">{{item.title}}</view>
+        <view>{{item.address}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="whit" bindtap="textfocus"></view>
+  <view class="add_address {{!subactive?'add_active':''}}" catchtap="addAddress">保存</view>
+  <nyz_area_picker show="{{show}}" bind:sureSelectArea="sureSelectAreaListener" bind:cancelbutton="cancelbutton" bind:cancelbutton="cancelbutton"></nyz_area_picker>
+</view>

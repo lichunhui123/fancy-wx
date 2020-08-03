@@ -1,0 +1,13 @@
+<view class="timeout-page">
+    <view bindtap="goRefresh">
+        <view class="timeout-imgCon">
+            <image class="timeout-img" src="../../image/network_timeout.png"></image>
+        </view>
+        <view class="timeout-connection">
+            <text>网络出问题啦，请检查后重试~</text>
+        </view>
+        <view class="timeout-refresh">
+            <text>点击重连</text>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "myswitch":"./switch/index",
+    "nyz_area_picker":"../../component/nyz_area_picker/nyz_area_picker"
+  },
+  "navigationBarTitleText": "新建配送地址"
+}

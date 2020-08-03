@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "growth-value-toast": "/component/growthValueToast/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "未取件",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

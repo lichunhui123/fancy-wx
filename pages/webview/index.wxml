@@ -1,0 +1,6 @@
+<view>
+    <web-view wx:if="{{url}}" src="{{url}}"></web-view>
+    <!-- 用户授权登录 -->
+    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess" invitorUserId="{{options.inviteUserId}}" activityCode="{{options.activityCode}}"></authorization-login>
+    <!-- 用户授权登录 -->
+</view>

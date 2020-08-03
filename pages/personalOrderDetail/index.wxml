@@ -1,0 +1,818 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<!--待付款状态时 添加class="order_detail"-->
+<view class="{{(orderStatus == 10&&!zero)||(orderStatus == 30 || orderStatus == 31)||(orderResource==40&&(orderStatus==20||orderStatus==30||orderStatus==31)&&groupCode&&groupStatus==1)?'order_obligation_detail':''}}">
+  <!--已取消-->
+  <image wx:if="{{orderStatus == 50||(orderStatus == 10&&zero)}}" class="top_bg" src="../../image/personal_top1.png"></image>
+  <!--其它状态-->
+  <image wx:else class="top_bg" src="../../image/personal_top.png"></image>
+
+  <view class="order_con">
+    <!--其它状态-->  <!--todo 待配送-配送 待收货-自提状态多人拼团需要不同的样式 添加一个不同的class order_other_style-->
+    <view wx:if="{{orderStatus == 20}}" class="order_status {{orderResource==40&&groupCode&&groupStatus==1?'order_other_style':''}}">待配送</view>
+    <view wx:if="{{orderStatus == 30 || orderStatus == 31}}" class="order_status {{orderResource==40&&groupCode&&groupStatus==1?'order_other_style':''}}">待收货</view>
+    <view wx:if="{{orderStatus == 40}}" class="order_status">已完成</view>
+    <view wx:if="{{orderStatus == 50||(orderStatus == 10&&zero)}}" class="order_status">已取消</view>
+
+    <!--待付款-->
+    <view wx:if="{{orderStatus == 10&&!zero}}" class="order_obligation">
+      <view>{{timeout}}</view>
+      <view>待付款，超时订单自动关闭</view>
+    </view>
+    <!--云店多人拼团活动待配送待收货并且是没有拼团成功的展示剩余拼团时间-->
+    <view wx:if="{{orderResource==40&&(orderStatus==20||orderStatus==30||orderStatus==31)&&groupCode&&groupStatus==1}}" class="order_obligation order_tip">
+        还差{{surplusCount}}人成团，剩余拼团时间：{{groupDoneTime}}
+    </view>
+    <!--待付款订单信息-->
+    <view wx:if="{{orderStatus == 10}}">
+        <!--自提订单-->
+        <view wx:if="{{zitiOrderDetails}}">
+            <view wx:for="{{zitiOrderDetails.orderList}}" wx:for-item="item" wx:key="index">
+                <view class="order_user_info">
+                    <view class="user_info_list">
+                        <text class="order_name" decode="true">取 货&emsp;人：</text>
+                        <text class="order_text">{{item.receiverName}}</text>
+                        <text class="order_text" style="margin-left: 30rpx">{{item.receiverPhone}}</text>
+                    </view>
+                    <view class="user_info_list">
+                        <text class="order_name">社区名称：</text>
+                        <text class="order_text">{{item.mecName}}</text>
+                    </view>
+                    <view class="user_info_list">
+                        <text class="order_name">取货地址：</text>
+                        <text class="order_text">{{item.branchesAddress}}</text>
+                    </view>
+                    <view class="user_info_icon">
+                        <image src="../../image/ziti.png"></image>
+                    </view>
+                </view>
+                <!--拼团订单详情 start-->
+                <view wx:if="{{item.orderResource==5}}">
+                    <view class="order_info">
+                        <!--待付款才有角标-->
+                        <view class="order_info_icon"><image src="../../image/groupIcon.png"></image></view>
+                        <view class="order_info_top">
+                            <view class="{{(orderStatus == 10&&!zero)?'order_padding_left':''}}" style="color: #FF3B30;">预计取货时间：{{item.estimateReceiveTime}} </view>
+                            <view>共{{item.goodsCount}}件商品</view>
+                        </view>
+                        <view class="order_info_list" wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                            <view class="goods_img">
+                                <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                                <!--当订单处于待配送状态，待取货的商品标记待取货。-->
+                                <image wx:if="{{orderStatus == 20&&cell.orderStatus == 30}}" class="goods_icon" src="../../image/order_daiquhuo.png"></image>
+                                <!--当订单处于待配送,待取货的状态，已取货的商品标记已取货-->
+                                <image wx:if="{{orderStatus == 20&&cell.orderStatus == 40||(orderStatus == 30 || orderStatus == 31)&&cell.orderStatus == 40}}" class="goods_icon" src="../../image/order_yiquhuo.png"></image>
+                            </view>
+                            <view class="goods_con">
+                                <view class="goods_con_top">
+                                  <view class="goods_name">{{cell.goodsName}}</view>
+                                  <view class="goods_desc">单价：￥{{numb.getNum(cell.goodsPrice/100)}}；规格：{{cell.specifications?cell.specifications:''}}；数量：X{{cell.goodsCount}}</view>
+                                </view>
+                                <view class="goods_price">
+                                    <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="order_price">
+                        <view class="order_price_text">
+                            <view>商品总额</view>
+                            <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+                        </view>
+                        <view class="order_price_text" wx:if="{{item.discountPrice}}">
+                            <view>优惠信息</view>
+                            <view style="color:#FF3B30;" class="weight">-¥{{numb.addTwoPoint(item.discountPrice/100)}}</view>
+                        </view>
+                        <view class="order_total_price">实付款：
+                            <text class="weight">¥</text>
+                            <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+                        </view>
+                    </view>
+                </view>
+                <!--拼团订单详情 end-->
+                <!--云店订单详情 start-->
+                <view wx:if="{{item.orderResource==40}}">
+                    <view class="order_info">
+                        <!--待付款才有角标-->
+                        <view class="order_info_icon" wx:if="{{orderStatus == 10}}"><image src="../../image/smallIcon.png"></image></view>
+                        <view class="order_info_top">
+                            <view></view>
+                            <view>共{{item.goodsCount}}件商品</view>
+                        </view>
+                        <view class="order_info_list" wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                            <!--限时折扣图标-->
+                            <image src="../../image/sale.png" class="order_info_discount_icon" wx:if="{{cell.activityType==10}}"></image>
+                            <view class="goods_img">
+                                <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                            </view>
+                            <view class="goods_con">
+                              <view class="goods_con_top">
+                                <view class="goods_name">{{cell.goodsName}}</view>
+                                <view class="goods_desc {{cell.activityType==20?'goods_desc_noHeight':''}}">单价：￥{{numb.getNum(cell.goodsPrice/100)}}；规格：{{cell.specifications?cell.specifications:''}}；数量：X{{cell.goodsCount}}</view>
+                                <view class="saleItem" wx:if="{{cell.activityType==20&&cell.fullDecMoneyList&&cell.fullDecMoneyList.length>0}}">
+                                    <text wx:for="{{cell.fullDecMoneyList}}" wx:for-item="el" wx:key="index">满{{el.fullMoney}}减{{el.decMoney}}</text>
+                                </view>
+                                <view class="saleItem" wx:if="{{cell.activityType==50}}"><text>买一送一</text></view><!--买一送一-->
+                                <view class="saleItem" wx:if="{{cell.activityType==60}}"><text>第二件半价</text></view><!--第二件半价-->
+                                <view class="saleItem" wx:if="{{cell.activityType==70}}"><text>多件多折</text></view><!--多件多折-->
+                                <view class="saleItem" wx:if="{{cell.activityType==80}}"><text>好物预售</text></view><!--好物预售-->
+                                <view class="saleItem" wx:if="{{cell.activityType==90&&item.groupCode}}"><text>多人拼团</text></view><!--多人拼团-->
+                              </view>
+                              <!--限时折扣 显示折扣价和原价-->
+                              <view class="goods_price" wx:if="{{cell.activityType==10}}"><text>¥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                              <!--好物预售-->
+                              <view class="goods_price" wx:elif="{{cell.activityType==80}}"><text>预售价：￥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                              <!--多人拼团 参与拼团或开团购买-->
+                              <view class="goods_price" wx:elif="{{cell.activityType==90&&item.groupCode}}"><text>团购价：￥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                              <view class="goods_price" wx:else>
+                                  <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}
+                              </view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="order_price">
+                        <view class="order_price_text">
+                            <view>商品总额</view>
+                            <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+                        </view>
+                        <view class="order_discount_text" wx:if="{{item.cardDiscountPrice>0||item.activityDiscountPrice>0||item.buyOneGetOneList.length>0||item.secondHalfPriceDiscount>0||item.multiDiscountPrice>0||item.goodsThingToBooking||item.manyPeopleGroup}}">
+                          <view class="order_discount_title">优惠信息</view>
+                          <view class="order_price_text" wx:if="{{item.cardType==10&&item.cardDiscountPrice>0}}">
+                            <view class="order_discount_name">优惠券</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.cardDiscountPrice/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.cardType==30&&item.cardDiscountPrice>0}}">
+                            <view class="order_discount_name">折扣券</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.cardDiscountPrice/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.activityDiscountPrice>0}}">
+                            <view class="order_discount_name">满减活动</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.activityDiscountPrice/100)}}</view>
+                          </view>
+                          <view wx:if="{{item.buyOneGetOneList.length>0}}">
+                            <view class="goodFree" wx:for="{{item.buyOneGetOneList}}" wx:for-item="cell" wx:key="index">
+                              <view class="goodFreeLeft">买一送一</view>
+                              <view class="goodFreeRight">
+                                <view class="goodFreeRightText">
+                                  <image src="../../image/activity_icon.png"></image>
+                                  <view>赠品</view>
+                                </view>
+                                <image class="goodFreeRightSrc" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                                <view class="goodFreeRightNum">x{{cell.goodsCount}}</view>
+                              </view>
+                            </view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.secondHalfPriceDiscount>0}}">
+                            <view class="order_discount_name">第二件半价</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.secondHalfPriceDiscount/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.multiDiscountPrice>0}}">
+                            <view class="order_discount_name">{{item.manyPriManyFolds}}</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.multiDiscountPrice/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.goodsThingToBooking}}">
+                            <view class="order_discount_name">好物预售</view>
+                            <view></view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.manyPeopleGroup}}">
+                            <view class="order_discount_name">多人拼团</view>
+                            <view></view>
+                          </view>
+                        </view>
+                        <view class="order_total_price">实付款：
+                            <text class="weight">¥</text>
+                            <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+                        </view>
+                    </view>
+                </view>
+                <!--云店订单详情 end-->
+            </view>
+            <view class="order_code">
+                <view class="code_text code_text01" wx:if="{{zitiOrderDetails.orderList.length==1}}">
+                    <!--todo 由于待支付状态多条订单的订单编号不同 和产品确定待支付多个订单时状态不展示-->
+                    <text>订单编号：{{zitiOrderDetails.orderList[0].orderCode}}</text>
+                    <view class="code_copy" bindtap="copy" data-ordercode="{{zitiOrderDetails.orderList[0].orderCode}}">复制</view>
+                </view>
+                <view class="code_text">下单时间：{{zitiOrderDetails.orderList[0].createTime}}</view>
+            </view>
+        </view>
+        <!--配送订单-->
+        <view wx:if="{{peisongOrderDetails}}">
+            <view class="water_user_info">
+                <view class="water_info_top">
+                    <image src="../../image/watercar.png"></image>
+                    <text>收货地址</text>
+                </view>
+                <view class="water_info_center">
+                    <view class="water_info_list">
+                        <text class="order_text">{{peisongOrderDetails.receiverName}}</text>
+                        <text class="order_text" style="margin-left: 30rpx">{{peisongOrderDetails.receiverPhone}}</text>
+                    </view>
+                    <view class="water_info_list">
+                        <text class="order_text">{{peisongOrderDetails.receiverAddress}}</text>
+                    </view>
+                </view>
+                <view class="water_info_icon">
+                    <image src="../../image/peisong.png"></image>
+                </view>
+            </view>
+            <view wx:for="{{peisongOrderDetails.orderList}}" wx:for-item="item" wx:key="index">
+                <!--云店订单详情 start-->
+                <view wx:if="{{item.orderResource==40}}">
+                    <view class="order_info">
+                        <!--待付款才有角标-->
+                        <view class="order_info_icon"><image src="../../image/smallIcon.png"></image></view>
+                        <view class="order_info_top">
+                            <view></view>
+                            <view>共{{item.goodsCount}}件商品</view>
+                        </view>
+                        <view class="order_info_list" wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                            <!--限时折扣图标-->
+                            <image src="../../image/sale.png" class="order_info_discount_icon" wx:if="{{cell.activityType==10}}"></image>
+                            <view class="goods_img">
+                                <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                            </view>
+                            <view class="goods_con">
+                                <view class="goods_con_top">
+                                  <view class="goods_name">{{cell.goodsName}}</view>
+                                  <view class="goods_desc {{cell.activityType==20?'goods_desc_noHeight':''}}">单价：￥{{numb.getNum(cell.goodsPrice/100)}}；规格：{{cell.specifications?cell.specifications:''}}；数量：X{{cell.goodsCount}}</view>
+                                  <view class="saleItem" wx:if="{{cell.activityType==20&&cell.fullDecMoneyList&&cell.fullDecMoneyList.length>0}}">
+                                      <text wx:for="{{cell.fullDecMoneyList}}" wx:for-item="el" wx:key="index">满{{el.fullMoney}}减{{el.decMoney}}</text>
+                                  </view>
+                                  <view class="saleItem" wx:if="{{cell.activityType==50}}"><text>买一送一</text></view><!--买一送一-->
+                                  <view class="saleItem" wx:if="{{cell.activityType==60}}"><text>第二件半价</text></view><!--第二件半价-->
+                                  <view class="saleItem" wx:if="{{cell.activityType==70}}"><text>多件多折</text></view><!--多件多折-->
+                                  <view class="saleItem" wx:if="{{cell.activityType==80}}"><text>好物预售</text></view><!--好物预售-->
+                                  <view class="saleItem" wx:if="{{cell.activityType==90&&item.groupCode}}"><text>多人拼团</text></view><!--多人拼团-->
+                                </view>
+                                <!--限时折扣 显示折扣价和原价-->
+                                <view class="goods_price" wx:if="{{cell.activityType==10}}"><text>¥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                                <!--好物预售-->
+                                <view class="goods_price" wx:elif="{{cell.activityType==80}}"><text>预售价：￥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                                <!--多人拼团 参与拼团或开团购买-->
+                                <view class="goods_price" wx:elif="{{cell.activityType==90&&item.groupCode}}"><text>团购价：￥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                                <view class="goods_price" wx:else>
+                                    <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="order_price">
+                        <view class="order_price_text">
+                            <view>商品总额</view>
+                            <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+                        </view>
+                       <view class="order_discount_text" wx:if="{{item.cardDiscountPrice>0||item.activityDiscountPrice>0||item.buyOneGetOneList.length>0||item.secondHalfPriceDiscount>0||item.multiDiscountPrice>0||item.goodsThingToBooking||item.manyPeopleGroup}}">
+                          <view class="order_discount_title">优惠信息</view>
+                          <view class="order_price_text" wx:if="{{item.cardType==10&&item.cardDiscountPrice>0}}">
+                            <view class="order_discount_name">优惠券</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.cardDiscountPrice/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.cardType==30&&item.cardDiscountPrice>0}}">
+                            <view class="order_discount_name">折扣券</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.cardDiscountPrice/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.activityDiscountPrice>0}}">
+                            <view class="order_discount_name">满减活动</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.activityDiscountPrice/100)}}</view>
+                          </view>
+                          <view wx:if="{{item.buyOneGetOneList.length>0}}">
+                            <view class="goodFree" wx:for="{{item.buyOneGetOneList}}" wx:for-item="cell" wx:key="index">
+                              <view class="goodFreeLeft">买一送一</view>
+                              <view class="goodFreeRight">
+                                <view class="goodFreeRightText">
+                                  <image src="../../image/activity_icon.png"></image>
+                                  <view>赠品</view>
+                                </view>
+                                <image class="goodFreeRightSrc" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                                <view class="goodFreeRightNum">x{{cell.goodsCount}}</view>
+                              </view>
+                            </view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.secondHalfPriceDiscount>0}}">
+                            <view class="order_discount_name">第二件半价</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.secondHalfPriceDiscount/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.multiDiscountPrice>0}}">
+                            <view class="order_discount_name">{{item.manyPriManyFolds}}</view>
+                            <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.multiDiscountPrice/100)}}</view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.goodsThingToBooking}}">
+                            <view class="order_discount_name">好物预售</view>
+                            <view></view>
+                          </view>
+                          <view class="order_price_text" wx:if="{{item.manyPeopleGroup}}">
+                            <view class="order_discount_name">多人拼团</view>
+                            <view></view>
+                          </view>
+                        </view>
+                        <view class="order_price_text">
+                            <view>配送费</view>
+                            <view class="weight">¥{{numb.addTwoPoint(item.deliveryPrice/100)}}</view>
+                        </view>
+                        <view class="order_total_price">实付款：
+                            <text class="weight">¥</text>
+                            <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+                        </view>
+                    </view>
+                </view>
+                <!--云店订单详情 end-->
+                <!--指尖商城订单详情 start-->
+                <view wx:elif="{{item.orderResource==10}}">
+                    <view class="order_info">
+                        <!--待付款才有角标-->
+                        <view class="order_info_icon"><image src="../../image/ecIcon.png"></image></view>
+                        <view class="order_info_top">
+                            <view></view>
+                            <view>共{{item.goodsCount}}件商品</view>
+                        </view>
+                        <block wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                            <view class="order_info_list">
+                                <view class="goods_img">
+                                    <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                                </view>
+                                <view class="goods_con">
+                                    <view class="goods_con_top">
+                                      <view class="goods_name">{{cell.goodsName}}</view>
+                                      <view class="goods_desc">单价：￥{{cell.goodsPrice/100}}；规格{{cell.specifications}}；数量：×{{cell.goodsCount}}</view>
+                                    </view>
+                                    <view class="goods_price">
+                                        <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                    </view>
+                    <view class="order_price">
+                        <view class="order_price_text">
+                            <view>商品总额</view>
+                            <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+                        </view>
+                        <view class="order_total_price">实付款：
+                            <text class="weight">¥</text>
+                            <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+                        </view>
+                    </view>
+                </view>
+                <!--指尖商城订单详情 end-->
+                <!--水管家订单详情 start-->
+                <view wx:else>
+                    <view class="order_info">
+                        <!--待付款才有角标-->
+                        <view class="order_info_icon"><image src="../../image/waterIcon.png"></image></view>
+                        <view class="order_info_top">
+                            <view class="{{(orderStatus == 10&&!zero)?'order_padding_left':''}}" style="color: #5ADAD0">{{item.receiveTime?'预约时间：':''}}{{item.receiveTime}}</view>
+                            <view>共{{item.goodsCount}}件商品</view>
+                        </view>
+                        <block wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                            <view class="order_info_list">
+                                <view class="goods_img">
+                                    <view class="water_icon" wx:if="{{item.orderResource==30}}">水票套餐</view>
+                                    <image wx:if="{{item.orderResource==30&&cell.setmealPhoto}}" class="goods_pic" src="{{imgHttp+numb.splitImg(cell.setmealPhoto)}}"></image>
+                                    <image wx:else class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                                    <!--当订单处于待配送状态，待收货的商品标记待取货。-->
+                                    <image wx:if="{{orderStatus == 20&&cell.orderStatus == 30}}" class="goods_icon" src="../../image/order_daiquhuo.png"></image>
+                                    <!--当订单处于待配送,待收货的状态，已完成的商品标记已取货-->
+                                    <image wx:if="{{orderStatus == 20&&cell.orderStatus == 40||(orderStatus == 30 || orderStatus == 31)&&cell.orderStatus == 40}}" class="goods_icon" src="../../image/order_yiquhuo.png"></image>
+                                </view>
+                                <view class="goods_con">
+                                    <view class="goods_con_top">
+                                      <view class="goods_name">{{item.orderResource!=30?cell.goodsName:cell.seriesName}}</view>
+                                      <view class="goods_desc {{item.orderResource==30?'desc':''}}">单价：￥{{cell.goodsPrice/100}}；{{item.orderResource!=30?'规格：':''}}{{cell.specifications&&item.orderResource!=30?cell.specifications:''}}{{item.orderResource!=30?'；':''}}数量：×{{cell.goodsCount}}</view>
+                                    </view>
+                                    <view>
+                                      <view class="goods_price">
+                                          <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}</view>
+                                      <view class="mealDetail" bindtap="mealDetail" wx:if="{{item.orderResource==30}}" data-meals="{{item.orderCode}}">套餐详情
+                                          <image src="../../image/{{cell.detailshow?'shoptop':'shopbottom'}}.png"></image>
+                                      </view>
+                                    </view>
+                                </view>
+                            </view>
+                            <block wx:if="{{cell.giftGoodsList.length>0&&cell.detailshow}}">
+                                <view class="waterp">
+                                    <view class="waterb" wx:for="{{cell.giftGoodsList}}" wx:key="{{index}}" wx:for-item="el">
+                                      <view class="waterOrder_tip" wx:if="{{!el.main}}">赠品</view>
+                                      <view class="waterOrder_content">
+                                        <view class="waterOrder_left">
+                                            <image src="{{imgUrl+el.goodsPhoto}}"></image>
+                                            <view>{{el.goodsName}}</view>
+                                        </view>
+                                        <text>×{{el.seriesCount}}</text>
+                                      </view>
+                                    </view>
+                                </view>
+                            </block>
+                        </block>
+                    </view>
+                    <view class="order_price">
+                        <view class="order_price_text">
+                            <view>商品总额</view>
+                            <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+                        </view>
+                        <view class="order_price_text" wx:if="{{item.ticketDeduction>0}}">
+                            <view>水票抵扣</view>
+                            <view style="color:#FF3B30;" class="weight">{{item.ticketDeduction}}张</view>
+                        </view>
+                        <view class="order_total_price">实付款：
+                            <text class="weight">¥</text>
+                            <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+                        </view>
+                    </view>
+                    <!--有水站信息或者是待收货的水管家商品-->
+                    <view class="water_branches water_waite_receiving" wx:if="{{item.waterStoreInfo||((orderStatus == 30 || orderStatus == 31) && item.orderResource==20 && item.sendCodeRespDto)}}">
+                        <view class="water_branches_left" wx:if="{{item.waterStoreInfo}}">
+                            <view class="water_branches_text" wx:if="{{item.waterStoreInfo.waterName}}">水站名称：{{item.waterStoreInfo.waterName}}</view>
+                            <view class="water_branches_text" wx:if="{{item.waterStoreInfo.tel}}">联系电话：{{item.waterStoreInfo.tel}}</view>
+                        </view>
+                        <!--待收货状态下 商品来源是水管家时显示一键催单-->
+                        <view class="water_branches_right_par" wx:if="{{(orderStatus == 30 || orderStatus == 31) && item.orderResource==20 && item.sendCodeRespDto}}">
+                            <view class="water_branches_right" bindtap="waterReminder" data-sendinfo="{{item.sendCodeRespDto}}">一键催单</view>
+                        </view>
+                    </view>
+                </view>
+                <!--水管家订单详情 end-->
+            </view>
+            <view class="order_code">
+                <view class="code_text code_text01" wx:if="{{peisongOrderDetails.orderList.length==1}}">
+                    <!--todo 由于待支付状态多条订单的订单编号不同 和产品确定待支付多个订单时状态不展示-->
+                    <text>订单编号：{{peisongOrderDetails.orderList[0].orderCode}}</text>
+                    <view class="code_copy" bindtap="copy" data-ordercode="{{peisongOrderDetails.orderList[0].orderCode}}">复制</view>
+                </view>
+                <view class="code_text">下单时间：{{peisongOrderDetails.createTime}}</view>
+            </view>
+        </view>
+    </view>
+    <!--其它状态信息-->
+    <view wx:else>
+        <view wx:for="{{orderDetails}}" wx:for-item="item" wx:key="index">
+          <!--拼团订单详情 start-->
+          <view wx:if="{{item.orderResource==5}}">
+            <view class="order_user_info">
+              <view class="user_info_list">
+                <text class="order_name" decode="true">取 货&emsp;人：</text>
+                <text class="order_text">{{item.receiverName}}</text>
+                <text class="order_text" style="margin-left: 30rpx">{{item.receiverPhone}}</text>
+              </view>
+              <view class="user_info_list">
+                <text class="order_name">社区名称：</text>
+                <text class="order_text">{{item.mecName}}</text>
+              </view>
+              <view class="user_info_list">
+                <text class="order_name">取货地址：</text>
+                <text class="order_text">{{item.branchesAddress}}</text>
+              </view>
+              <view class="user_info_icon">
+                <image src="../../image/ziti.png"></image>
+              </view>
+            </view>
+            <view class="order_info">
+              <view class="order_info_top">
+                <view class="{{(orderStatus == 10&&!zero)?'order_padding_left':''}}" style="color: #FF3B30;">预计取货时间：{{item.estimateReceiveTime}} </view>
+                <view>共{{item.goodsCount}}件商品</view>
+              </view>
+              <view class="order_info_list" wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                <view class="goods_img">
+                  <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                  <!--当订单处于待配送状态，待取货的商品标记待取货。-->
+                  <image wx:if="{{orderStatus == 20&&cell.orderStatus == 30}}" class="goods_icon" src="../../image/order_daiquhuo.png"></image>
+                  <!--当订单处于待配送,待取货的状态，已取货的商品标记已取货-->
+                  <image wx:if="{{orderStatus == 20&&cell.orderStatus == 40||(orderStatus == 30 || orderStatus == 31)&&cell.orderStatus == 40}}" class="goods_icon" src="../../image/order_yiquhuo.png"></image>
+                </view>
+                <view class="goods_con">
+                  <view class="goods_con_top">
+                    <view class="goods_name">{{cell.goodsName}}</view>
+                    <view class="goods_desc">单价：￥{{numb.getNum(cell.goodsPrice/100)}}；规格：{{cell.specifications?cell.specifications:''}}；数量：X{{cell.goodsCount}}</view>
+                  </view>
+                  <view class="goods_price">
+                    <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}</view>
+                </view>
+              </view>
+            </view>
+            <view class="order_price">
+              <view class="order_price_text">
+                <view>商品总额</view>
+                <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+              </view>
+              <view class="order_price_text" wx:if="{{item.discountPrice}}">
+                <view>优惠信息</view>
+                <view style="color:#FF3B30;" class="weight">-¥{{numb.addTwoPoint(item.discountPrice/100)}}</view>
+              </view>
+              <view class="order_total_price">实付款：
+                <text class="weight">¥</text>
+                <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+              </view>
+            </view>
+          </view>
+          <!--拼团订单详情 end-->
+          <!--云店订单详情 start-->
+          <view wx:elif="{{item.orderResource==40}}">
+            <!--自提 start-->
+            <view class="order_user_info" wx:if="{{item.orderType==20}}">
+              <view class="user_info_list">
+                <text class="order_name" decode="true">取 货&emsp;人：</text>
+                <text class="order_text">{{item.receiverName}}</text>
+                <text class="order_text" style="margin-left: 30rpx">{{item.receiverPhone}}</text>
+              </view>
+              <view class="user_info_list">
+                <text class="order_name">社区名称：</text>
+                <text class="order_text">{{item.mecName}}</text>
+              </view>
+              <view class="user_info_list">
+                <text class="order_name">取货地址：</text>
+                <text class="order_text">{{item.branchesAddress}}</text>
+              </view>
+              <view class="user_info_icon">
+                <image src="../../image/ziti.png"></image>
+              </view>
+            </view>
+            <!--自提 end-->
+            <!--配送 start-->
+            <view class="water_user_info" wx:if="{{item.orderType==10}}">
+              <view class="water_info_top">
+                <image src="../../image/watercar.png"></image>
+                <text>收货地址</text>
+              </view>
+              <view class="water_info_center">
+                <view class="water_info_list">
+                  <text class="order_text">{{item.receiverName}}</text>
+                  <text class="order_text" style="margin-left: 30rpx">{{item.receiverPhone}}</text>
+                </view>
+                <view class="water_info_list">
+                  <text class="order_text">{{item.receiverAddress}}</text>
+                </view>
+              </view>
+              <view class="water_info_icon">
+                <image src="../../image/peisong.png"></image>
+              </view>
+            </view>
+            <!--配送 end-->
+            <view class="order_info">
+              <view class="order_info_top">
+                <view></view>
+                <view>共{{item.goodsCount}}件商品</view>
+              </view>
+              <view class="order_info_list" wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                <!--限时折扣图标-->
+                <image src="../../image/sale.png" class="order_info_discount_icon" wx:if="{{cell.activityType==10}}"></image>
+                <view class="goods_img">
+                  <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                </view>
+                <view class="goods_con">
+                  <view class="goods_con_top">
+                    <view class="goods_name">{{cell.goodsName}}</view>
+                    <view class="goods_desc {{cell.activityType==20?'goods_desc_noHeight':''}}">单价：￥{{numb.getNum(cell.goodsPrice/100)}}；规格：{{cell.specifications?cell.specifications:''}}；数量：X{{cell.goodsCount}}</view>
+                    <view class="saleItem" wx:if="{{cell.activityType==20&&cell.fullDecMoneyList&&cell.fullDecMoneyList.length>0}}">
+                      <text wx:for="{{cell.fullDecMoneyList}}" wx:for-item="el" wx:key="index">满{{el.fullMoney}}减{{el.decMoney}}</text>
+                    </view>
+                    <view class="saleItem" wx:if="{{cell.activityType==50}}"><text>买一送一</text></view><!--买一送一-->
+                    <view class="saleItem" wx:if="{{cell.activityType==60}}"><text>第二件半价</text></view><!--第二件半价-->
+                    <view class="saleItem" wx:if="{{cell.activityType==70}}"><text>多件多折</text></view><!--多件多折-->
+                    <view class="saleItem" wx:if="{{cell.activityType==80}}"><text>好物预售</text></view><!--好物预售-->
+                    <view class="saleItem" wx:if="{{cell.activityType==90&&item.groupCode}}"><text>多人拼团</text></view><!--多人拼团-->
+                  </view>
+                  <!--限时折扣 显示折扣价和原价-->
+                  <view class="goods_price" wx:if="{{cell.activityType==10}}"><text>¥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                  <!--好物预售-->
+                  <view class="goods_price" wx:elif="{{cell.activityType==80}}"><text>预售价：￥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                  <!--多人拼团 参与拼团或开团购买-->
+                  <view class="goods_price" wx:elif="{{cell.activityType==90&&item.groupCode}}"><text>团购价：￥</text>{{numb.getNum(cell.orderPrice/100)}}<text class="original_price">￥{{numb.getNum(cell.goodsPrice/100*cell.goodsCount)}}</text></view>
+                  <view class="goods_price" wx:else>
+                      <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}</view>
+                </view>
+              </view>
+            </view>
+            <view class="order_price">
+              <view class="order_price_text">
+                  <view>商品总额</view>
+                  <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+              </view>
+              <view class="order_discount_text" wx:if="{{item.cardDiscountPrice>0||item.activityDiscountPrice>0||item.buyOneGetOneList.length>0||item.secondHalfPriceDiscount>0||item.multiDiscountPrice>0||item.goodsThingToBooking||item.manyPeopleGroup}}">
+                <view class="order_discount_title">优惠信息</view>
+                <view class="order_price_text" wx:if="{{item.cardType==10&&item.cardDiscountPrice>0}}">
+                  <view class="order_discount_name">优惠券</view>
+                  <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.cardDiscountPrice/100)}}</view>
+                </view>
+                <view class="order_price_text" wx:if="{{item.cardType==30&&item.cardDiscountPrice>0}}">
+                  <view class="order_discount_name">折扣券</view>
+                  <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.cardDiscountPrice/100)}}</view>
+                </view>
+                <view class="order_price_text" wx:if="{{item.activityDiscountPrice>0}}">
+                  <view class="order_discount_name">满减活动</view>
+                  <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.activityDiscountPrice/100)}}</view>
+                </view>
+                <view wx:if="{{item.buyOneGetOneList.length>0}}">
+                  <view class="goodFree" wx:for="{{item.buyOneGetOneList}}" wx:for-item="cell" wx:key="index">
+                    <view class="goodFreeLeft">买一送一</view>
+                    <view class="goodFreeRight">
+                      <view class="goodFreeRightText">
+                        <image src="../../image/activity_icon.png"></image>
+                        <view>赠品</view>
+                      </view>
+                      <image class="goodFreeRightSrc" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                      <view class="goodFreeRightNum">x{{cell.goodsCount}}</view>
+                    </view>
+                  </view>
+                </view>
+                <view class="order_price_text" wx:if="{{item.secondHalfPriceDiscount>0}}">
+                  <view class="order_discount_name">第二件半价</view>
+                  <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.secondHalfPriceDiscount/100)}}</view>
+                </view>
+                <view class="order_price_text" wx:if="{{item.multiDiscountPrice>0}}">
+                  <view class="order_discount_name">{{item.manyPriManyFolds}}</view>
+                  <view class="weight" style="color:#FF3B30">-¥{{numb.addTwoPoint(item.multiDiscountPrice/100)}}</view>
+                </view>
+                <view class="order_price_text" wx:if="{{item.goodsThingToBooking}}">
+                  <view class="order_discount_name">好物预售</view>
+                  <view></view>
+                </view>
+                <view class="order_price_text" wx:if="{{item.manyPeopleGroup}}">
+                  <view class="order_discount_name">多人拼团</view>
+                  <view></view>
+                </view>
+              </view>
+              <view class="order_price_text" wx:if="{{item.orderType==10}}">
+                <view>配送费</view>
+                <view class="weight">¥{{numb.addTwoPoint(item.deliveryPrice/100)}}</view>
+              </view>
+              <view class="order_total_price">实付款：
+                <text class="weight">¥</text>
+                <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+              </view>
+            </view>
+            <!--待收货-->
+            <view class="footer_btn {{iphone?'iphone':''}}" wx:if="{{item.orderResource==40&&(orderStatus == 30 || orderStatus == 31)}}" bindtap="confirmReceipt">确认收货</view>
+          </view>
+          <!--云店订单详情 end-->
+          <!--指尖商城订单详情 start-->
+          <view wx:elif="{{item.orderResource==10}}">
+            <view class="water_user_info">
+              <view class="water_info_top">
+                <image src="../../image/watercar.png"></image>
+                <text>收货地址</text>
+              </view>
+              <view class="water_info_center">
+                <view class="water_info_list">
+                  <text class="order_text">{{item.receiverName}}</text>
+                  <text class="order_text" style="margin-left: 30rpx">{{item.receiverPhone}}</text>
+                </view>
+                <view class="water_info_list">
+                  <text class="order_text">{{item.receiverAddress}}</text>
+                </view>
+              </view>
+              <view class="water_info_icon">
+                <image src="../../image/peisong.png"></image>
+              </view>
+            </view>
+            <view class="order_info">
+              <view class="order_info_top">
+                <view></view>
+                <view>共{{item.goodsCount}}件商品</view>
+              </view>
+              <block wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                <view class="order_info_list">
+                  <view class="goods_img">
+                    <image class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                  </view>
+                  <view class="goods_con">
+                    <view class="goods_con_top">
+                      <view class="goods_name">{{cell.goodsName}}</view>
+                      <view class="goods_desc">单价：￥{{cell.goodsPrice/100}}；规格{{cell.specifications}}；数量：×{{cell.goodsCount}}</view>
+                    </view>
+                    <view class="goods_price">
+                      <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}
+                    </view>
+                  </view>
+                </view>
+              </block>
+            </view>
+            <view class="order_price">
+              <view class="order_price_text">
+                <view>商品总额</view>
+                <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+              </view>
+              <view class="order_total_price">实付款：
+                <text class="weight">¥</text>
+                <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+              </view>
+            </view>
+          </view>
+          <!--指尖商城订单详情 end-->
+          <!--水管家订单详情 start-->
+          <view wx:else>
+            <view class="water_user_info" wx:if="{{item.orderResource!=30}}">
+              <view class="water_info_top">
+                <image src="../../image/watercar.png"></image>
+                <text>收货地址</text>
+              </view>
+              <view class="water_info_center">
+                <view class="water_info_list">
+                  <text class="order_text">{{item.receiverName}}</text>
+                  <text class="order_text" style="margin-left: 30rpx">{{item.receiverPhone}}</text>
+                </view>
+                <view class="water_info_list">
+                  <text class="order_text">{{item.receiverAddress}}</text>
+                </view>
+              </view>
+              <view class="water_info_icon">
+                <image src="../../image/peisong.png"></image>
+              </view>
+            </view>
+            <view class="order_info">
+              <view class="order_info_top">
+                <view class="{{(orderStatus == 10&&!zero)?'order_padding_left':''}}" style="color: #5ADAD0">{{item.receiveTime?'预约时间：':''}}{{item.receiveTime}}</view>
+                <view>共{{item.goodsCount}}件商品</view>
+              </view>
+              <block wx:for="{{item.orderItemList}}" wx:for-item="cell" wx:key="index">
+                <view class="order_info_list">
+                  <view class="goods_img">
+                     <view class="water_icon" wx:if="{{item.orderResource==30}}">水票套餐</view>
+                    <image wx:if="{{item.orderResource==30&&cell.setmealPhoto}}" class="goods_pic" src="{{imgHttp+numb.splitImg(cell.setmealPhoto)}}"></image>
+                    <image wx:else class="goods_pic" src="{{imgHttp+numb.splitImg(cell.goodsPhoto)}}"></image>
+                    <!--当订单处于待配送状态，待收货的商品标记待取货。-->
+                    <image wx:if="{{orderStatus == 20&&cell.orderStatus == 30}}" class="goods_icon" src="../../image/order_daiquhuo.png"></image>
+                    <!--当订单处于待配送,待收货的状态，已完成的商品标记已取货-->
+                    <image wx:if="{{orderStatus == 20&&cell.orderStatus == 40||orderStatus == 30&&cell.orderStatus == 40}}" class="goods_icon" src="../../image/order_yiquhuo.png"></image>
+                  </view>
+                  <view class="goods_con">
+                    <view class="goods_con_top">
+                      <view class="goods_name">{{item.orderResource!=30?cell.goodsName:cell.seriesName}}</view>
+                      <view class="goods_desc {{item.orderResource==30?'desc':''}}">单价：￥{{cell.goodsPrice/100}}；{{item.orderResource!=30?'规格：':''}}{{cell.specifications&&item.orderResource!=30?cell.specifications:''}}{{item.orderResource!=30?'；':''}}数量：×{{cell.goodsCount}}</view>
+                    </view>
+                    <view>
+                      <view class="goods_price">
+                        <text>¥</text>{{numb.getNum(cell.orderPrice/100)}}</view>
+                      <view class="mealDetail" bindtap="mealDetail" wx:if="{{item.orderResource==30}}" data-meals="{{item.orderCode}}">套餐详情
+                        <image src="../../image/{{cell.detailshow?'shoptop':'shopbottom'}}.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <block wx:if="{{cell.giftGoodsList.length>0&&cell.detailshow}}">
+                  <view class="waterp">
+                    <view class="waterb" wx:for="{{cell.giftGoodsList}}" wx:key="{{index}}" wx:for-item="el">
+                      <view class="waterOrder_tip" wx:if="{{!el.main}}">赠品</view>
+                      <view class="waterOrder_content">
+                        <view class="waterOrder_left">
+                          <image src="{{imgUrl+el.goodsPhoto}}"></image>
+                          <view>{{el.goodsName}}</view>
+                        </view>
+                        <text>×{{el.seriesCount}}</text>
+                      </view>
+                    </view>
+                  </view>
+                </block>
+              </block>
+            </view>
+            <view class="order_price">
+              <view class="order_price_text">
+                <view>商品总额</view>
+                <view class="weight">¥{{numb.getNum(item.goodsPrice/100)}}</view>
+              </view>
+              <view class="order_price_text" wx:if="{{item.ticketDeduction>0}}">
+                <view>水票抵扣</view>
+                <view style="color:#FF3B30;" class="weight">{{item.ticketDeduction}}张</view>
+              </view>
+              <view class="order_total_price">实付款：
+                <text class="weight">¥</text>
+                <text class="weight">{{numb.getNum(item.orderPrice/100)}}</text>
+              </view>
+            </view>
+            <!--有水站信息或者是待收货的水管家商品-->
+            <view class="water_branches water_waite_receiving" wx:if="{{item.waterStoreInfo||((orderStatus == 30 || orderStatus == 31) && item.orderResource==20 && item.sendCodeRespDto)}}">
+              <view class="water_branches_left" wx:if="{{item.waterStoreInfo}}">
+                <view class="water_branches_text" wx:if="{{item.waterStoreInfo.waterName}}">水站名称：{{item.waterStoreInfo.waterName}}</view>
+                <view class="water_branches_text" wx:if="{{item.waterStoreInfo.tel}}">联系电话：{{item.waterStoreInfo.tel}}</view>
+              </view>
+              <!--待收货状态下 商品来源是水管家时显示一键催单-->
+              <view class="water_branches_right_par" wx:if="{{(orderStatus == 30 || orderStatus == 31) && item.orderResource==20 && item.sendCodeRespDto}}">
+                <view class="water_branches_right" bindtap="waterReminder" data-sendinfo="{{item.sendCodeRespDto}}">一键催单</view>
+              </view>
+            </view>
+          </view>
+          <!--水管家订单详情 end-->
+        </view>
+        <view class="order_code">
+          <view class="code_text code_text01" wx:if="{{orderDetails.length==1}}">
+            <!--todo 由于待支付状态多条订单的订单编号不同 和产品确定待支付多个订单时状态不展示-->
+            <text>订单编号：{{orderDetails[0].orderCode}}</text>
+            <view class="code_copy" bindtap="copy" data-ordercode="{{orderDetails[0].orderCode}}">复制</view>
+          </view>
+          <!--水管家订单派送单号 start-->
+          <view class="code_text" wx:if="{{orderDetails[0].sendCodeRespDto}}">派送单号：{{orderDetails[0].sendCodeRespDto.sendNo}}</view>
+          <!--水管家订单派送单号 end-->
+          <view class="code_text">下单时间：{{orderDetails[0].createTime}}</view>
+          <!--待付款 和已取消状态没有此项-->
+          <view wx:if="{{(orderStatus == 20||orderStatus == 30||orderStatus == 31||orderStatus == 40) && orderDetails[0].payCode}}" class="code_text">支付单号：{{orderDetails[0].payCode}}</view>
+        </view>
+    </view>
+  </view>
+  <!--待付款-->
+  <view class="footer {{iphone?'iphone':''}}" wx:if="{{orderStatus == 10&&!zero}}">
+    <view bindtap="cancelOrder">取消订单</view>
+    <view bindtap="goPay">立即付款</view>
+  </view>
+  <!--多人拼团活动 并且是参团或者发起拼团购买 并且是待收货-自提和待配送-配送还没拼团成功的状态 去分享-->
+  <button open-type="share" class="footer_btn {{iphone?'iphone':''}}" wx:if="{{orderResource==40&&(orderStatus==20||orderStatus==30||orderStatus==31)&&groupCode&&groupStatus==1}}">去分享</button>
+  <!--待收货-->
+  <view class="footer_btn {{iphone?'iphone':''}}" wx:elif="{{(orderStatus == 30 || orderStatus == 31)}}" bindtap="confirmReceipt">确认收货</view>
+  <view class="tabbarIphone" wx:if="{{iphone}}"></view>
+  <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+</view>

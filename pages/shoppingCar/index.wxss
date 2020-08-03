@@ -1,0 +1,530 @@
+/* pages/shopping/index.wxss */
+
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+}
+
+.shoppingWrap {
+  width: 100%;
+  background: #F8F8F8;
+}
+.shoppingbox{
+  width: 100%;
+}
+.edit {
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: 30rpx;
+  background: white;
+}
+
+.goods_content {
+  width: 100%;
+  margin-top: 20rpx;
+  background: white;
+  box-sizing: border-box;
+  padding-left: 30rpx;
+}
+
+.good_item {
+  min-height: 260rpx;
+  border-bottom: 1rpx solid #EBEBEB;
+  box-sizing: border-box;
+  padding: 20rpx 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+.gactive{
+  border-bottom: 1rpx solid #fff;
+}
+.select {
+  width: 32rpx;
+  height: 220rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.select image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.good_img {
+  width: 220rpx;
+  height: 220rpx;
+  margin-left: 20rpx;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.good_img image {
+  width: 100%;
+  height: 100%;
+}
+.sold{
+  width: 220rpx;
+  height: 220rpx;
+  position: absolute;
+  top: 0;
+  background: rgba(0,0,0,0.70);
+  text-align: center;
+  line-height: 220rpx;
+  color: white;
+  font-size: 32rpx;
+}
+.water_icon{
+  position: absolute;
+  bottom:0;
+  left:0;
+  width:220rpx;
+  height:40rpx;
+  opacity: 0.7;
+  background: #F2922F;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  line-height: 40rpx;
+  text-align: center;
+}
+.good_con {
+  width: 371rpx;
+  min-height: 220rpx;
+  margin-left: 20rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.good_title{
+  max-height: 80rpx;
+  line-height: 34rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;/*显示几行*/
+  overflow: hidden;
+  margin-bottom: 5rpx;
+}
+.delgood{
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  position: absolute;
+  top: 10rpx;
+  right: 15rpx;
+  
+}
+.delgood image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.contop{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 14rpx;
+}
+.good_type {
+  display: inline-block;
+  position: relative;
+  width:98rpx;
+  height:28rpx;
+}
+.good_type image{
+  position: absolute;
+  left:0;
+  top:4rpx;
+  width:98rpx;
+  height:28rpx;
+}
+.good_type text{
+  width:98rpx;
+  height:28rpx;
+  position: absolute;
+  top:4rpx;
+  left:50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  color: #FFFFFF;
+  line-height: 28rpx;
+  text-align: center;
+}
+.good_name {
+  padding-left: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  line-height: 40rpx;
+}
+
+.good_spec {
+  font-size: 24rpx;
+  color: #999;
+}
+.saleItem{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.saleItem text{
+  display: inline-block;
+  border: 1rpx solid #FF3B30;
+  border-radius: 4rpx;
+  font-size: 20rpx;
+  color: #FF3B30;
+  height:28rpx;
+  padding:0 10rpx;
+  margin-right: 20rpx;
+  margin-top:10rpx;
+}
+.price{
+  height: 42rpx;
+  font-size: 36rpx;
+  color: #333;
+}
+.pricech{
+  font-size: 28rpx;
+}
+.discount{
+  height: 74rpx;
+}
+.pricek{
+  font-size: 28rpx;
+  color: #FF3B30;
+}
+.pricez{
+  font-size: 36rpx;
+  color: #FF3B30;
+}
+.pricey{
+  font-size: 24rpx;
+  color: #999;
+  text-decoration:line-through;
+}
+.addbox{
+  width: 176rpx;
+  height: 82rpx;
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 0rpx;
+  right: 20rpx;
+}
+.liue{
+  width: 62rpx;
+  height:82rpx;
+  box-sizing: border-box;
+  padding: 20rpx 0 20rpx 10rpx;
+}
+.liuet{
+  width: 62rpx;
+  height:82rpx;
+  box-sizing: border-box;
+  padding: 20rpx 10rpx 20rpx 0;
+}
+.addbox image{
+  width: 42rpx;
+  height:42rpx;
+}
+
+.addbox input{
+  width: 72rpx;
+  height: 42rpx;
+  text-align: center;
+  font-size: 28rpx;
+}
+.footTop{
+  width: 100%;
+  height: 99rpx;
+  background: white;
+}
+.footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100rpx;
+  background: #FFFFFF;
+  border-top: 1rpx solid #EBEBEB;
+  display: flex;
+  justify-content: space-between;
+}
+.foot_left{
+  width: 532rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  align-items: center;
+}
+.allbuy image{
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 10rpx;
+}
+.allbuy{
+  height: 100rpx;
+  font-size: 28rpx;
+  color: #313131;
+  display: flex;
+  align-items: center;
+}
+.allsum{
+  height: 100rpx;
+  font-size: 28rpx;
+  color: #333333;
+  display: flex;
+  text-align: right;
+  flex-direction: column;
+  justify-content: center;
+}
+.allnum{
+  font-size: 36rpx;
+  font-weight: 600;
+}
+.foot_right{
+  width: 218rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+}
+.gobuy{
+  width: 188rpx;
+  height: 70rpx;
+  background: #F2922F;
+  border-radius: 34rpx;
+  text-align: center;
+  line-height: 70rpx;
+  font-weight: 600;
+  font-size: 26rpx;
+  color: #FFFFFF;
+}
+.nologin{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding-top: 82rpx;
+  background: white;
+}
+.nologin image{
+  width: 450rpx;
+  height:450rpx;
+  margin-bottom: 20rpx;
+}
+.nologin .goodnodata{
+  width: 294rpx;
+  height:236rpx;
+  margin-bottom: 40rpx;
+}
+.notitle{
+  font-size: 24rpx;
+  color: #333333;
+}
+.gologin{
+  width: 180rpx;
+  height: 60rpx;
+  font-size: 28rpx;
+  color:white;
+  background: #F2922F;
+  box-sizing: border-box;
+  border-radius: 7rpx;
+  margin-top: 30rpx;
+  text-align: center;
+  line-height: 60rpx;
+}
+.gohome{
+  font-size: 24rpx;
+  color: #F2922F;
+  background: white;
+  margin-top: 20rpx;
+}
+
+/* 水管家样式 */
+
+.mealDetail{
+  width: 130rpx;
+  height: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 24rpx;
+  color: #F2922F;
+  margin-top: 10rpx;
+}
+.mealDetail image{
+  width: 10rpx;
+  height: 10rpx;
+  margin-left: 10rpx;
+}
+.waterOrder{
+  background: #F8F8F8;
+  border-bottom: 1rpx solid #EBEBEB;
+  box-sizing: border-box;
+  padding-right: 30rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+.waterOrder_tip{
+  font-size: 24rpx;
+  color: #F2922F;
+  line-height: 24rpx;
+  padding:10rpx 0 0 20rpx;
+}
+.waterOrder_content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.waterOrder_left{
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+}
+.waterOrder_left image{
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+}
+.sold_title{
+  height: 60rpx;
+  box-sizing: border-box;
+  padding-top: 28rpx;
+  font-size: 24rpx;
+  color: #333333;
+}
+.x{
+  color: #C6C6C6;
+}
+.shopissueBox{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.shopissue{
+  width: 710rpx;
+  background: white;
+  min-height: 70rpx;
+  box-sizing: border-box;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+  padding:20rpx 20rpx 0 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.shopissueTitle{
+  width: 565rpx;
+  flex-shrink: 0;
+  height: 100%;
+  font-size: 24rpx;
+  color: #333333;
+}
+.shopissueList{
+  line-height: 24rpx;
+}
+.goissue{
+  width: 105rpx;
+  color: #FF3B30;
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content:flex-end;
+  font-size: 24rpx;
+}
+.goissue image{
+  width: 12rpx;
+  height: 22rpx;
+  margin-left: 10rpx;
+}
+.ureStar{
+  font-size: 24rpx;
+  color: #FF3B30;
+  padding: 0 2rpx;
+}
+.shopitemSale{
+  width: 184rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 0;
+  left: -30rpx;
+}
+.lcardn{
+  font-size: 24rpx;
+  color: #F2922F;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.lcardn image{
+  width: 70rpx;
+  height: 32rpx;
+  margin-left: 10rpx;
+}
+.fullDescTip{
+  line-height: 20rpx;
+  font-size: 20rpx;
+  margin-top: 18rpx;
+  margin-bottom: 20rpx;
+}
+.manyDiscountTip{
+  font-size: 22rpx;
+  color: #FF3B30;
+  line-height: 22rpx;
+  margin-top: 18rpx;
+  margin-bottom: 20rpx;
+}
+.fullve{
+  display: inline-block;
+  padding-right: 10rpx;
+}
+.price2{
+  font-size: 28rpx;
+  color: #EF0000;
+}
+.discount{
+  font-size: 36rpx;
+  color: #333333;
+}
+.mou1{
+  font-size: 24rpx;
+  color:#999;
+  padding-left: 27rpx;
+  text-decoration:line-through;
+}
+.prePriceCon .discount{
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 36rpx;
+  height:auto;
+}
+.prePriceCon .discount text:last-of-type{
+  font-size: 36rpx;
+}
+.prePriceCon .price{
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 24rpx;
+  margin-top: 14rpx;
+  text-decoration: line-through;
+  height:auto;
+}

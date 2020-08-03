@@ -1,0 +1,40 @@
+<view class="setting_con">
+    <view class="setting_item" style="height:160rpx">
+        <text class="setting_text">头像</text>
+        <image class="setting_icon" src="{{icon?icon:'../../image/footerLogo.png'}}"></image>
+    </view>
+    <view class="setting_item">
+        <text class="setting_text">昵称</text>
+        <text class="setting_text">{{nickname}}</text>
+    </view>
+    <view class="setting_item">
+        <text class="setting_text">用户ID</text>
+        <text class="setting_text">{{userId}}</text>
+    </view>
+    <view class="setting_item">
+        <text class="setting_text">手机号</text>
+        <button class="bind_btn" bindtap="toBindPhone" wx:if="{{!phone}}">去绑定</button>
+        <view class="setting_right" wx:else>
+            <text class="setting_text">{{phone}}</text>
+            <button class="changeBind_btn" bindtap="toChangePhone">更换绑定</button>
+        </view>
+    </view>
+    <view class="setting_item">
+        <text class="setting_text">性别</text>
+        <picker bindchange="changeSex" value="{{sexIndex}}" range="{{sexArr}}" range-key="{{'name'}}">
+            <view class="setting_right">
+                <text class="setting_text">{{!sex?'点击完善':sexArr[sexIndex]['name']}}</text>
+                <image src="../../image/rightIcon.png"></image>
+            </view>
+        </picker>
+    </view>
+    <view class="setting_item">
+        <text class="setting_text">生日</text>
+        <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="changeDate">
+            <view class="setting_right">
+                <text class="setting_text">{{birthday==""?"点击完善":birthday}}</text>
+                <image src="../../image/rightIcon.png"></image>
+            </view>
+        </picker>
+    </view>
+</view>

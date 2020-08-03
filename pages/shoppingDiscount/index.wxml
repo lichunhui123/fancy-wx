@@ -1,0 +1,25 @@
+<!--pages/discountChoose/index.wxml-->
+<view class="discountWrap">
+  <view class="nonuse">
+    <text>不使用</text>
+    <view class="nouse" bindtap="noUse"><image src="../../image/{{noselect?'afterSelect':'beforeSelect'}}.png"></image></view>
+  </view>
+  
+  <view class="ticket_item" wx:for="{{discountList}}" wx:key="{{index}}">
+    <view class="ticket_left">
+      <view>￥<text class="price">{{item.discountAmount}}</text></view>
+      <!-- <view>满<text class="price">10</text>减<text class="price">5</text></view> -->
+      <!-- <view><text class="price">5</text>折</view> -->
+      <view class="mk">{{item.cardTypeStr}}</view>
+    </view>
+    <view class="ticket_right">
+      <view class="ticket_right_con">
+        <view class="ticket_name">{{item.cardName}}</view>
+        <view class="ticket_time">{{item.startTime}}-{{item.endTime}}</view>
+        <view class="ticket_type">仅适用于拼团{{item.applicableGoods==0?'全部':'指定'}}商品</view>
+      </view>
+      <view class="usebtn" bindtap="cardClick" data-itemdata="{{item}}"><image src="../../image/{{item.select?'afterSelect':'beforeSelect'}}.png"></image></view>
+    </view>
+  </view>
+
+</view>

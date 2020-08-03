@@ -1,0 +1,93 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view>
+    <confirm-box wx:if="{{showConfirm}}" confirm-config="{{confirmConfig}}" bind:sureClick="sureClick"  catchtouchmove="myCatchTouch"></confirm-box>
+    <view class="tab">
+        <view class="{{tableIndex==1?'tab_active':''}}" bindtap="tabClick" data-tableIndex="1">已选商品</view>
+        <view class="{{tableIndex==2?'tab_active':''}}" bindtap="tabClick" data-tableIndex="2">购买记录</view>
+    </view>
+    <!--已选商品-->
+    <view wx:if="{{tableIndex==1}}">
+        <view wx:if="{{!noSelect}}">
+            <view class="tip_par">
+                <view class="branch_name">当前店铺：{{branchName}}</view>
+                <view class="attention_tip">注意：扫码后请尽快购买，否则30分钟后会自动清空哦！</view>
+            </view>
+            <view class="buyCar_con">
+                <view class="buyCar_list" wx:for="{{goodsList}}" wx:key="{{index}}">
+                <view class="del_icon"><image bindtap="delete" data-skucode="{{item.skuCode}}" src="../../image/delIcon.png"/></view>
+                <view class="goods_selectIcon" bindtap="select" data-skucode="{{item.skuCode}}"><image data-skucode="{{item.skuCode}}" src="{{item.chiose?'../../image/afterSelect.png':'../../image/beforeSelect.png'}}"/></view>
+                <view class="goods_desc">
+                    <view class="goods_title">{{item.skuName}}</view>
+                    <view class="standard">规格：{{item.specification}}</view>
+                    <view class="price"><text>¥</text><text>{{numb.getNum(item.salesPrice)}}</text></view>
+                    <view class="goods_action">
+                        <image class="minus" src="../../image/minus.png" bindtap="minus" data-skucode="{{item.skuCode}}"></image>
+                        <view>{{item.num}}</view>
+                        <image class="plus" src="../../image/plus.png" bindtap="plus" data-skucode="{{item.skuCode}}"></image>
+                    </view>
+                </view>
+            </view>
+            </view>
+            <view class="bottom">
+                <view class="all_selectIcon" bindtap="allSelect">
+                    <image src="{{allSelect?'../../image/afterSelect.png':'../../image/beforeSelect.png'}}"/>
+                </view>
+                <view class="all_text">全选</view>
+                <view class="total_text">总计：</view>
+                <view class="total_price">¥{{numb.getNum(total)}}</view>
+                <view class="go_closeAccount" bindtap="goPay">去结算</view>
+                <view class="continue_scan" bindtap="scanCode">继续扫码</view>
+            </view>
+        </view>
+        <view class="no_list" wx:if="{{noSelect}}">
+            <image src="../../image/nodata.png"/>
+            <view class="no_text">暂无已选商品哦～</view>
+            <view class="go_shopping" bindtap="scanCode">去购物</view>
+        </view>
+    </view>
+
+    <!--购买记录-->
+    <view wx:if="{{tableIndex==2}}">
+        <view wx:if="{{!noRecord}}">
+            <view class="record_list" wx:for="{{orderDetailList}}" wx:key="{{index}}">
+                <view class="record_top">
+                    <view>
+                        <text class="record_title">订单编号：</text><text class="record_text">{{item.orderCode}}</text>
+                    </view>
+                    <view>
+                        <text class="record_title">店铺名称：</text><text class="record_text">{{item.branchesName}}</text>
+                    </view>
+                    <view>
+                        <text class="record_title">支付时间：</text><text class="record_text">{{numb.getTime(item.payTime,20)}}</text>
+                    </view>
+                </view>
+                <view class="record_center">
+                    <view class="table">
+                        <view class="tr">
+                            <view class="th">商品名称</view>
+                            <view class="th">单价</view>
+                            <view class="th">数量</view>
+                            <view class="th">金额</view>
+                        </view>
+                        <view wx:for="{{item.orderDetailDtos}}" wx:key="index" wx:for-item="itemDtos" class="tr">
+                            <view class="td">{{itemDtos.skuName}}</view>
+                            <view class="td">¥{{numb.getNum(itemDtos.salesPrice/100)}}</view>
+                            <view class="td">{{itemDtos.goodsCount}}</view>
+                            <view class="td">¥{{numb.getNum(itemDtos.totalMoney/100)}}</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="record_bottom">
+                    <view class="record_totalNum">合计：{{item.goodsCount}}件</view>
+                    <view class="record_totalPrice">{{numb.getNum(item.paymentMoney/100)}}元</view>
+                </view>
+            </view>
+            <view class="baseline" wx:if="{{noMore}}"><text>————</text> 我是有底线的 <text>————</text></view>
+        </view>
+        <view class="no_record" wx:if="{{noRecord}}">
+            <image src="../../image/nodata.png"/>
+            <view class="no_recordText">暂无购物记录哦～</view>
+            <view class="go_shopping" bindtap="scanCode">去购物</view>
+        </view>
+    </view>
+</view>

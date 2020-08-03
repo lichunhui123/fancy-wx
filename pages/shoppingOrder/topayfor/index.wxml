@@ -1,0 +1,39 @@
+<!--pages/placeOrder/topayfor/index.wxml-->
+<wxs module="numb" src="../../../filter/filter.wxs"></wxs>
+<view class="payformask">
+  <view class="maskc" bindtap="maskClick"></view>
+  <view class="ensureorder">
+      <view class="sureq {{claimTime?'su_h':''}}">
+        <view>该订单内包含自提商品，需要您到点自提，请确认提货信息</view>
+        <view class="sure_time" wx:if="{{claimTime}}">拼团商品预计  <text class="su_ti">{{claimTime}}</text>  自提</view>
+      </view>
+      <view class="getorderTab" wx:if="{{TabShow}}">
+        <view class="gettorderT" catchtap="groupTabClick"><view class="{{pinorclo==1?'get_active':''}}">拼团</view></view>
+        <view class="gettorderT" catchtap="cloudTabClick"><view class="{{pinorclo==2?'get_active':''}}">云店</view></view>
+      </view>
+      <view class="getorder" wx:if="{{pinorclo==1}}">
+      <image src="../../../image/groupIcon.png" class="getFix"></image>
+        <view class="communq"><text class="claim_name" decode="true"><text class="qu">取</text>&nbsp;货&nbsp;&nbsp;人：</text><text class="title">{{orderInfor.pickupPerson}}</text><text class="titleq">{{orderInfor.personTel}}</text></view>
+    <view class="commun"><text>社区名称：</text><text class="title">{{communityName}}</text></view>
+    <view class="commun"><text>取货地址：</text><text class="title">{{takeAddress}}</text></view>
+      </view>
+      <view class="getorder" wx:if="{{pinorclo==2}}">
+      <image src="../../../image/smallIcon.png" class="getFix"></image>
+        <view class="communq"><text class="claim_name" decode="true"><text class="qu">取</text>&nbsp;货&nbsp;&nbsp;人：</text><text class="title">{{orderInfor.cloudpickupPerson}}</text><text class="titleq">{{orderInfor.cloudpersonTel}}</text></view>
+    <view class="commun"><text>社区名称：</text><text class="title">{{cloudCommunityName}}</text></view>
+    <view class="commun"><text>取货地址：</text><text class="title">{{cloudTakeAddress}}</text></view>
+      </view>
+      <view class="goodsum">
+          <view class="goodalle"><text>商品总额</text><view>￥<text class="title">{{numb.getNum(totalMoney)}}</text></view></view>
+          <view class="sale" wx:if="{{discountNum*1>0}}"><text>已优惠</text><text class="celmoney">-￥{{numb.addTwoPoint(discountNum)}}</text></view>
+          <view class="sale" wx:if="{{orderInfor.postage*1>0&&!orderInfor.striping}}"><text>配送费</text><text class="ps">￥{{orderInfor.postage}}</text></view>
+          <view class="sale" wx:if="{{wticket>0}}"><text>水票抵扣</text><text class="celmoney">{{wticket}}张</text></view>
+          <view class="suremoney"><text>实付款：</text> <text class="money">￥</text><text class="moneynum">{{numb.getNum(orderInfor.totalNum)}}</text></view>
+      </view>
+
+    <view class="footer">
+      <view class="celorder" bindtap="maskClick">取消订单</view>
+      <view class="ensureen" bindtap="goToPay">去结算</view>
+    </view>
+  </view>
+</view>

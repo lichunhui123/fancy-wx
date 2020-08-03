@@ -1,0 +1,89 @@
+<wxs module="filter" src="../../filter/filter.wxs"></wxs>
+<view class="order_detail">
+    <view class="detail_con">
+        <view class="detail_top">
+            <image src="{{orderInfo.carrierIconUrl}}"/>
+            <view class="express_company">
+                <view>{{orderInfo.carrierName}}</view>
+                <view>{{orderInfo.orderId}}</view>
+            </view>
+            <view class="order_status" style="color: #5ADAD0;" wx:if="{{orderInfo.status==1003||orderInfo.status==1005}}">快递员已取</view>
+            <view class="order_status" wx:if="{{orderInfo.status==1007}}">{{orderInfo.statusStr}}</view>
+            <view class="order_btn" wx:if="{{orderInfo.status==1001}}" bindtap="cancelOrder">取消订单</view>
+        </view>
+        <view class="detail_center" wx:if="{{onOff}}">
+            <view class="address_list">
+                <view class="address_icon"><image src="../../image/send_icon.png"></image></view>
+                <view class="address_text">
+                    <view class="address_selected">
+                        <text>{{orderInfo.senderName}}</text><text>{{orderInfo.senderMobile}}</text>
+                        <view>{{orderInfo.senderProvince}}{{orderInfo.senderCity}}{{orderInfo.senderArea}}{{orderInfo.senderAddress}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="address_list">
+                <view class="address_icon"><image src="../../image/consignee_icon.png"></image></view>
+                <view class="address_text">
+                    <view class="address_selected">
+                        <text>{{orderInfo.receiveName}}</text><text>{{orderInfo.receiveMobile}}</text>
+                        <view>{{orderInfo.receiveProvince}}{{orderInfo.receiveCity}}{{orderInfo.receiveArea}}{{orderInfo.receiveAddress}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail_list">
+                <text>快递单号：{{orderInfo.expressCode!=null?orderInfo.expressCode:""}}</text>
+            </view>
+            <view class="detail_list">
+                <text>下单时间：{{orderInfo.createTime}}</text>
+            </view>
+            <view class="detail_list">
+                <text class="detail_name">服务门店：</text>
+                <text class="detail_text">{{orderInfo.mecName}}</text>
+                <image bindtap="makePhoneCall" src="../../image/phone.png"/>
+            </view>
+            <view class="detail_list">
+                <text class="detail_name" decode="true">地&emsp;&emsp;址：</text>
+                <text class="detail_desc">{{orderInfo.linkAddress}}</text>
+            </view>
+            <view class="detail_list">
+                <text>订单状态：</text>
+                <text style="color:#F2922F;" wx:if="{{orderInfo.status==1001}}">待接单</text>
+                <text style="color:#F2922F;" wx:if="{{orderInfo.status==1003||orderInfo.status==1005}}">已揽件</text>
+                <text wx:if="{{orderInfo.status==1007}}">{{orderInfo.statusStr}}</text>
+            </view>
+            <view class="detail_list">
+                <text decode="true">重&emsp;&emsp;量：{{orderInfo.weight}}kg</text>
+            </view>
+            <view class="detail_list">
+                <text decode="true">保&emsp;&emsp;价：{{orderInfo.guaranteeValueAmount}}元</text>
+            </view>
+            <view class="detail_list">
+                <text decode="true">体&emsp;&emsp;积：{{orderInfo.vloumLong}}cm*{{orderInfo.vloumWidth}}cm*{{orderInfo.vloumHeight}}cm</text>
+            </view>
+            <view class="detail_list">
+                <text>运费价格：{{filter.getNum(orderInfo.freightPrice)}}元</text>
+            </view>
+        </view>
+        <!--已揽件-->
+        <view class="detail_onOff" wx:if="{{orderInfo.status==1005||orderInfo.status==1003}}">
+            <view class="onOff_btn {{onOff?'':'off_status'}}" bindtap="onOffClick">
+                <text>{{onOff?'收起详情信息':'展开详细信息'}}</text>
+                <image src="../../image/unflod_icon.png"/>
+            </view>
+        </view>
+    </view>
+    <!--已揽件的物流信息-->
+    <view class="null" wx:if="{{orderInfo.status==1005||orderInfo.status==1003}}"></view>
+    <view class="logistics_info" wx:if="{{orderInfo.status==1005||orderInfo.status==1003}}">
+        <view class="logistics_list" wx:for="{{wuliu}}" wx:key="index">
+            <view class="logistics_status" wx:if="{{index==0}}">
+                <image src="../../image/afterSelect.png" />
+            </view>
+            <view class="logistics_status" wx:else>
+                <image src="../../image/end.png" />
+            </view>
+            <view class="logistics_desc">{{item.detail}}</view>
+            <view class="logistics_date">{{item.opeTime}}</view>
+        </view>
+    </view>
+</view>

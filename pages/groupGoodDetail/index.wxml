@@ -1,0 +1,111 @@
+<!--pages/groupGoodDetail/index.wxml-->
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view class="detailWrap">
+  <view wx:if="{{!showNull}}">
+    <view class="swiper-content">
+      <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange">
+      <block wx:for="{{urlImg}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <image src="{{imgHttp}}{{item}}" class="slide-image" mode="widthFix"></image>
+        </swiper-item>
+      </block>
+      </swiper>
+      <text class='swiper-num'>{{swiperNum+1}}/{{urlImg.length}}</text>
+    </view>
+    <!-- ------- -->
+    <view class="detail_content">
+      <view class="detailc1">
+        <view class="detailc1_img">
+          <image src="../../image/zhekou.png" wx:if="{{goodsDetail.discountStatus==10}}"></image>
+          <image src="../../image/Ovalbg.png" wx:if="{{goodsDetail.discountStatus!=10}}"></image>
+          <view class="detailc1_img_title">
+            <view class="price_left">
+              <view class="price_left_title" wx:if="{{goodsDetail.discountStatus!=10}}">￥<text class="priceo">{{numb.getNum(goodsDetail.grouponPrice)}}</text><text class="pricet">{{goodsDetail.friendStoreName}}：{{numb.getNum(goodsDetail.friendSellPrice)}}</text></view>
+              <view class="price_left_title" wx:if="{{goodsDetail.discountStatus==10}}">折扣价￥<text class="priceo">{{goodsDetail.discountPrice}}</text><text class="pricet">原价：{{numb.getNum(goodsDetail.grouponPrice)}}</text></view>
+              </view>
+            <view class="price_right">
+              <view class="over"><text wx:if="{{goodsDetail.activityStatus==1&&goodsDetail.repertory!=0}}">距结束</text><text wx:if="{{goodsDetail.repertory==0}}">已售罄</text></view>
+              <view class="daystyle">
+                <view class="fange">{{countdownTime.day}}</view><text style="padding:0 6rpx">天</text><view class="fange">{{countdownTime.hour}}</view>：<view class="fange">{{countdownTime.minute}}</view>：<view class="fange">{{countdownTime.second}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="detailc1_con">
+          <view class="detop">
+            <view class="detailc1_title">{{goodsDetail.storeGoodsName}}</view>
+            <view class="detailc1_pick">
+              <image src="../../image/detail-date.png"></image>
+              <text>  预计{{goodsDetail.zitiTime}}自提</text>
+            </view>
+            <view class="detailc1_quota" wx:if="{{goodsDetail.singleMax>0}}">限购:
+              <text class="quota_title">每人限购{{goodsDetail.orderMax}}单 每单限购{{goodsDetail.singleMax}}份</text>
+            </view>
+          </view>
+          <!-- <view class="detailc1_sales">
+            <text style="color:#333;">销量：</text>已售
+            <text class="yel">{{goodsDetail.soldOut}}</text> 份，还剩{{goodsDetail.repertory}}份</view> -->
+        </view>
+      </view>
+      <view class="detailc2">
+        规格：{{goodsDetail.storeGoodsSpecification}}
+        <view class="share">
+          <button formType="submit" open-type="share">
+            <image src="../../image/fenx.png"></image>
+            <text class="sharetitle ">分享好友</text>
+          </button>
+        </view>
+      </view>
+      <view class="detailc3" wx:if="{{avatars&&avatars.length>0}}">
+        <view class="detailc3_title">
+          <text>购买记录</text>
+          <view>已有
+            <text class="yel">{{totalPeople}}</text> 人购买，商品共销售
+            <text class="yel">{{goodsDetail.soldOut}}</text> 份</view>
+        </view>
+        <view class="record">
+          <view wx:for="{{avatars}}" wx:for-item="item" wx:key="{{item}}" wx:for-index="index" class="{{index==9?'recorimg':'recordimg'}}" wx:if="{{index<=9}}">
+            <image wx:if="{{index<9}}" src="{{item.icon}}" class="avader" />
+            <image class="avator-img" wx:if="{{index==9}}" src="../../image/avatar-more.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="gooddetail">
+      <view class="good_detail_title">— · 商品详情 · —</view>
+      <view class="imgdetail">
+        <block wx:for="{{detailImg}}" wx:key="index">
+            <image src="{{imgHttp}}{{item}}" mode="widthFix"></image>
+        </block>
+        <image src='{{imgHttp}}mallImages/20191105/f8e2c5181f6d45f29f12db7703e4a828.png' class="explain" mode="widthFix"></image>
+      </view>
+    </view>
+    <view class="totop" bindtap="gotoTop" wx:if="{{toTopshow}}">
+      <image src="../../image/back-top.png"></image>
+    </view>
+    <view class="tabbar {{iphone?'iphone':''}}">
+      <view class="grouphome" bindtap="grouphomeClick">
+        <image src="../../image/grouphome.png"></image>回首页</view>
+      <view class="groupshop" bindtap="shoppingClick">
+        <image src="../../image/groupshop.png"></image>购物车
+        <view class="stay" wx:if="{{shoppingNum}}">{{shoppingNum}}</view>
+      </view>
+      <view class="addgou" bindtap="addShopping">加入购物车</view>
+      <view class="addbuy" bindtap="goBuy">立即购买</view>
+    </view>
+    <view class="tabbarIphone" wx:if="{{iphone}}"></view>
+    <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+  </view>
+  <!--站点下无商品-->
+  <view wx:if="{{showNull}}" class='nullData'>
+    <view class='nullcenter'>
+      <image class='nullimg' src='../../image/no_content.png'></image>
+      <view class='nullTitle'>该站点未开放此活动</view>
+      <view class='nullTitle' bindtap="grouphomeClick">点击
+        <text class="colorActive">返回首页</text>查看更多活动</view>
+    </view>
+  </view>
+  <!-- 用户授权登录 -->
+  <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+  <!-- 用户授权登录 -->
+</view>

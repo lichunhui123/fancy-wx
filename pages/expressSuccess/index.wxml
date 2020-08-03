@@ -1,0 +1,16 @@
+<view class="express_success">
+    <view class="success_top">
+        <image src="../../image/success.png"></image>
+        <view>提交成功</view>
+    </view>
+    <view class="success_center">
+        <view class="success_name">{{name}}<text>{{phone}}</text></view>
+        <view class="success_text success_text01">服务门店：{{mecName}}</view>
+        <view class="success_text">地址：{{address}}</view>
+        <image bindtap="makePhoneCall" src="../../image/phone.png"></image>
+    </view>
+    <view class="success_btn">
+        <view bindtap="goExpress">继续下单</view>
+        <view bindtap="goOrder">查看订单</view>
+    </view>
+</view>

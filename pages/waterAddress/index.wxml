@@ -1,0 +1,22 @@
+<!--pages/waterAddress/index.wxml-->
+<view class="addressWrap">
+  <view class="address_content" wx:if="{{addressList.length>0}}">
+    <view class="address_item" wx:for="{{addressList}}" wx:key="{{index}}">
+        <view class="item_left" bindtap="addreddClick" data-itemdata="{{item}}">
+          <view class="address_name"><text class="name_left">{{item.name}}</text><text class="tel">{{item.phone}}</text><text class="default" wx:if="{{item.isDefault==1}}">默认</text></view>
+          <view class="address_x">{{item.provinceName}}-{{item.cityName}}-{{item.districtName}}  {{item.address}}</view>
+        </view>
+        <view class="item_right">
+          <image src="../../image/addsedit.png" class="addseditt" bindtap="addsedit" data-itemaddid="{{item}}"></image>
+        <image src="../../image/delIcon.png" class="addsedit" bindtap="delAddress" data-itemaddid="{{item.addId}}" data-inde="{{index}}" data-adddefault="{{item.isDefault}}" wx-if="{{ecChoose!='nodel'}}"></image>
+        </view>
+    </view>
+    <view class="add_bottom"></view>
+  </view>
+  <view class="nodata" wx:if="{{nodata&&addressList.length<1}}">
+    <image src="../../image/nodata.png"></image>
+    <view class="not">还没添加过地址呢~</view>
+    <view class="addbottom" catchtap="oneAddAddress">新建地址</view>
+  </view>
+  <view class="add_address" catchtap="addAddress" wx:if="{{addressList.length>0}}">新建地址</view>
+</view>

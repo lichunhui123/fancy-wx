@@ -1,0 +1,97 @@
+
+.searchBtn{
+    width:96rpx;
+    height:96rpx;
+    position:absolute;
+    right:22rpx;
+    bottom:434rpx;
+}
+.backCenter{
+    width:96rpx;
+    height:96rpx;
+    position:absolute;
+    right:22rpx;
+    bottom:324rpx;
+}
+.storeContent{
+    position:absolute;
+    bottom:30rpx;
+    left:30rpx;
+    background: #fff;
+    width:690rpx;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding:55rpx 30rpx 30rpx;
+}
+.storeTitle{
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #333333;
+    width:495rpx;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.location{
+    margin-top: 50rpx;
+}
+.locationIcon{
+    width:25rpx;
+    height:32rpx;
+    margin-right: 13rpx;
+    float: left;
+}
+.locationAddress{
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #999999;
+    line-height: 32rpx;
+    word-break:break-all;
+    word-wrap:break-word;
+    white-space:normal;
+}
+.operation{
+    margin-top: 30rpx;
+    margin-left: 38rpx;
+    display: flex;
+}
+.operationItem{
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #F2922F;
+    line-height: 32rpx;
+    height:32rpx;
+    border: 1px solid #F2922F;
+    border-radius: 18.5rpx;
+    padding:0 17rpx;
+    margin-right: 10rpx;
+}
+.navigation{
+    position:absolute;
+    right:50rpx;
+    top:30rpx;
+    width:100rpx;
+}
+.navigationIcon{
+    margin:0 auto;
+    width:51rpx;
+    height:50rpx;
+    box-shadow: 0 8px 20px 0 rgba(59,73,238,0.10);
+}
+.navigationTitle{
+    margin-top: 10rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 20rpx;
+    color: #F2922F;
+    line-height: 20rpx;
+    text-align:center;
+}
+.line{
+    width:1px;
+    height:54rpx;
+    background:#EBEBEB;
+    position: absolute;
+    right:164rpx;
+    top:43rpx;
+}

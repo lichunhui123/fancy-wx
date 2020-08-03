@@ -1,0 +1,31 @@
+<!--pages/addAddress/index.wxml-->
+<view class="address_wrap">
+  <view class="address_section">
+    <view>
+      <view class="address_item">
+        <view class="add_name">姓名</view>
+        <input type="text" placeholder="请输入姓名" placeholder-class="inpcolor" value="{{addsName}}" bindinput="inpName" maxlength="10"/>
+      </view>
+      <view class="address_item2">
+        <view class="add_tel">电话</view>
+        <input type="number" placeholder="请输入电话号码" placeholder-class="inpcolor" value="{{addsTel}}" bindinput="inpTel" maxlength="11"/>
+      </view>
+    </view>
+    <view class="section_bo"></view>
+    <view>
+      <view class="address_item3" bindtap='chooseAddress'>
+        <view class="area">所在地区</view>
+        <view>
+        <text class="{{province?'addcity1':'addcity'}}">{{province == ''?'请选择省市区':province + '-' + city + '-' + area}}</text></view>
+      </view>
+      <view class="address_item4">
+        <view class="detadd">详细地址</view>
+        <view>
+        <textarea type="text" placeholder="请输入详细地址" placeholder-class="inpcolor" wx:if="{{inpshow}}" value="{{inpcon}}" bindinput="inpmonitor"/>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="{{subactive?'active_sub':'save_address'}}" bindtap="save_submit">保存地址</view>
+  <nyz_area_picker show="{{show}}" bind:sureSelectArea="sureSelectAreaListener" bind:cancelbutton="cancelbutton"></nyz_area_picker>
+</view>

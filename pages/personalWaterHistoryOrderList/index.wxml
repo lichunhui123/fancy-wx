@@ -1,0 +1,50 @@
+<wxs module="numFr" src="../../filter/filter.wxs"></wxs>
+<view class="order_con">
+    <view class="order_top">
+        <view wx:for="{{tabArr}}" wx:key="index" class="top_item {{state==item.state?'active':''}}" bindtap="getOrderChange" data-index="{{item.state}}">
+            <text class="top_text">{{item.name}}</text>
+        </view>
+    </view>
+    <view class="order_detail">
+        <view class="order_list" wx:if="{{!noData}}" wx:for="{{orderList}}" wx:key="index">
+            <view bindtap="goOrderDetail" data-info="{{item.info}}">
+                <view class="list_top">
+                    <text>{{item.orderType==1?"订单编号":"派送单号"}}：{{item.orderType==1?item.orderNo:item.sendNo}}</text>
+                    <text wx:if="{{item.orderType==1&&item.state==1}}" style="color: #F2922F;">待付款</text>
+                    <text wx:if="{{item.orderType==2&&item.state==0}}" style="color: #F2922F;">待收货</text>
+                    <text wx:if="{{(item.orderType==1&&item.state==3)||(item.orderType==2&&item.state==5)}}" style="color: #333333;">已完成</text>
+                    <text wx:if="{{item.state==-1}}" style="color: #999999;">订单已取消</text>
+                </view>
+                <view class="list_center">
+                    <view class="list_img">
+                        <image src="{{imgHttp+item.goodsPic}}"></image>
+                    </view>
+                    <view class="list_desc">
+                        <view class="list_name">
+                            <view>{{item.goodsName}}</view>
+                            <view>x{{item.goodsNum}}</view>
+                        </view>
+                        <view class="list_spec">{{item.specifications}}</view>
+                        <view class="list_time">{{item.orderType==1?"下单时间":"预约时间"}}：{{item.orderType==1?item.orderTime:item.appointmentTime}}</view>
+                    </view>
+                </view>
+            </view>
+            <!--待付款 待收货 才有下边的内容-->
+            <view class="list_bottom" wx:if="{{(item.orderType==1&&item.state==1)||(item.orderType==2&&item.state==0)}}">
+                <!--待付款 才显示应付-->
+                <view class="order_price">{{(item.orderType==1&&item.state==1)?'应付：¥'+numFr.getNum(item.paymentMoney/100):''}}</view>
+                <view class="list_btn">
+                    <!--<view class="list_btn01" wx:if="{{item.orderType==1&&item.state==1}}" bindtap="cancelOrder" data-orderNo="{{item.orderNo}}">取消订单</view>
+                    <view class="list_btn01" wx:if="{{item.orderType==2&&item.state==0&&item.type==1}}" bindtap="cancelSendOrder" data-sendNo="{{item.sendNo}}">取消派送单</view>-->
+                    <view class="list_btn02" wx:if="{{item.orderType==1&&item.state==1}}" bindtap="goOrderDetail" data-info="{{item.info}}">去付款</view>
+                    <!--<view class="list_btn02" wx:if="{{item.orderType==2&&item.state==0}}" bindtap="waterReminder" data-item="{{item}}">一键催单</view>-->
+                </view>
+            </view>
+        </view>
+    </view>
+    <!--无订单-->
+    <view wx:if="{{noData}}" class="nullData">
+        <image src="../../image/nodata.png"></image>
+        <view class="no_text">您还没有订单哟！</view>
+    </view>
+</view>

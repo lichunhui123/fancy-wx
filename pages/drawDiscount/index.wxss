@@ -1,0 +1,203 @@
+/* pages/discount/index.wxss */
+
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+}
+
+.discountWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.ticket_content {
+  flex: 1;
+  overflow-y: scroll;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.ticket_item {
+  width: 710rpx;
+  height: auto;
+  background: #fff;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.ticket_left {
+  min-width: 190rpx;
+  color: #f2922f;
+  display: flex;
+  font-size: 32rpx;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.price{
+  font-size: 52rpx;
+  padding: 0 6rpx;
+}
+.ticket_right {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding-right: 146rpx;
+  position: relative;
+}
+.mk{
+  font-size: 26rpx;
+  text-align: center;
+}
+.ticket_right_con {
+  height: auto;
+  padding: 32rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket_name {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+  font-weight: 600;
+}
+
+.ticket_time {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.ticket_type {
+  height: 32rpx;
+  font-size: 24rpx;
+  color: #999;
+  display: flex;
+  align-items: center;
+}
+.ticket_type image{
+  width: 12rpx;
+  height: 22rpx;
+  margin-left: 15rpx;
+}
+
+.usebtn {
+  width: 116rpx;
+  height: 54rpx;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  border: 1rpx solid #f2922f;
+  border-radius: 10rpx;
+  font-size: 24rpx;
+  color: #f2922f;
+  text-align: center;
+  line-height: 54rpx;
+  margin-right: 20rpx;
+  margin-top: -27rpx;
+}
+.employ{
+  width: 90rpx;
+  height: 90rpx;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+.employ image{
+  width: 90rpx;
+  height: 90rpx;
+}
+.hactive{
+  color: #999;
+}
+.nologin{
+  height: 600rpx;
+  background: #f8f8f8;
+  text-align: center;
+}
+.nologin .goodnodata{
+  width: 450rpx;
+  height:450rpx;
+  margin: 82rpx auto 20rpx;
+}
+.notitle{
+  font-size: 24rpx;
+  color: #333333;
+}
+.popupMark{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.70);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.popup{
+  width: 540rpx;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+}
+.popHead{
+  height: 106rpx;
+  font-size: 36rpx;
+  line-height: 116rpx;
+  text-align: center;
+}
+.popCon{
+  flex: 1;
+  padding: 0 45rpx 10rpx 45rpx;
+  line-height: 46rpx;
+  font-size: 28rpx;
+  color: #999999;
+}
+.surebtn{
+  height: 88rpx;
+  border-top: 1rpx solid #ebebeb;
+  line-height: 88rpx;
+  font-size: 32rpx;
+  text-align: center;
+  color: #F2922F;
+}
+.prno{
+  padding-right: 0;
+}
+.nologin{
+  height: 600rpx;
+  background: #f8f8f8;
+  text-align: center;
+}
+.nologin .goodnodata{
+  width: 294rpx;
+  height:236rpx;
+  margin: 240rpx auto 40rpx;
+}
+.notitle{
+  height: 30rpx;
+  font-size: 28rpx;
+  color: #666666;
+}

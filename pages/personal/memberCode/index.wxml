@@ -1,0 +1,13 @@
+<!--pages/home/memberCode/index.wxml-->
+<view class="mask" catchtouchmove="true">
+  <view class="maskBox">
+    <image src="../../../image/crown.png" class="crown"></image>
+    <image src="../../../image/offtop.png" class="offtop" catchtap="offTop"></image>
+    <view class="crowncode">会员码</view>
+    <view class="ercode"> 
+        <canvas canvas-id="barcode" style="width:380rpx;height:120rpx;z-index:999999;margin:0 auto"></canvas>
+    </view>
+    <view class="crownnum">{{receiptBarCode}}</view>
+    <view class="crownt">5分钟之内有效</view>
+  </view>
+</view>

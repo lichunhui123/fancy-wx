@@ -1,0 +1,263 @@
+/* pages/location/index.wxss */
+
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+}
+
+.locationWrap {
+  width: 100%;
+}
+.search{
+  height: 96rpx;
+  background: #FFA449;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.seachinp{
+  width: 690rpx;
+  height: 66rpx;
+  border-radius: 66rpx;
+  background: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #333;
+}
+.seachinp image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.searchplace{
+  color: #999; 
+}
+.header {
+  width: 100%;
+  min-height: 342rpx;
+  background:white;
+  position: relative;
+}
+
+.head_img {
+  width: 100%;
+  height: 324rpx;
+  box-sizing: border-box;
+}
+.place{
+  width: 100%;
+  height: 342rpx;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+.place image{
+  width: 104rpx;
+  height: 104rpx;
+  flex-shrink: 0;
+  margin-top: 20rpx;
+}
+.current_place{
+  font-size: 24rpx;
+  color: #fff;
+  padding-top: 20rpx;
+}
+.current_adds{
+  font-size: 30rpx;
+  color:white;
+  padding-top: 30rpx;
+}
+.chooseformer{
+  width: 372rpx;
+  height: 72rpx;
+  background: #FFFFFF;
+  border-radius: 40rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #333;
+  position: absolute;
+  bottom:-12rpx;
+  border:4rpx solid rgba(245,161,79,1);
+}
+.current_comm {
+  width: 690rpx;
+  height: 270rpx;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 8rpx 0 rgba(0, 0, 0, 0.12); 
+  border-radius: 8rpx;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+.noHu{
+  height: 20rpx;
+  background: #F8F8F8;
+}
+.current_img {
+  width: 114rpx;
+  height: 114rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: -54rpx;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.current_img image {
+  width: 100%;
+  height: 100%;
+}
+
+.current_title {
+  width: 100%;
+  height: 24rpx;
+  margin-top: 73rpx;
+  box-sizing: border-box;
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+}
+
+.current_name {
+  width: 100%;
+  height: 32rpx;
+  box-sizing: border-box;
+  margin: 20rpx 0 30rpx 0;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  font-weight: 600;
+}
+
+.current_address {
+  width: 100%;
+  max-height: 64rpx;
+  padding: 0 64rpx;
+  box-sizing: border-box;
+  font-size: 24rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;/*显示几行*/
+  color: #666;
+}
+
+.formerly {
+  width: 100%;
+  height: 298rpx;
+  background:#fff;
+}
+
+.formerly_top {
+  width: 100%;
+  height: 78rpx;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.formerly_top image {
+  width: 44rpx;
+  height: 2rpx;
+}
+.formerly_title{
+  padding:0 14rpx;
+}
+.community_item{
+  min-height: 165rpx;
+  box-sizing: border-box;
+  margin-left: 30rpx;
+  display: flex;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.ce{
+  box-shadow: none;
+}
+.coitem_left{
+  width: 100rpx;
+  min-height: 165rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.coitem_left image{
+  width: 100rpx;
+  height: 100rpx;
+}
+.coitem_right{
+  width: 620rpx;
+  min-height: 165rpx;
+  display: flex;
+  box-sizing: border-box;
+  padding:30rpx 30rpx 30rpx 20rpx;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.coitem_name{
+  font-size: 28rpx;
+  color: #333333;
+  display: flex;
+  justify-content: space-between;
+}
+.coitem_siteName{
+  width:420rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.coitem_title{
+  font-size: 24rpx;
+  color: #999;
+  width:100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.coitem_address{
+  max-height: 64rpx;
+  box-sizing: border-box;
+  padding-right: 42rpx;
+  font-size: 24rpx;
+  color: #666;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;/*显示几行*/
+}
+.near_formerly{
+  width: 100%;
+  box-sizing: border-box;
+  background:#fff;
+}
+
+.distance{
+  font-size: 24rpx;
+  color: #F2922F;
+  text-align: right;
+  flex-shrink: 0;
+}
+.locaright{
+  width: 12rpx;
+  height: 22rpx;
+  position: absolute;
+  right: 20rpx;
+  bottom: 30rpx;
+  z-index: 88;
+}

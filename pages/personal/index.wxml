@@ -1,0 +1,115 @@
+<view class="personal">
+    <view class="shape_code" bindtap="shapeCodeClick">
+        <view class="shape_code_img"><image src="../../image/shape_code.png"></image></view>
+        <view class="shape_code_text">会员码</view>
+    </view>
+    <view class="persoanl_top">
+      <image class="top_bg" src="../../image/personal_top.png"></image>
+      <view class="personal_icon">
+          <view class="icon_left">
+            <image class="user_img" src="{{userInfo.icon?userInfo.icon:'../../image/footerLogo.png'}}"></image>
+            <view class="level_icon" wx:if="{{userInfo.userLevel}}">
+                <image class="level_img" src="../../image/level.png"></image>
+                <text>{{userInfo.userLevel}}</text>
+            </view>
+          </view>
+          <view wx:if="{{userId}}" class="icon_right">
+              <view>{{userInfo.nickname?userInfo.nickname:"用户"}}</view>
+              <view bindtap="copyUserId">{{userId}}</view>
+          </view>
+          <view wx:else class="icon_right" bindtap="toLogin">点击登录</view>
+      </view>
+    </view>
+    <view class="personal_con">
+        <view class="table_view">
+            <view class="table_num">
+                <view class="num_item" bindtap="toWaterTicket">
+                    <view>{{waterTicket}}<text>张</text></view>
+                    <view>水票</view>
+                </view>
+                <view class="num_item" bindtap="toMemberPoints">
+                    <view>{{userInfo.userCredit?userInfo.userCredit:0}}<text>分</text></view>
+                    <view>积分</view>
+                </view>
+                <view class="num_item" bindtap="toDiscount">
+                    <view>{{userInfo.totalCard?userInfo.totalCard:0}}<text>张</text></view>
+                    <view>卡券</view>
+                </view>
+            </view>
+        </view>
+        <view class="table_view">
+            <view class="order_title">
+                <view class="order_title_left">我的订单</view>
+                <view class="order_title_right" bindtap="toOrderList" data-index="0">查看全部订单<image src="../../image/rightIcon.png"></image></view>
+            </view>
+            <view class="order_tabs">
+                <view class="order_item" bindtap="toOrderList" data-index="10">
+                    <image src="../../image/order01.png"></image>
+                    <view class='num_text' wx:if="{{waitePay}}">{{waitePay}}</view>
+                    <view>待付款</view>
+                </view>
+                <view class="order_item" bindtap="toOrderList" data-index="20">
+                    <image src="../../image/order02.png"></image>
+                    <view class='num_text' wx:if="{{onTheWay}}">{{onTheWay}}</view>
+                    <view>待配送</view>
+                </view>
+                <view class="order_item" bindtap="toOrderList" data-index="30">
+                    <image src="../../image/order03.png"></image>
+                    <view class='num_text' wx:if="{{forPickup}}">{{forPickup}}</view>
+                    <view>待收货</view>
+                </view>
+            </view>
+        </view>
+        <view class="table_view">
+            <view class="order_title">
+                <view class="order_title_left">我的服务</view>
+            </view>
+            <view class="service_tabs">
+                <view class="service_item" bindtap="toInviteNewActivity">
+                    <image src="../../image/service01.png"></image>
+                    <view>邀新送券</view>
+                </view>
+                <view wx:if="{{identity==0||identity==1}}" class="service_item" bindtap="toWaterPromotion">
+                    <image src="../../image/service02.png"></image>
+                    <view>水站合伙人</view>
+                </view>
+                <view class="service_item" bindtap="toReceiverAddress">
+                    <image src="../../image/service03.png"></image>
+                    <view>收货地址</view>
+                </view>
+                <view class="service_item" bindtap="toFAQ">
+                    <image src="../../image/service04.png"></image>
+                    <view>常见问题</view>
+                </view>
+                <view class="service_item">
+                    <button open-type="contact">
+                        <image src="../../image/service05.png"></image>
+                        <view>联系客服</view>
+                    </button>
+                </view>
+                <view class="service_item" bindtap="toHistoryOrderList">
+                    <image src="../../image/service06.png"></image>
+                    <view>历史订单</view>
+                </view>
+                <view class="service_item" bindtap="goSetting">
+                    <image src="../../image/service07.png"></image>
+                    <view>设置</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="no_invite" catchtouchmove="myCatchTouch" wx:if="{{showNoInvite}}">
+        <view class="no_invite_mask"></view>
+        <view class="no_invite_img">
+            <view class="no_invite_close" bindtap="closeNoInvite"></view>
+            <image src="https://img.goola.cn/mallImages/20191105/99eee0ab32c34ff7bb3e5aa9b16b6d19.png"></image>
+        </view>
+    </view>
+    <!--会员码-->
+    <member-code wx:if="{{showShapeCode}}" receiptBarCode="{{receiptBarCode}}" bind:cancel="hideShapeCode"></member-code>
+    <!--会员码-->
+    <!-- 用户授权登录 -->
+    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+    <!-- 用户授权登录 -->
+</view>
+

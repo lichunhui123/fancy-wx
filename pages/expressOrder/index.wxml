@@ -1,0 +1,128 @@
+<!--pages/myorder/index.wxml-->
+<view class="order_wrap">
+    <view class="{{navItemActive==2?'order_nav order_top':'order_nav'}}">
+        <view class="nav_item">
+            <view class="{{navItemActive==1?'nav_item_active':'nav_item_text'}}" bindtap="navItemClick" data-index="1">我的寄件</view>
+            <view class="navbut" wx:if="{{navItemActive==1}}"></view>
+        </view>
+        <view class="nav_item">
+            <view class="{{navItemActive==2?'nav_item_active':'nav_item_text'}}" bindtap="navItemClick" data-index="2">我的取件</view>
+            <view class="navbut" wx:if="{{navItemActive==2}}"></view>
+        </view>
+    </view>
+	<!--我的寄件start-->
+	<view class="order_par {{isPhoneX?'par_phone':''}}" wx:if="{{navItemActive==1}}">
+		<view class="order_list" wx:if="{{orderList.length>0}}">
+			<view class="order_list_item" wx:for="{{orderList}}" wx:key="">
+				<view class="orderitem_top">
+					<view class="top_left">
+						<image src="{{item.carrierIconUrl}}"></image>
+						<text class="top_left_title">{{item.carrierName}}</text>
+					</view>
+					<view class="top_right">
+						<text class="top_right_title" bindtap="checkdetail" data-cid="{{item.id}}">查看详情</text>
+						<image src="../../image/right_icon.png"></image>
+					</view>
+				</view>
+				<view class="order_content">
+					<view class="content_b">
+						<text class="tith">订单编号：</text>
+						<text>{{item.orderId}}</text>
+					</view>
+					<view class="content_b">
+						<text class="tith">订单状态：</text>
+						<text wx:if="{{item.status==1007}}">{{item.cancelStatusStr}}</text>
+						<text style="color: #5ADAD0;" wx:if="{{item.status==1005||item.status==1003}}">快递员已取</text>
+						<text style="color: #F2922F;" wx:if="{{item.status==1001}}">待接单</text>
+					</view>
+					<view class="content_auto" style="width:90%">
+						<text class="tith">服务门店：</text>
+						<text>{{item.mecName}}</text>
+					</view>
+					<view class="content_z">
+						<image src="../../image/consignee_icon.png"></image>
+						<text decode="true">&nbsp;{{item.receiveName}}&nbsp;&nbsp;</text>
+						<text>{{item.receiveMobile}}</text>
+					</view>
+					<view class="content_auto">
+						<text class="tith" decode="true">地<text class="or"></text>址：</text>
+						<text>{{item.receiveProvince}}{{item.receiveCity}}{{item.receiveArea}}{{item.receiveAddress}}</text>
+					</view>
+					<view class="phone" bindtap="phoneClick" data-tel="{{item.linkPhone}}">
+						<image src="../../image/phone.png"></image>
+					</view>
+				</view>
+				<view class="orderitem_bottom" wx:if="{{item.status==1001}}">
+					<view class="cancelorder" bindtap="cancelorder" data-qid="{{item.id}}">取消订单</view>
+				</view>
+			</view>
+		</view>
+		<view class="order_list" wx:if="{{noOrderList}}">
+			<view class="nodata">
+				<image src="/image/nodata.png"></image>
+				<text>暂无订单~</text>
+			</view>
+		</view>
+		<view class="alldatatitle" wx:if="{{orderList.length>0&&!alldatatitle}}">已加载全部数据</view>
+	</view>
+	<!--我的寄件end-->
+	<!--我的取件start-->
+	<view class="order_par {{isPhoneX?'par_phone':''}}" wx:if="{{navItemActive==2}}">
+		<view class="head_hint">亲，只展示您近一个月内签收的包裹哦~</view>
+		<view class="sign_content" wx:if="{{signInfoList.length>0}}">
+			<view class="sign_item" wx:for="{{signInfoList}}" wx:key="index">
+				<view class="sign_item_title">{{item.mecName}}</view>
+				<view class="sign_item_list" wx:for="{{item.list}}" wx:for-item="val" wx:key="val.expressCode">
+					<view class="sign_source">
+						<text class="express">{{val.carrierName}}</text>
+						<text>{{val.expressCode}}</text>
+					</view>
+					<view class="sign_code">
+						<view class="signcode">
+							<text>货架号：</text>
+							<text class="code_color">{{val.cargo}}</text>
+						</view>
+						取件码：
+						<text class="codeAll_color">{{val.putawaySerialNumber}}</text>
+					</view>
+					<view class="signT">签收时间：
+						<text class="signTime">{{val.signTime}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="order_list" wx:if="{{noSignInfoList}}">
+			<view class="nodata">
+				<image src="/image/nodata.png"></image>
+				<text>亲，当前没有您的取件信息呢！</text>
+			</view>
+		</view>
+		<!--未绑定手机-->
+		<view class="no_phone" wx:if="{{noPhone}}">
+			<image src="../../image/nodata.png"/>
+			<view class="no_text">您还未绑定手机号，请先绑定手机号</view>
+			<view class="no_button" bindtap="bindPhone">去绑定</view>
+		</view>
+	</view>
+	<!--我的取件end-->
+    <view class="tab_bottom {{isPhoneX?'tab_phone':''}}">
+        <view class="tab_list" bindtap="signFor">
+            <view>
+                <image src="../../image/tab01.png"></image>
+            </view>
+            <view class="tab_text">未取件</view>
+        </view>
+        <view class="tab_list" bindtap="sendparcel">
+            <view>
+                <image src="../../image/tab02.png"></image>
+            </view>
+            <view class="tab_text">通知快递</view>
+        </view>
+        <view class="tab_list tab_active">
+            <view>
+                <image src="../../image/tabmy.png"></image>
+            </view>
+            <view class="tab_text">我的快递</view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,68 @@
+.bind-up-phone-body{
+    margin:0 30rpx;
+}
+.bind-up-phone-body-1, .bind-up-phone-body-2 {
+    width: 100%;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    border-bottom: 1rpx solid #ebebeb;
+    box-sizing: border-box;
+}
+.bind_text_left{
+    width:180rpx;
+    font-size: 30rpx;
+    line-height: 30rpx;
+    color: #333333;
+    flex-shrink: 0;
+}
+.bind_text_right{
+    width:100%;
+    font-size: 30rpx;
+    line-height: 30rpx;
+    color: #333333;
+    flex-shrink: 0;
+}
+.bind-up-phone-body input {
+    width:100%;
+    height:100%;
+    border: none;
+    outline: none;
+    font-size: 30rpx;
+    box-sizing: border-box;
+}
+.bind-up-phone-body input::placeholder {
+    color:  #999999;
+}
+.verification{
+    width: 180rpx;
+    height: 60rpx;
+    background: #F8F8F8;
+    border-radius: 30rpx;
+    color: #F2922F;
+    font-size: 28rpx;
+    text-align: center;
+    line-height: 60rpx;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+.notActrive{
+    color: #999999;
+}
+.countState{
+    color: #333333;
+}
+.bind-up-phone-body-3{
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    border-radius: 44rpx;
+    background: #DDDDDD;
+    color: #FFFFFF;
+    margin-top: 100rpx;
+    font-size: 32rpx;
+}
+.isActiveButton{
+    background: #F2922F;
+}

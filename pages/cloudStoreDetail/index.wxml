@@ -1,0 +1,247 @@
+
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view class="detailWrap">
+  <image src="../../image/sale.png" class="sale" wx:if="{{goodsDetail.type==10}}"></image>
+  <view wx:if="{{!showNull}}">
+    <view class="swiper-content">
+      <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange">
+      <block wx:for="{{urlImg}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <image src="{{imgHttp}}{{item}}" class="slide-image" mode="widthFix"></image>
+        </swiper-item>
+      </block>
+      </swiper>
+      <text class='swiper-num'>{{swiperNum+1}}/{{urlImg.length}}</text>
+    </view>
+    
+    <view class="detail_content {{goodsDetail.type==10?'_con_active':''}}">
+      <view class="detailc1">
+        <!--限时折扣-->
+        <view class="detailc1_imgt" wx:if="{{goodsDetail.type==10}}">
+          <image src="../../image/Ovalbg.png"></image>
+          <view class="detailc1_img_title">
+            <view class="price_leftt">
+              <view class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.disCountPrice)}}</text><text class="pricet">{{numb.getNum(goodsDetail.salesPrice)}}</text></view>
+              </view>
+            <view class="price_right">
+              <view class="over"><text>距结束剩余</text></view>
+              <view class="daystyle">
+                <view class="fange">{{countdownTime.day}}</view><text style="padding:0 6rpx">天</text><view class="fange">{{countdownTime.hour}}</view>：<view class="fange">{{countdownTime.minute}}</view>：<view class="fange">{{countdownTime.second}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 好物预售 -->
+        <view class="detailc1_imgt" wx:elif="{{goodsDetail.type==80}}">
+          <image src="../../image/Ovalbg.png"></image>
+          <view class="detailc1_img_title">
+            <view class="price_leftt">
+              <view class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.prePrice)}}</text></view>
+              <view class="price_left_title01">原价:¥{{numb.getNum(goodsDetail.salesPrice)}}</view>
+            </view>
+            <view class="price_right">
+              <view class="over"><text>{{hasStart?'距结束':'距开售时间剩余'}}</text></view>
+              <view class="daystyle">
+                <view class="fange" wx:if="{{hasStart}}">{{countdownTime.day}}</view><text wx:if="{{hasStart}}" style="padding:0 6rpx">天</text><view class="fange">{{countdownTime.hour}}</view>：<view class="fange">{{countdownTime.minute}}</view>：<view class="fange">{{countdownTime.second}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 多人拼团 -->
+        <view class="detailc1_img" wx:elif="{{goodsDetail.type==90}}">
+          <image src="../../image/smallsprice.png"></image>
+          <view class="price_left">
+            <view class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.prePrice)}}</text></view>
+            <view class="price_left_title01">原价:¥{{numb.getNum(goodsDetail.salesPrice)}}</view>
+          </view>
+        </view>
+        <!--其他情况-->
+        <view class="detailc1_img" wx:else>
+          <image src="../../image/smallsprice.png"></image>
+          <view class="price_left">
+            <view class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.salesPrice)}}</text></view>
+          </view>
+        </view>
+        <view class="detailc1_con">
+          <view class="detop">
+            <view><view class="fullsub" wx:if="{{goodsDetail.type==20}}">满减</view><view class="detailc1_title">{{goodsDetail.goodsName}}</view></view>
+            <view class="saleItem" wx:if="{{goodsDetail.type==20}}"><text wx:for="{{goodsDetail.fullDecMoneyList}}">{{item.fullMoney}}减{{item.decMoney }}</text></view><!--满减活动-->
+            <view class="saleItem" wx:if="{{goodsDetail.type==50}}"><text>买一送一</text><view class="saleItem_text">买1件，赠送1件同款商品</view></view><!--买一送一-->
+            <view class="saleItem" wx:if="{{goodsDetail.type==60}}"><text>买2件，均价￥{{goodsDetail.averagePrice}}/件</text></view><!--第二件半价-->
+            <view class="saleItem" wx:if="{{goodsDetail.type==70&&goodsDetail.manyPriManyFoldsList&&goodsDetail.manyPriManyFoldsList.length>0}}"><!--多件多价-->
+              <text wx:for="{{goodsDetail.manyPriManyFoldsList}}" wx:for-item="el" wx:for-index="i" wx:key="i">{{el.count}}件{{el.discount/10}}折</text>
+            </view>
+            <view class="saleItem" wx:if="{{goodsDetail.type==80}}"><text>好物预售</text><view class="saleItem_text">价格更优惠</view></view><!--好物预售-->
+            <view class="saleItem" wx:if="{{goodsDetail.type==90}}"><text>{{goodsDetail.groupCount}}人团</text><view class="saleItem_text">拼着买，更便宜</view></view><!--多人拼团-->
+          </view>
+          <!-- <view class="detailc1_sales">
+            <text style="color:#333;">销量：</text>已售
+            <text class="yel">{{goodsDetail.soldCount}}</text> 份，还剩{{goodsDetail.salableCount}}份</view> -->
+        </view>
+      </view>
+      <view class="detailc2">
+        <view class="goodspec">规格：{{goodsDetail.goodsSpec}}</view>
+        <view class="discount_q" wx:if="{{!goodsDetail.type&&(discountList.length>0||hasDrawDiscountList.length>0)}}">
+          <view class="discount_q_item" wx:for="{{hasDrawDiscountList}}" wx:key="index">
+            <view wx:if="{{item.cardType!=30}}">{{item.useThreshold?'满'+item.useThresholdT+'元减'+item.cardMoneyT+'元':item.cardMoneyT+'元'}}</view>
+            <view wx:if="{{item.cardType==30}}">{{item.discountRatioT?item.discountRatioT:'-'}}折</view>
+          </view>
+          <view class="discount_q_item" wx:for="{{discountList}}" wx:key="index">
+            <view wx:if="{{item.cardType!=30}}">{{item.useThreshold?'满'+item.useThresholdT+'元减'+item.cardMoneyT+'元':item.cardMoneyT+'元'}}</view>
+            <view wx:if="{{item.cardType==30}}">{{item.discountRatioT?item.discountRatioT:'-'}}折</view>
+            <view class="nowDraw" bindtap="drawDiscount">领取</view>
+          </view>
+        </view>
+        <view class="share">
+          <button formType="submit" open-type="share">
+            <image src="../../image/fenx.png"></image>
+            <text class="sharetitle ">分享好友</text>
+          </button>
+        </view>
+      </view>
+      <!--多人拼团-->
+      <view class="detailc3" wx:if="{{goodsDetail.type==90&&groupList.length>0}}">
+        <view class="detailc3_title">
+          <text wx:if="{{!groupNumGreaterThenOne}}">{{groupList.length}}人正在拼团，可直接参与</text><!--当只有一人开团是-->
+          <text wx:if="{{groupNumGreaterThenOne}}">这些人刚刚开团可直接参团</text><!--当团购活动下拼团人数剩余人数均大于1人时-->
+          <view wx:if="{{groupList.length>3}}" class="detailc3_title_right" bindtap="checkGroupMore"><text>查看更多</text><image src="../../image/rightIcon.png"></image></view>
+        </view>
+        <view class="detail3_list_con">
+          <view class="detail3_list" wx:for="{{groupList}}" wx:key="index" wx:if="{{index<3}}">
+            <view class="detail3_list_left">
+              <image src="{{item.userInfoList[0].icon}}"/>
+              <view>{{item.userInfoList[0].nickname}}</view>
+            </view>
+            <view class="detail3_list_right">
+              <view class="detail3_list_tmp" wx:if="{{item.surplusCount==1}}">
+                <view>还差<span>1人</span>拼成</view>
+                <view>剩余 {{item.hour}}:{{item.minute}}:{{item.second}}</view>
+              </view>
+              <view class="detail3_list_btn" bindtap="goGroupBuy" data-groupcode="{{item.groupCode}}">去拼团</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="detailc3" wx:elif="{{goodsDetail.iconList&&goodsDetail.iconList.length>0}}">
+        <view class="detailc3_title">
+          <text>购买记录</text>
+          <view>已有
+            <text class="yel">{{goodsDetail.buyNum}}</text> 人购买，商品共销售
+            <text class="yel">{{goodsDetail.soldCount}}</text> 份</view>
+        </view>
+        <view class="record">
+          <view wx:for="{{goodsDetail.iconList}}" wx:key="index" class="{{index==9?'recorimg':'recordimg'}}" wx:if="{{index<=9}}">
+            <image wx:if="{{index<9}}" src="{{item}}" class="avader" />
+            <image class="avator-img" wx:if="{{index==9}}" src="../../image/avatar-more.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="gooddetail">
+      <view class="good_detail_title">— · 商品详情 · —</view>
+      <view class="imgdetail">
+        <block wx:for="{{detailImg}}" wx:key="index">
+            <image src="{{imgHttp}}{{item}}" mode="widthFix"></image>
+        </block>
+      </view>
+    </view>
+    <view class="totop" bindtap="gotoTop" wx:if="{{toTopshow}}">
+      <image src="../../image/back-top.png"></image>
+    </view>
+    <!--商品还未拼团成功-->
+    <view class="tabbar {{iphone?'iphone':''}}" wx:if="{{groupShare&&groupStatus==1}}">
+      <view class="grouphome grouphome1" bindtap="grouphomeClick">
+        <image src="../../image/grouphome.png"></image>回首页</view>
+      <view class="goGroup" bindtap="goGroupBuy" data-groupcode="{{groupCode}}">
+        <view>¥<text>{{numb.getNum(goodsDetail.prePrice)}}</text></view>
+        <view>还差{{goodsDetail.surplusCount}}人，去拼团</view>
+      </view>
+    </view>
+    <!--商品已拼团成功-->
+    <view class="tabbar {{iphone?'iphone':''}}" wx:elif="{{groupShare&&groupStatus==2}}">
+      <view class="grouphome" bindtap="grouphomeClick">
+        <image src="../../image/grouphome.png"></image>回首页</view>
+      <view class="hasGroup">
+        <view>该团已经拼团成功啦~</view>
+        <view>可以参与别的团或者开团哦</view>
+      </view>
+      <view class="goGroup goGroup1" bindtap="goOpenGroupBuy">
+        <view>¥<text>{{numb.getNum(goodsDetail.prePrice)}}</text></view>
+        <view>去开团</view>
+      </view>
+    </view>
+    <!--其他情况-->
+    <view class="tabbar {{iphone?'iphone':''}}" wx:else>
+      <view class="grouphome" bindtap="grouphomeClick">
+        <image src="../../image/grouphome.png"></image>回首页</view>
+      <view class="groupshop" bindtap="shoppingClick">
+        <image src="../../image/groupshop.png"></image>购物车
+        <view class="stay" wx:if="{{shoppingNum}}">{{shoppingNum}}</view>
+      </view>
+      <!--好物预售活动未开始-->
+      <view wx:if="{{goodsDetail.type==80&&!hasStart}}" class="addgou addgougray">加入购物车</view>
+      <!--多人拼团-->
+      <view wx:elif="{{goodsDetail.type==90}}" class="anotherAdd aloneAdd" bindtap="goBuy">
+        <view>¥<text>{{numb.getNum(goodsDetail.salesPrice)}}</text></view>
+        <view>单独购买</view>
+      </view>
+      <!--其他情况-->
+      <view wx:else class="addgou" bindtap="addShopping">加入购物车</view>
+      <!--好物预售活动未开始-->
+      <view wx:if="{{goodsDetail.type==80&&!hasStart}}" class="addbuy addbuygray">立即购买</view>
+      <!--多人拼团-->
+      <view wx:elif="{{goodsDetail.type==90}}" class="anotherAdd groupAdd" bindtap="goOpenGroupBuy">
+        <view>¥<text>{{numb.getNum(goodsDetail.prePrice)}}</text></view>
+        <view>发起拼团</view>
+      </view>
+      <!--其他情况-->
+      <view wx:else class="addbuy" bindtap="goBuy">立即购买</view>
+    </view>
+    <view class="tabbarIphone" wx:if="{{iphone}}"></view>
+    <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+  </view>
+  <view class="detail_mask" wx:if="{{showGroupMore}}">
+    <view class="mask_con">
+      <view class="mask_con_top">
+        <view class="mask_title">正在拼团</view>
+        <view class="mask_center">
+          <view class="mask_list_con">
+            <view class="mask_list" wx:for="{{groupList}}" wx:key="index" wx:if="{{index<10}}">
+              <view class="mask_list_left">
+                <image src="{{item.userInfoList[0].icon}}"></image>
+                <view>
+                  <view class="mask_name">{{item.userInfoList[0].nickname}}<text>还差</text><text>{{item.surplusCount}}人</text></view>
+                  <view class="mask_time">剩余 {{item.hour}}:{{item.minute}}:{{item.second}}</view>
+                </view>
+              </view>
+              <view class="mask_btn" bindtap="goGroupBuy" data-groupcode="{{item.groupCode}}">去拼团</view>
+            </view>
+          </view>
+          <view class="mask_tip {{groupList.length<6?'fixed_bottom':''}}">仅显示10个正在拼团的人</view>
+        </view>
+      </view>
+      <image bindtap="closeGroupMore" class="mask_close" src="../../image/mask_close.png"/>
+    </view>
+  </view>
+  <!--站点下无商品-->
+  <view wx:if="{{showNull}}" class='nullData'>
+    <view class='nullcenter'>
+      <image class='nullimg' src='../../image/no_content.png'></image>
+      <view class='nullTitle'>该活动已结束</view>
+      <view class='nullTitle' bindtap="grouphomeClick">点击
+        <text class="colorActive">返回首页</text>查看更多活动</view>
+    </view>
+  </view>
+  <!--多人拼团活动已结束-->
+  <view wx:if="{{hasEnd}}" class='nullData'>
+    <view class='nullcenter'>
+      <image class='nullimg' src='../../image/no_content.png'></image>
+      <view class='nullTitle'>该活动已结束</view>
+      <view class='nullTitle' bindtap="grouphomeClick">点击
+        <text class="colorActive">返回首页</text>查看更多活动</view>
+    </view>
+  </view>
+  <!-- 用户授权登录 -->
+  <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+  <!-- 用户授权登录 -->
+</view>

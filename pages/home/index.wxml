@@ -1,0 +1,140 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view>
+    <view class="header">
+        <view class="header_left" bindtap="nearSite">
+            <image src="../../image/weizi1.png" class="address_icon"></image>
+            <view class="head_title">{{selectAddress}}</view>
+            <view><image src="../../image/right_icon_new.png" class="right_icon"></image></view>
+        </view>
+    </view>
+    <view class="swiper-content {{!notice.takeExpress&&!notice.sendExpress&&!notice.payWait&&!notice.receive?'swiper-content1':''}}">
+        <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange" circular="true">
+            <swiper-item class="swiper-item" wx:for="{{bannerConfig}}" wx:for-item="item" wx:key="index" bindtap="goThematicActivities" data-item="{{item}}" data-index="{{index}}">
+                <image src="{{imgUrl+item.headBannerPic}}" class="slide-image" mode="widthFix"></image>
+            </swiper-item>
+        </swiper>
+        <text class='swiper-num'>{{swiperNum+1}}/{{bannerConfig.length}}</text>
+    </view>
+    <view class="home_tip" wx:if="{{notice.takeExpress>0||notice.sendExpress>0||notice.payWait>0||notice.receive>0}}">
+        <image src="../../image/home_tip.png"></image>
+        <view class="home_tip_content">
+            <swiper autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+                <swiper-item wx:if="{{notice.takeExpress>0}}">
+                    <view>您有待取快递哦！</view>
+                </swiper-item>
+                <swiper-item wx:if="{{notice.sendExpress>0}}">
+                    <view>代寄订单已发货！</view>
+                </swiper-item>
+                <swiper-item wx:if="{{notice.payWait>0}}">
+                    <view>您有订单待付款哦！</view>
+                </swiper-item>
+                <swiper-item wx:if="{{notice.receive>0}}">
+                    <view>您有订单待收货哦！</view>
+                </swiper-item>
+            </swiper>
+        </view>
+    </view>
+    <view class="entrance_content">
+        <view class="entrance_top">
+            <view class="entrance_top_list opera" bindtap="takeSomething">
+                <image src="../../image/opera.png"></image>
+                <text>取快递</text>
+            </view>
+            <view class="entrance_top_list member" bindtap="getReceiptBarcode">
+                <image src="../../image/member.png"></image>
+                <text>会员码</text>
+            </view>
+            <view class="entrance_top_list discount" bindtap="discountTicket">
+                <image src="../../image/discount.png"></image><text>优惠券</text>
+            </view>
+        </view>
+        <view class="entrance_bottom">
+            <swiper class="entrance_swiper" bindchange="entranceChange" circular="true">
+                <swiper-item class="entrance_swiper_item">
+                    <view class="busitem" bindtap="goSmallShopPage"><image src="../../image/weidianIcon.png"></image><view>指尖云店</view></view>
+                    <view class="busitem" bindtap="goFingerMall"><image src="../../image/zhenxuan.png"></image><view>更好甄选</view></view>
+                    <view class="busitem" bindtap="goGroupPage"><image src="../../image/pintuantu.png"></image><view>指尖拼团</view></view>
+                    <view class="busitem" bindtap="goWater"><image src="../../image/watertu.png"></image><view>水管家</view></view>
+                    <view class="busitem" bindtap="goExpress"><image src="../../image/kuaitu.png"></image><view>我的快递</view></view>
+                </swiper-item>
+                <swiper-item class="entrance_swiper_item">
+                    <view class="busitem busitem01" bindtap="goSelfHelpPurchasing"><image src="../../image/zgou.png"></image><view>扫码自助购</view></view>
+                </swiper-item>
+            </swiper>
+            <view class="entrance_swiper_tab">
+                <view class="{{entranceNum==0?'active':''}}"></view>
+                <view class="{{entranceNum==1?'active':''}}"></view>
+            </view>
+        </view>
+    </view>
+    <view class="module_content" wx:if="{{cloudStore.length>0}}">
+        <view class="module_content_title">指尖云店<text>好物就在身边</text></view>
+        <view class="module_content_item">
+            <image class="module_content_banner" src="{{imgUrl}}/mallImages/20200622/t7KaQ656bj6NjndXTaGkW6RyyYTTNj63.png"></image>
+            <view class="module_content_list_par">
+                <view class="module_content_list" wx:for="{{cloudStore}}" wx:for-item="item" wx:key="index" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}">
+                    <view class="list_src"><image src="{{imgUrl+item.showGoodsPic}}"/></view>
+                    <view class="list_name">{{item.goodsName}}</view>
+                    <view class="list_price">¥<text class="list_price_text1">{{numb.getNum(item.showSalesPrice)}}</text><text class="list_price_text2" wx:if="{{item.showFriendlyPrice}}">¥{{numb.getNum(item.showFriendlyPrice)}}</text></view>
+                    <view class="list_buy" catchtap="cloudGoodsAddCar" data-goodsitem="{{item}}"><image src="../../image/shopp.png"></image></view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="module_content" wx:if="{{datas.length>0&&fingerMall.length>0}}">
+        <view class="module_content_title">更好甄选<text>全球好货直邮到家</text></view>
+        <view class="discount_time" wx:if="{{datas.length>0}}">
+            <view class="dis_title">
+                <view class="limit_title"><image src="../../image/limit_title.png"></image></view>
+                <view class="goin" bindtap="limitgoGroup">进去逛逛<image src="../../image/right_icon_new.png"></image></view>
+            </view>
+            <view class="xin">
+                <view class="xin_left"></view>
+                <view class="xin-list" bindtouchend="moveItem" bindtouchstart="moveStart">
+                    <block wx:for="{{datas}}" wx:key="key" wx:for-index="idx" >
+                        <view class="single" animation="{{item.animation}}"  style="z-index: {{item.zIndex}}"
+                              catchtap="moveClick" data-inda="{{item}}" >
+                            <view class="dis_con_it">
+                                <image src="{{imgUrl+numb.getImg(item.goodsPic)}}" class="dis_con_img"></image>
+                                <image src="../../image/disblack.png" class="dis_con_img1" wx:if="{{item.few!='few'}}"></image><image src="{{imgUrl+item.picDetail}}" class="dis_con_img1" wx:if="{{item.few=='few'}}"></image>
+                                <view class="dis_word">
+                                    <view class="dis_word_title"><text class="titley">{{item.storeGoodsName}}</text>
+                                        <view class="dis_word_title1" wx:if="{{item.few!='few'}}">规格:{{item.storeGoodsSpecification}}</view>
+                                    </view>
+                                    <view class="dis_word_box" wx:if="{{item.few!='few'}}">
+                                        <view class="word_box_title">指尖折扣价</view>
+                                        <view>￥<text class="b_title">{{item.discountPrice}}</text></view>
+                                        <view class="b_title1">￥{{numb.getNum(item.price)}}</view>
+                                    </view>
+                                </view>
+                                <view class="tianmi" wx:if="{{item.few!='few'}}"><image src="../../image/tianmi.png"></image><text>精选商品</text></view>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </view>
+        <view class="fruit_con" wx:for="{{fingerMall}}" wx:key="index" wx:if="{{fingerMall.length>0}}">
+            <view class="fruit_img"><image src="https://img.goola.cn/{{item.classPic}}"></image></view>
+            <view class="fruit_goods">
+                <view class="fruit_item" wx:for="{{item.mallGoodsInfos}}" wx:key="index" wx:for-item="it" bindtap="fingerMallGoodsDetailClick" data-itdetail="{{it}}" wx:if="{{index<item.num*10}}">
+                    <image src="{{imgUrl+numb.getImg(it.goodsPics)}}"></image>
+                    <view class="fruit_center">
+                        <view class="fruit_center_name">{{it.skuName}}</view>
+                        <view class="fruit_center_spec" wx:if="{{it.spec}}">规格：{{it.spec}}</view>
+                    </view>
+                    <!--商品加入过活动的-->
+                    <view class="fruit_item_price" wx:if="{{it.activityId}}">￥<text>{{numb.getNum(it.discountPrice/100)}}</text><text>{{numb.getNum(it.salesPrice)}}</text></view>
+                    <!--商品没有加入活动-->
+                    <view class="fruit_item_price" wx:else>￥<text>{{numb.getNum(it.salesPrice)}}</text><text>￥{{numb.getNum(it.competitorPrice)}}</text></view>
+                    <view class="fruit_buy" catchtap="addCarClick" data-goodsitem="{{it}}"><image src="../../image/shopp.png"></image></view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="bottom" wx:if="{{fingerMall.length>0}}">—— 不好意思，已经到底啦 ——</view>
+    <!--会员码-->
+    <member-mask receiptBarCode="{{receiptBarCode}}" bind:cancel="cancelmask" wx:if="{{crownShow}}"></member-mask>
+     <!-- 用户授权登录 -->
+    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+</view>

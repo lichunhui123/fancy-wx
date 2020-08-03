@@ -1,0 +1,77 @@
+<!--pages/waterGoodDetail/index.wxml-->
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="detailWrap">
+  <view >
+    <view class="swiper-content">
+      <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange">
+      <block wx:for="{{urlImg}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <image src="{{imgHttp}}{{item}}" class="slide-image" mode="widthFix"></image>
+        </swiper-item>
+      </block>
+      </swiper>
+      <text class='swiper-num'>{{swiperNum+1}}/{{urlImg.length}}</text>
+    </view>
+    <!-- ------- -->
+    <view class="detail_content">
+      <view class="itemXin">
+        <view class="itemtop">
+          <view>
+            <view class="item_name">{{type==20?itemDetail.skuName:''}}{{type==30?mealItemDetail.seriesName:''}}</view>
+            <view class="item_brand" wx:if="{{(type==20&&itemDetail.brand)||(type==30&&mealItemDetail.waterMealsMasterInfoDto.brand)}}">品牌：{{type==20?itemDetail.brand:''}}{{type==30?mealItemDetail.waterMealsMasterInfoDto.brand:''}}</view>
+          </view>
+          <view class="price">￥<text class="pricenum">{{type==20?itemDetail.sellPrice:''}}{{type==30?mealItemDetail.price:''}}</text></view>
+        </view>
+        <!-- <view class="item_market">销售：<text class="buysold">已售{{itemDetail.sellNum}}{{type==30?mealItemDetail.soldNum:''}}份</text></view> -->
+      </view>
+      <view class="spec" wx:if="{{type==20&&goodsSpec}}">
+        规格：{{goodsSpec}}
+        <view class="share">
+          <button formType="submit" open-type="share">
+            <image src="../../image/fenx.png"></image>
+            <text class="sharetitle ">分享好友</text>
+          </button>
+        </view>
+      </view>
+      <view class="water_station" wx:if="{{type==20}}">
+        <view class="station_name"><view class="namet"><image src="../../image/house.png" class="staimg"></image>{{itemDetail.waterName}}</view><image src="../../image/phone.png" bindtap="phoneClick"></image></view>
+        <view class="stationbox">
+          <view class="distanceline"><image src="../../image/tance.png"></image><text class="distance">距您约</text><text>{{distance}}</text></view>
+        <view class="address"><image src="../../image/watergps.png"></image>
+          <view class="address_title">{{addressc}}</view>
+        </view>
+        </view>
+      </view>
+      <view class="spec" wx:if="{{type==30}}">套餐桶数：{{mealItemDetail.waterMealsMasterInfoDto.num}}桶<text wx:if="{{mealItemDetail.giftGoodsList&&mealItemDetail.giftGoodsList.length>0}}" decode="{{true}}">&nbsp;&nbsp;赠: </text><view wx:for="{{mealItemDetail.giftGoodsList}}" wx:key="{{index}}" class="specbox">{{item.skuName}}  {{item.type==1?'水票':''}}{{item.type==2?'水':''}}{{item.type==3?'其他':''}}{{item.num}}{{item.type==2?'桶':'张'}}</view></view>
+      <view class="gooddetail">
+      <view class="good_detail_title">— · 商品详情 · —</view>
+      <view class="imgdetail">
+        <block wx:for="{{detailImg}}" wx:key="index" wx:if="{{detailImg.length>0}}">
+            <image src="{{imgHttp}}{{item}}" mode="widthFix"></image>
+        </block>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+        <!-- <image src='{{imgHttp}}mallImages/20191105/f8e2c5181f6d45f29f12db7703e4a828.png' class="explain" mode="widthFix"></image> -->
+      </view>
+    </view>
+    <view class="totop" bindtap="gotoTop" wx:if="{{toTopshow}}">
+      <image src="../../image/back-top.png"></image>
+    </view>
+    <view class="tabbar {{iphone?'iphone':''}}">
+      <view class="grouphome" bindtap="grouphomeClick">
+        <image src="../../image/grouphome.png"></image>回首页</view>
+      <view class="groupshop" bindtap="shoppingClick">
+        <image src="../../image/groupshop.png"></image>购物车
+        <view class="stay" wx:if="{{shoppingNum}}">{{shoppingNum}}</view>
+      </view>
+      <view class="addgou" bindtap="addShopping">加入购物车</view>
+      <view class="addbuy" bindtap="goBuy">立即购买</view>
+    </view>
+    <view class="tabbarIphone" wx:if="{{iphone}}"></view>
+    <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+    </view>
+  </view>
+  <!-- 用户授权登录 -->
+  <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+  <!-- 用户授权登录 -->
+</view>

@@ -1,0 +1,13 @@
+<view>
+    <view class="bind-up-phone-body">
+        <view class="bind-up-phone-body-1">
+            <input type="number" placeholder="请输入绑定的手机号" bindinput="changePhone" value="{{phone}}"/>
+        </view>
+        <view class="bind-up-phone-body-2">
+            <input type="number" placeholder="请输入验证码" bindinput="changeVerification" value="{{verification}}"/>
+            <view wx:if="{{countState}}" class="verification countState">{{countNum}}S</view>
+            <view wx:else class="verification {{isverific?'':'notActrive'}}" bindtap="getVerification">获取验证码</view>
+        </view>
+        <view class="bind-up-phone-body-3 {{buttonState?'isActiveButton':''}}" bindtap="submitButtonFn">确定</view>
+    </view>
+</view>

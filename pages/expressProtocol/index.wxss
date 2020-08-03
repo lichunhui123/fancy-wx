@@ -1,0 +1,56 @@
+/* pages/expressProtocol/index.wxss */
+html, page {
+  width: 100%;
+  height: 100%;
+}
+
+.protocolWrap {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding: 40rpx 30rpx 135rpx 30rpx;
+  font-size: 28rpx;
+}
+.hinttitle{
+  font-size: 30rpx;
+  color: #333;
+}
+.hint{
+  width: 100%;
+  padding-top: 10rpx;
+  color: #666;
+}
+.hint_t{
+  width: 100%;
+  padding-top: 38rpx;
+  color: #666;
+}
+.serve{
+  width: 100%;
+  padding-top: 30rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.serve_title{
+  width: 100%;
+  min-height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.serve_titlet{
+  width: 100%;
+  font-size: 30rpx;
+  margin-top: 30rpx;
+  color: #333;
+}
+.ser_word{
+  font-size: 28rpx;
+  color: #666;
+}
+.ser_wordt{
+  font-size: 28rpx;
+  color: #666;
+  padding-top: 30rpx;
+}

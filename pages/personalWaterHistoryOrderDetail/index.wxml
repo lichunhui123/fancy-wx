@@ -1,0 +1,80 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<!--待付款状态时 添加class="order_detail"-->
+<view>
+    <!--已取消-->
+    <image wx:if="{{orderDetails.state === 4||(orderDetails.state === 1&&zero)}}" class="top_bg" src="../../image/personal_top1.png"></image>
+    <!--其它状态-->
+    <image wx:else class="top_bg" src="../../image/personal_top.png"></image>
+
+    <view class="order_con">
+        <!--其它状态-->
+        <view wx:if="{{orderDetails.state === 1}}" class="order_status">待付款</view>
+        <view wx:if="{{orderDetails.state === 2}}" class="order_status">待收货</view>
+        <view wx:if="{{orderDetails.state === 3}}" class="order_status">已完成</view>
+        <view wx:if="{{orderDetails.state === 4||(orderDetails.state === 1&&zero)}}" class="order_status">已取消</view>
+
+        <!--待付款-->
+        <view wx:if="{{orderDetails.state === 1&&!zero}}" class="order_obligation">
+            <view>{{timeout}}</view>
+            <view>待付款，超时订单自动关闭</view>
+        </view>
+
+        <view>
+            <view class="water_user_info">
+                <view class="water_info_top">
+                    <image src="../../image/watercar.png"></image>
+                    <text>收货地址</text>
+                </view>
+                <view class="water_info_center">
+                    <view class="water_info_list">
+                        <text class="order_text">{{orderDetails.userName}}</text>
+                        <text class="order_text" style="margin-left: 30rpx">{{orderDetails.phone}}</text>
+                    </view>
+                    <view class="water_info_list">
+                        <text class="order_text">{{orderDetails.address}}</text>
+                    </view>
+                </view>
+                <view class="water_info_icon">
+                    <image src="../../image/peisong.png"></image>
+                </view>
+            </view>
+            <view class="order_info">
+                <view class="order_info_top">
+                    <view style="color: #5ADAD0">预约时间：{{orderDetails.appointmentTime}}</view>
+                    <view>共{{orderDetails.goodsCount}}件商品</view>
+                </view>
+                <view class="order_info_list" wx:for="{{orderDetails.goodsList}}" wx:key="index">
+                    <view class="goods_img">
+                        <image class="goods_pic" src="{{imgHttp+item.goodsPic}}"></image>
+                    </view>
+                    <view class="goods_con">
+                        <view class="goods_name">{{item.goodsName}}</view>
+                        <view class="goods_desc">规格：{{item.specifications?item.specifications:''}}；数量：X{{item.goodsNum}}</view>
+                        <view class="goods_price"><text>¥</text>{{numb.getNum(item.goodsPrice/100*item.goodsNum)}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="order_price" wx:if="{{orderDetails.money}}">
+                <view class="order_price_text"><view>商品总额</view><view>¥{{numb.getNum(orderDetails.money/100)}}</view></view>
+                <view class="order_price_text" wx:if="{{orderDetails.ticketMoney}}"><view>水票抵扣</view><view style="color:#FF3B30;">-¥{{numb.getNum(orderDetails.ticketMoney/100)}}</view></view>
+                <view class="order_total_price">实付款：<text>¥</text><text>{{numb.getNum(orderDetails.paymentMoney/100)}}</text></view>
+            </view>
+        </view>
+
+        <view class="order_code">
+            <view class="code_text code_text01">
+                <text>{{orderDetails.orderNo?"订单编号":"派送单号"}}：{{orderDetails.orderNo?orderDetails.orderNo:orderDetails.sendNo}}</text>
+                <view class="code_copy" bindtap="copy" data-code="{{orderDetails.orderNo?orderDetails.orderNo:orderDetails.sendNo}}">复制</view>
+            </view>
+            <view class="code_text">下单时间：{{orderDetails.orderTime}}</view>
+            <!--待付款 和已取消状态没有此项-->
+            <view wx:if="{{orderDetails.paymentCode}}" class="code_text">支付单号：{{orderDetails.paymentCode}}</view>
+        </view>
+    </view>
+    <!--待付款-->
+    <!--<view class="footer {{iphone?'iphone':''}}" wx:if="{{orderDetails.state === 1&&!zero}}">
+        <view bindtap="cancelOrder" data-orderNo="{{orderDetails.orderNo}}">取消订单</view>
+        <view bindtap="goPay">立即付款</view>
+    </view>-->
+    <view class="tabbarIphone" wx:if="{{iphone}}"></view>
+</view>

@@ -1,0 +1,19 @@
+<view class="select_weight" catchtouchmove="movetan">
+    <view class="mask_bg"></view>
+    <view class="weight_confirm">
+        <view class="weight_title">重量</view>
+        <view class="weight_con">
+            <view class="weight_left">重量</view>
+            <view class="weight_right">
+                <image class="weight_minus" src="{{weightNum>1?'../../../image/minus.png':'../../../image/minust.png'}}" bindtap="minus"></image>
+                <view>{{weightNum}}kg</view>
+                <image class="weight_plus" src="{{weightNum<30?'../../../image/plus.png':'../../../image/plust.png'}}" bindtap="plus"></image>
+            </view>
+        </view>
+        <view class="weight_tip">注：重量以快递员称重为准，快件“虚胖”要按体积收费哦～</view>
+        <view class="weight_button">
+            <view bindtap="cancel">取消</view>
+            <view bindtap="sure">确定</view>
+        </view>
+    </view>
+</view>

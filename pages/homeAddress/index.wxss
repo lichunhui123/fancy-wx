@@ -1,0 +1,126 @@
+.header{
+    height:155rpx;
+    position: relative;
+}
+.header image{
+    width:100%;
+    height:140rpx;
+}
+.header_con{
+    width:690rpx;
+    height:136rpx;
+    background: #ffffff;
+    position: absolute;
+    top:27rpx;
+    left:50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2rpx 8rpx 0 rgba(0,0,0,0.12);
+    border-radius: 8rpx;
+    padding-left: 20rpx;
+    box-sizing: border-box;
+}
+.header_icon{
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 24rpx;
+    padding-top:30rpx;
+}
+.header_address{
+    padding-top:20rpx;
+    font-size:0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.header_con image{
+    padding-right: 10rpx;
+    width:24rpx;
+    height:32rpx;
+}
+.header_con .header_text{
+    height:32rpx;
+    font-size: 30rpx;
+    color: #333333;
+    line-height: 32rpx;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;/*显示几行*/
+}
+.address_title{
+    display: flex;
+    justify-content: center;
+    padding-top: 40rpx;
+    padding-bottom: 20rpx;
+}
+.address_line{
+    width:44rpx;
+    height:2rpx;
+    opacity: 0.42;
+    background: #F2922F;
+    border-radius: 1rpx;
+    margin-top: 15rpx;
+}
+.address_line_right{
+    width:13rpx;
+    height:2rpx;
+    background: #F2922F;
+    border-radius: 1rpx;
+    float: right;
+}
+.address_line_left{
+    width:13rpx;
+    height:2rpx;
+    background: #F2922F;
+    border-radius: 1rpx;
+    float: left;
+}
+.address_title text{
+    font-size: 32rpx;
+    color: #333333;
+    text-align: center;
+    line-height: 32rpx;
+    padding:0 14rpx;
+}
+.address_list_par{
+    margin:0 30rpx;
+    padding-bottom: 100rpx;
+}
+.address_list{
+    padding:22rpx 0 30rpx 0;
+    border-bottom:1rpx solid #EBEBEB;
+    position: relative;
+}
+.address_list image{
+    width:32rpx;
+    height:32rpx;
+    position: absolute;
+    right:30rpx;
+    top:50%;
+    transform: translateY(-50%);
+}
+.address_name{
+    font-size: 30rpx;
+    color: #333333;
+    line-height: 46rpx;
+}
+.address_text{
+    padding-top: 12rpx;
+    font-size: 28rpx;
+    line-height: 28rpx;
+    color: #999999;
+}
+.address_text text:nth-child(2){
+    margin-left: 40rpx;
+}
+.add_address{
+    width: 100%;
+    height: 100rpx;
+    background: #F2922F;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    color: #FFFFFF;
+}

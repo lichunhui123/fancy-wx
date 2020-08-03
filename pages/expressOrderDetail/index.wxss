@@ -1,0 +1,170 @@
+.detail_con{
+    width:690rpx;
+    margin:30rpx auto 20rpx;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
+    border-radius: 4rpx;
+}
+.margin20{
+    margin:30rpx auto 20rpx;
+}
+.detail_top{
+    height:120rpx;
+    display:flex;
+    align-items: center;
+    background: #F8F8F8;
+}
+.detail_top image{
+    width:80rpx;
+    height:80rpx;
+    margin-left: 20rpx;
+}
+.express_company{
+    width:370rpx;
+    margin-left: 20rpx;
+}
+.express_company view:nth-child(1){
+    font-size: 32rpx;
+    color: #333333;
+    line-height: 32rpx;
+}
+.express_company view:nth-child(2){
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 28rpx;
+    margin-top: 14rpx;
+}
+.order_status{
+    font-size: 28rpx;
+    color: #F2922F;
+    line-height: 28rpx;
+    margin-left: 86rpx;
+}
+.order_btn{
+    border: 1rpx solid #F2922F;
+    border-radius: 27rpx;
+    width:180rpx;
+    height:56rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #F2922F;
+    line-height: 56rpx;
+    box-sizing: border-box;
+}
+.address_list{
+    display:flex;
+    align-items: center;
+    padding:21rpx 30rpx 14rpx 20rpx;
+    border-bottom: 1rpx solid #EBEBEB;
+}
+.address_icon image{
+    width:40rpx;
+    height:40rpx;
+}
+.address_text{
+    margin-left: 20rpx;
+}
+.address_selected text{
+    font-size: 32rpx;
+    color: #333333;
+    line-height: 32rpx;
+    margin-right: 20rpx;
+}
+.address_selected view{
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 38rpx;
+    margin-top: 7rpx;
+}
+.detail_list{
+    display:flex;
+    align-items: flex-start;
+    padding:24rpx 20rpx;
+    border-bottom: 1rpx solid #EBEBEB;
+    position:relative;
+}
+.detail_list text{
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 40rpx;
+}
+.detail_name{
+    width:140rpx;
+}
+.detail_desc{
+    width:510rpx;
+}
+.detail_text{
+    width:440rpx;
+}
+.detail_list image{
+    width:68rpx;
+    height:68rpx;
+    position:absolute;
+    right:20rpx;
+    top:10rpx;
+}
+.detail_onOff{
+    padding:17rpx 0;
+}
+.onOff_btn{
+    width:240rpx;
+    height:54rpx;
+    margin:0 auto;
+    border: 1rpx solid #DDDDDD;
+    border-radius: 44rpx;
+    display: flex;
+    align-items: center;
+}
+.onOff_btn text{
+    font-size: 24rpx;
+    color: #999999;
+    margin-left: 31rpx;
+}
+.onOff_btn image{
+    width:24rpx;
+    height:14rpx;
+    margin-left: 11rpx;
+    transition: transform .3s;
+    transform: rotateZ(0);
+}
+.off_status image{
+    transition: transform .3s;
+    transform: rotateZ(180deg);
+}
+.null{
+    height:20rpx;
+    background: #F8F8F8;
+}
+.logistics_info{
+    margin:23rpx 44rpx 77rpx 49rpx;
+}
+.logistics_list{
+    border-left:2rpx solid #EBEBEB;
+    padding-left: 39rpx;
+    padding-bottom: 40rpx;
+    position: relative;
+}
+.logistics_list:last-child{
+    padding-bottom: 0;
+}
+.logistics_desc{
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 42rpx;
+}
+.logistics_date{
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 24rpx;
+    margin-top: 13rpx;
+}
+.logistics_status{
+    position: absolute;
+    left:-20rpx;
+    top:50%;
+    transform: translateY(-50%);
+}
+.logistics_status image{
+    width:40rpx;
+    height:40rpx;
+}

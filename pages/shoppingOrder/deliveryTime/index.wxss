@@ -1,0 +1,80 @@
+/* pages/shoppingOrder/deliveryTime/index.wxss */
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+}
+.deliveryTimeWrap{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.70);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 99999;
+}
+.top{
+  flex: 1;
+}
+.content{
+  width: 100%;
+  height: 700rpx;
+  background: #FFFFFF;
+  box-shadow: inset 0 -1rpx 0 0 #EBEBEB;
+  border-radius: 20rpx 20rpx 0 0;
+}
+.title{
+  height: 88rpx;
+  text-align: center;
+  line-height: 88rpx;
+  font-size: 32rpx;
+  color: #333333;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.timesbox{
+  display: flex;
+}
+.timeLeft{
+  width: 220rpx;
+  height: 612rpx;
+  overflow-y: scroll;
+  flex-shrink: 0;
+  background: #F8F8F8;
+}
+.timeRight{
+  width: 500rpx;
+  margin-left: 30rpx;
+  flex-shrink: 0;
+}
+.timeLeft_item{
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+.timeLeft_active{
+  background: white;
+}
+.tiemRight_item{
+  height: 100rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 28rpx;
+  color: #333333;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.tiemRight_active{
+  color: #F2922F;
+}
+.tiemRight_item image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 20rpx;
+}
+.scroll{
+  height: 612rpx;
+}

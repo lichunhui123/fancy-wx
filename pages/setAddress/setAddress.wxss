@@ -1,0 +1,72 @@
+.setaddress{
+  border-top:1rpx solid #DBDBDB;
+}
+.login_item{
+  display:flex;
+}
+.login_title{
+  width:130rpx;
+  height:100rpx;
+  font-size: 30rpx;
+  line-height: 100rpx;
+  color: #333333;
+  text-align: center;
+}
+.login_input input{
+  width:620rpx;
+  height:100rpx;
+  border-bottom: 1rpx solid #EBEBEB;
+  box-sizing: border-box;
+  font-size: 30rpx;
+}
+.login_input input::placeholder{
+  color:#999999;
+}
+.login_btn{
+  width:690rpx;
+  height:88rpx;
+  background: #F2922F;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #FFFFFF;
+  border: none;
+  margin-top: 100rpx;
+}
+.select_title{
+  height:88rpx;
+  display: flex;
+}
+.select_line{
+  width:4rpx;
+  height:30rpx;
+  background: #5ADAD0;
+  margin:29rpx 17rpx 0 30rpx;
+}
+.select_title text{
+  font-size: 32rpx;
+  color: #333333;
+  line-height: 88rpx;
+}
+.select_list{
+  display:flex;
+  flex-wrap:wrap;
+}
+.select_item{
+  width:210rpx;
+  height:68rpx;
+  box-sizing: border-box;
+  border: 2rpx solid #DDDDDD;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  line-height: 68rpx;
+  color: #333333;
+  text-align: center;
+  margin-left: 30rpx;
+  margin-bottom: 20rpx;
+}
+.active{
+  border: 2rpx solid #5ADAD0;
+  color: #5ADAD0;
+}

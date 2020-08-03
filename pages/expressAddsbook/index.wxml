@@ -1,0 +1,31 @@
+<!--pages/addressbook/index.wxml-->
+<view class="address_wrap">
+  <view class="address_list" wx:if="{{itemData.length>0}}">
+    <view class="item-list" wx:for="{{itemData}}" wx:for-item="item" wx:for-index="index" wx:key="that">
+      <view class="item-info">
+        <view class="adds_left" bindtap="clickitem" data-inda="{{item}}">
+          <view>
+            <text class="address_name">{{item.name}}</text>
+            <text class="address_name2">{{item.phone}}</text>
+          </view>
+          <view class="address_word">
+            <text>{{item.province}}-{{item.city}}-{{item.area}}</text>
+            <text class="detailadds">{{item.address}}</text>
+          </view>
+        </view>
+        <image src="../../image/addsedit.png" class="addseditt" bindtap="addsedit" data-itemdetail="{{item}}"></image>
+        <image src="../../image/delIcon.png" class="addsedit" bindtap="itemDelete" data-id="{{item.id}}"></image>
+      </view>
+      <!-- <view class="item-oper">
+        <view class="oper-delete" bindtap="itemDelete" data-id="{{item.id}}">删除</view>
+      </view> -->
+    </view>
+  </view>
+  <view class="address_list" wx:if="{{itemData.length<1}}">
+    <view class="nodata">
+      <image src="/image/nodata.png"></image>
+      <text>您还未填写地址~</text>
+    </view>
+  </view>
+  <view class="add_address" bindtap="add_submit">添加地址</view>
+</view>

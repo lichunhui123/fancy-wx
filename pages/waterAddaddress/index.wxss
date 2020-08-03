@@ -1,0 +1,198 @@
+/* pages/waterAddaddress/index.wxss */
+html, page {
+  width: 100%;
+  height: 100%;
+}
+
+.addWrap {
+  width: 100%;
+  height: 100%;
+  border-top: 1rpx solid #ebebeb;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.personxin{
+  height: 200rpx;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+.personxin input{
+  width: 570rpx;
+  height: 80rpx;
+  margin-left: 40rpx;
+  color: #333;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.place{
+  color: #C6C6C6;
+}
+
+.name{
+  height: 100rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 30rpx;
+  color: #333333;
+}
+.tel{
+  height: 100rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 30rpx;
+  color: #333333;
+}
+.hui{
+  height: 30rpx;
+  background: #F8F8F8;
+}
+.city{
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+.province{
+  height: 100rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  box-sizing: border-box;
+  padding-right: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30rpx;
+  color: #333333;
+}
+.compon{
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  padding-left: 40rpx;
+  font-weight: 600;
+}
+.componh{
+  padding-left: 40rpx;
+  color: #C6C6C6;
+}
+.prov_left{
+  width: 620rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+}
+.locator{
+  width: 60rpx;
+  height: 60rpx;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+.province image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.citys{
+  display: inline-block;
+  max-width: 280rpx;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.cityst{
+  flex-shrink: 0;
+}
+.textarea{
+  width: 700rpx;
+  font-size: 30rpx;
+  height: 94rpx;
+  font-weight: 600;
+}
+.detailAddress{
+  min-height: 164rpx;
+  border-bottom: 1rpx solid #ebebeb;
+}
+.detailtitle{
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  color: #333333;
+}
+.setdefault{
+  height: 100rpx;
+  border-bottom: 1rpx solid #ebebeb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30rpx;
+  color: #333333;
+  box-sizing: border-box;
+  padding-right: 30rpx;
+}
+.add_address{
+  width: 690rpx;
+  height: 88rpx;
+  background: #F2922F;
+  border-radius: 8rpx;
+  position: fixed;
+  bottom: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  line-height: 88rpx;
+  font-size: 32rpx;
+  color: #FFFFFF;
+}
+.add_active{
+  background: #dddddd;
+}
+
+
+.regin{
+  width: 100%;
+  height: 424rpx;
+  overflow-y: scroll;
+  background: #F8F8F8;
+  position: relative;
+  top: -100rpx;
+  left: 0;
+}
+.reginTo{
+  top: 0;
+}
+.regin_item{
+  min-height: 106rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.regin_item_left{
+  width: 74rpx;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.regin_item_left image{
+  width: 34rpx;
+  height: 34rpx;
+}
+.regin_item_right{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 20rpx 20rpx 20rpx 0;
+  font-size: 24rpx;
+  color: #999999;
+}
+.regin_title{
+  font-size: 28rpx;
+  color: #333333;
+}
+.whit{
+  flex: 1;
+}

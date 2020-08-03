@@ -1,0 +1,51 @@
+.step_con{
+    border-top:1rpx solid #DBDBDB;
+    padding-top: 30rpx;
+}
+.step_con image{
+    width:690rpx;
+    height:200rpx;
+    margin:0 30rpx 20rpx;
+    border-radius: 10rpx;
+}
+.no_tip{
+    font-size: 28rpx;
+    color: #EF0000;
+    text-align: center;
+    line-height: 28rpx;
+}
+.action_btn{
+    position:absolute;
+    bottom:100rpx;
+}
+.scan_btn{
+    width:690rpx;
+    height:88rpx;
+    line-height: 88rpx;
+    font-size: 32rpx;
+    color: #FFFFFF;
+    text-align: center;
+    background: #F2922F;
+    border-radius: 8rpx;
+    margin:0 30rpx 50rpx 30rpx;
+}
+.buyCar_btn{
+    display: flex;
+    justify-content:center;
+}
+.buyCar_btn view{
+    font-size: 28rpx;
+    color: #333333;
+    padding:0 54rpx;
+    line-height: 28rpx;
+}
+.buyCar_btn view:first-child{
+    border-right:1rpx solid #CCCCCC;
+}
+.not_open .scan_btn{
+    background: #DDDDDD;
+}
+.not_open .buyCar_btn view{
+    color: #999999;
+    opacity: 0.6;
+}

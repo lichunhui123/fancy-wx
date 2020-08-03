@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "member-code": "./memberCode/index",
+    "authorization-login": "/component/authorizationLogin/index"
+  },
+  "navigationBarTitleText": "我的",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

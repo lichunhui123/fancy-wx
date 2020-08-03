@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+  },
+  "navigationBarTitleText": "我的快递",
+  "onReachBottomDistance":50,
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

@@ -1,0 +1,14 @@
+<view>
+    <view class="site_list" wx:for="{{list}}" wx:key="index">
+        <view class="list_left" bindtap="backToExpress" data-info="{{item}}">
+            <view class="list_name">
+                <view class="mecName">{{item.mecName}}</view>
+                <view class="distance">{{item.distance}}</view>
+                <view class="nearest" wx:if="{{item.nearest==1}}">最近</view>
+            </view>
+            <view class="list_address">{{item.address}}</view>
+        </view>
+        <view class="list_center" bindtap="callPhone" data-phone="{{item.phone}}"><image src="../../image/phone.png"></image></view>
+        <view class="list_right" bindtap="navigation" data-item="{{item}}"><image src="../../image/address.png"></image></view>
+    </view>
+</view>

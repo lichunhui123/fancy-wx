@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "confirm-box": "./confirm/index"
+  },
+  "navigationBarTitleText": "购物信息",
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

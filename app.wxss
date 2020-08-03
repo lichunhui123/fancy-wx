@@ -1,0 +1,22 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+view,text{
+  font-family: PingFangSC-Regular;
+}
+/* 清除浮动 */
+.clear:after{
+  width:0;
+  height:0;
+  content:'';
+  display: block;
+  clear: both;
+}
+button::after{ border: none; }

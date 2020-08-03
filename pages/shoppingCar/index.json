@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "authorization-login":"/component/authorizationLogin/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "购物车"
+}

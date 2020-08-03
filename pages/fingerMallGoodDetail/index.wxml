@@ -1,0 +1,87 @@
+<!--pages/groupGoodDetail/index.wxml-->
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view class="detailWrap">
+  <view>
+    <view class="swiper-content">
+      <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange">
+      <block wx:for="{{urlImg}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <image src="{{imgHttp}}{{item}}" class="slide-image" mode="widthFix"></image>
+        </swiper-item>
+      </block>
+      </swiper>
+      <text class='swiper-num'>{{swiperNum+1}}/{{urlImg.length}}</text>
+    </view>
+    <view class="detail_content">
+      <view class="detailc1">
+        <view class="detailc1_img">
+          <image src="../../image/Ovalbg.png"></image>
+          <view class="detailc1_img_title">
+            <view class="price_left">
+              <!--商品加入过活动的-->
+              <view wx:if="{{goodsDetail.activityId}}" class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.discountPrice/100)}}</text><text class="pricet" wx:if="{{goodsDetail.competitorPrice}}">原价：{{numb.getNum(goodsDetail.salesPrice)}}</text></view>
+              <!--商品没有加入活动-->
+              <view wx:else class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.salesPrice)}}</text><text class="pricet" wx:if="{{goodsDetail.competitorPrice}}">{{goodsDetail.competitorName}}{{goodsDetail.competitorName?"：":""}}{{numb.getNum(goodsDetail.competitorPrice)}}</text></view>
+            </view>
+            <view class="price_right">全国直邮</view>
+          </view>
+        </view>
+        <view class="detailc1_con">
+          <view class="detailc1_title">{{goodsDetail.skuName}}</view>
+          <!-- <view class="detailc1_sales">
+            <text style="color:#333;">销量：</text>已售
+            <text class="yel">{{goodsDetail.soldNum}}</text> 份，还剩{{goodsDetail.inventory}}份</view> -->
+        </view>
+      </view>
+      <view class="detailc2">
+        规格：{{goodsDetail.goodsSpec}}
+        <view class="share">
+            <button formType="submit" open-type="share">
+              <image src="../../image/fenx.png"></image>
+              <text class="sharetitle ">分享好友</text>
+            </button>
+          </view>
+      </view>
+      <view class="detailc3" wx:if="{{goodsDetail.iconList&&goodsDetail.iconList.length>0}}">
+        <view class="detailc3_title">
+          <text>购买记录</text>
+          <view>已有
+            <text class="yel">{{goodsDetail.buyHistoryNum}}</text> 人购买，商品共销售
+            <text class="yel">{{goodsDetail.soldNum}}</text> 份</view>
+        </view>
+        <view class="record">
+          <view wx:for="{{goodsDetail.iconList}}" wx:for-item="item" wx:key="{{item}}" wx:for-index="index" class="{{index==9?'recorimg':'recordimg'}}" wx:if="{{index<=9}}">
+            <image wx:if="{{index<9}}" src="{{item}}" class="avader" />
+            <image class="avator-img" wx:if="{{index==9}}" src="../../image/avatar-more.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="gooddetail">
+      <view class="good_detail_title">— · 商品详情 · —</view>
+      <view class="imgdetail">
+        <block wx:for="{{detailImg}}" wx:key="index">
+            <image src="{{imgHttp}}{{item}}" mode="widthFix"></image>
+        </block>
+      </view>
+    </view>
+    <view class="totop" bindtap="gotoTop" wx:if="{{toTopshow}}">
+      <image src="../../image/back-top.png"></image>
+    </view>
+    <view class="tabbar {{iphone?'iphone':''}}">
+      <view class="grouphome" bindtap="grouphomeClick">
+        <image src="../../image/grouphome.png"></image>回首页</view>
+      <view class="groupshop" bindtap="shoppingClick">
+        <image src="../../image/groupshop.png"></image>购物车
+        <view class="stay" wx:if="{{shoppingNum}}">{{shoppingNum}}</view>
+      </view>
+      <view class="addgou" bindtap="addShopping">加入购物车</view>
+      <view class="addbuy" bindtap="goBuy">立即购买</view>
+    </view>
+    <view class="tabbarIphone" wx:if="{{iphone}}"></view>
+    <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+  </view>
+  <!-- 用户授权登录 -->
+  <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+  <!-- 用户授权登录 -->
+</view>

@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "growth-value-toast": "/component/growthValueToast/index"
+  }
+}

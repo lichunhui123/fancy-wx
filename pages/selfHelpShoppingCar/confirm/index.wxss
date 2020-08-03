@@ -1,0 +1,78 @@
+.confirm_bg{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vh;
+  height:100vh;
+  opacity: 0.5;
+  background: #000000;
+  z-index: 2;
+  overflow: hidden;
+
+}
+.confirm_con{
+  width:540rpx;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  z-index: 3;
+}
+.confirm_title{
+  font-size: 36rpx;
+  color: #333333;
+  text-align: center;
+  line-height: 36rpx;
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+}
+.confirm_content{
+  padding:0 30rpx 16rpx;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.content_list{
+ margin-bottom: 14rpx;
+}
+.content_list:after{
+  width:0;
+  height:0;
+  display: block;
+  clear:both;
+  content:"";
+}
+.contnet_title{
+  float: left;
+  max-width: 224rpx;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 36rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.content_standard{
+  float: left;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 36rpx;
+  margin-left: 10rpx;
+  max-width:105rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.content_tip{
+  float: right;
+  font-size: 28rpx;
+  color: #999999;
+  text-align: right;
+  line-height: 36rpx;
+}
+.sure_btn{
+  height:87rpx;
+  line-height: 87rpx;
+  font-size: 32rpx;
+  text-align: center;
+}

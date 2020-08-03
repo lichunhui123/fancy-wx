@@ -1,0 +1,11 @@
+{
+    "usingComponents": {
+        "authorization-login": "/component/authorizationLogin/index",
+        "growth-value-toast": "/component/growthValueToast/index"
+    },
+    "navigationBarTitleText": "扫码取件",
+    "enablePullDownRefresh": false,
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+}

@@ -1,0 +1,14 @@
+<view class="groupbuy_body">
+    <view class='groupbuy_Succeed'>
+        <view class='succeed_header'>
+            <image class="succeed_img" src="../../image/success.png"></image>
+            <view class="succeed_title">支付成功</view>
+        </view>
+        <view class="succeed_hint">
+          我们会尽快为您配送，期待您再次光临！
+        </view>
+        <view class="gohome_button" bindtap="gotoHomeBtn">返回首页</view>
+    </view>
+    <!--成长值 积分 toast-->
+    <growth-value-toast wx:if="{{showGrowthValueToast}}" growth="{{growth}}" credits="{{credits}}"></growth-value-toast>
+</view>

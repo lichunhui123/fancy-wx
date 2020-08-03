@@ -1,0 +1,16 @@
+<view class='openBindPhone' wx:if="{{showGetPhone}}">
+    <view class='bingPhoneCentent'>
+        <image class='bingPhonebg' src="../../image/bindPonebg.png"></image>
+        <view class='closeBindPhone' bindtap='closeBindPhoneFn'>
+            <image class='closeX' src="../../image/bindPoneClear.png"></image>
+        </view>
+        <view class='bindPhoneCenter'>
+            <view class='bindPhoneMagess'>
+                <view class='bindPhoneTitle'>需要您的同意</view>
+                <view class='bindPhoneText'>需要您的手机授权</view>
+                <view class='bindPhoneText'>授权后可享受更多优质服务</view>
+            </view>
+            <button  class='confirmButton' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 确认授权</button>
+        </view>
+    </view>
+</view>

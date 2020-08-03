@@ -1,0 +1,14 @@
+<view>
+    <view class="step_con">
+        <image src="https://img.goola.cn/mallImages/20191212/b366246e93674515bffc09309db2218e.png"></image>
+        <image src="https://img.goola.cn/mallImages/20191212/0c3e6bf176ed4965a0f8893611ae04fc.png"></image>
+        <image src="https://img.goola.cn/mallImages/20191212/90565c9734dc4495b1e82dcfd020fd78.jpg"></image>
+    </view>
+    <view class="action_btn">
+        <view class="scan_btn" bindtap="branchScan">扫一扫店铺二维码</view>
+        <view class="buyCar_btn">
+            <view bindtap="goBuyCar" data-index="1">已选商品</view>
+            <view bindtap="goBuyCar" data-index="2">购买记录</view>
+        </view>
+    </view>
+</view>

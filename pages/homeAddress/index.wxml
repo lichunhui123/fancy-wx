@@ -1,0 +1,34 @@
+<wxs module="filter" src="../../filter/filter.wxs"></wxs>
+<view>
+    <view class="header">
+        <image src="../../image/address_bg.png"></image>
+        <view class="header_con">
+            <view class="header_icon">当前定位</view>
+            <view class="header_address">
+                <view><image src="../../image/address_location.png"></image></view>
+                <view class="header_text">{{selectAddress}}</view>
+            </view>
+        </view>
+    </view>
+    <view>
+        <view class="address_title">
+            <view class="address_line"><view class="address_line_right"></view></view>
+            <text>收货地址</text>
+            <view class="address_line"><view class="address_line_left"></view></view>
+        </view>
+        <view class="address_list_par">
+            <view class="address_list {{item.active?'active':''}}" wx:for="{{addressList}}" wx:key="index" data-itemdata="{{item}}" bindtap="select">
+                <view class="address_name">{{item.provinceName}}{{item.cityName}}{{item.districtName}}{{item.address}}</view>
+                <view class="address_text">
+                    <text>{{item.name}}</text>
+                    <text>{{filter.encryptPhone(item.phone)}}</text>
+                </view>
+                <image src="../../image/afterSelect.png" wx:if="{{item.active}}"></image>
+            </view>
+        </view>
+    </view>
+    <view class="add_address" catchtap="addAddress">新建地址</view>
+    <!-- 用户授权登录 -->
+    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+    <!-- 用户授权登录 -->
+</view>

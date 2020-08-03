@@ -1,0 +1,69 @@
+/* pages/home/memberCode/index.wxss */
+
+.mask {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.70);
+}
+
+.maskBox {
+  width: 650rpx;
+  height: 352rpx;
+  background: white;
+  border-radius: 20rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.crown {
+  width: 164rpx;
+  height: 76rpx;
+  position: absolute;
+  top: -76rpx;
+  left: 50%;
+  transform: translate(-50%);
+  vertical-align:bottom;
+}
+
+.crowncode {
+  height: 106rpx;
+  line-height: 106rpx;
+  font-size: 36rpx;
+  color: #333;
+  text-align: center;
+}
+
+.ercode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+
+.crownnum {
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  margin-top: 5rpx;
+}
+
+.crownt {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+}
+.offtop{
+  width: 40rpx;
+  height: 70rpx;
+  position: absolute;
+  top: -70rpx;
+  right: 30rpx;
+}

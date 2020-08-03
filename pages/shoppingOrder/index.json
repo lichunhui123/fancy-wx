@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "Topayfor":"./topayfor/index",
+    "authorizationGetPhone":"../../component/authorizationGetPhone/index",
+    "deliveryTime":"./deliveryTime/index"
+  },
+  "navigationBarTitleText": "提交订单"
+}

@@ -1,0 +1,403 @@
+html, page {
+    width: 100%;
+    height: 100%;
+    font-family: PingFangSC-Regular;
+    background: #F8F8F8;
+}
+.data_content{
+    display:flex;
+}
+.data_left_list{
+    width:172rpx;
+    height:100%;
+    overflow: auto;
+}
+.data_left_list view{
+    width:172rpx;
+    height:100rpx;
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 100rpx;
+    background:  #F8F8F8;
+    text-align: center;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;/*显示几行*/
+}
+.data_left_list .active{
+    color: #333333;
+    background: #FFFFFF;
+    font-weight: 600;
+}
+.data_right_list{
+    width:578rpx;
+    height:100%;
+    overflow: auto;
+    background: #ffffff;
+}
+.data_goods_item{
+    width:538rpx;
+    height:240rpx;
+    margin:0 20rpx;
+    display:flex;
+    position: relative;
+    border-bottom: 1rpx solid #EBEBEB;
+}
+.data_goods_item:last-of-type{
+  border-bottom: none;
+}
+.data_goods_item_left{
+    width:200rpx;
+    height:200rpx;
+    margin:20rpx 10rpx 20rpx 0;
+}
+.data_goods_item_left image{
+    width:100%;
+    height:100%;
+}
+.data_goods_item_right{
+    width:338rpx;
+    margin: 15rpx 0 20rpx;
+    position: relative;
+}
+.goods_name{
+    max-height:76rpx;
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 38rpx;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;/*显示几行*/
+}
+.goods_spec{
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 24rpx;
+    margin-top: 5rpx;
+}
+.goods_icon{
+  display:flex;
+  align-items: center;
+}
+.goods_icon text{
+    display: inline-block;
+    border: 1rpx solid #FF3B30;
+    border-radius: 4rpx;
+    font-size: 20rpx;
+    color: #FF3B30;
+    height:28rpx;
+    padding:0 10rpx;
+    margin-right: 20rpx;
+    margin-top: 10rpx;
+}
+.goods_price{
+    font-size: 28rpx;
+    color: #FF3B30;
+    line-height: 36rpx;
+    position: absolute;
+    bottom:0;
+    left:0;
+}
+.goods_price .goods_price_text1{
+    font-size: 32rpx;
+    margin-left: 2rpx;
+}
+.goods_price .goods_price_text2{
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 24rpx;
+    margin-left: 12rpx;
+    text-decoration: line-through;
+}
+.goods_price1{
+    position: absolute;
+    bottom:0;
+    left:0;
+}
+.goods_price_discount{
+    font-size: 32rpx;
+    line-height: 32rpx;
+    color: #FF3B30;
+}
+.goods_price_origin{
+    font-size: 20rpx;
+    line-height: 20rpx;
+    margin-top: 8rpx;
+    color: #999999;
+    text-decoration:line-through;
+}
+.disnum{
+    font-size: 28rpx;
+}
+.addBuyIcon{
+    position: absolute;
+    right:0;
+    bottom:20rpx;
+    width:50rpx;
+    height:50rpx;
+}
+.addBuyIcon image{
+    width:100%;
+    height:100%;
+}
+.addbox{
+    width: 196rpx;
+    height: 102rpx;
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    right:0;
+    bottom:-10rpx;
+}
+.addbox .liue{
+    width: 62rpx;
+    height:102rpx;
+    box-sizing: border-box;
+    padding:30rpx 10rpx;
+}
+.addbox image{
+    width: 42rpx;
+    height:42rpx;
+}
+.addbox input{
+    width: 72rpx;
+    height: 42rpx;
+    text-align: center;
+    font-size: 28rpx;
+}
+.nologin{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: 82rpx;
+}
+.nologin .goodnodata{
+    width: 450rpx;
+    height:450rpx;
+    margin-bottom: 20rpx;
+}
+.notitle{
+    font-size: 24rpx;
+    color: #333333;
+}
+.shopbottom{
+    width:100%;
+    height:198rpx;
+}
+/*购物袋入口样式 start */
+.pagebuttom{
+    width:100%;
+    height:90rpx;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    z-index: 999;
+    bottom: 35rpx;
+  }
+  .buybox{
+    width:690rpx;
+    height:90rpx;
+    background: rgba(0,0,0,0.80);
+    border-radius: 50px;
+    display:flex;
+    position: relative;
+  }
+  .buydai{
+    width: 90rpx;
+    height: 107rpx;
+    position: absolute;
+    left: 60rpx;
+    bottom:-6.6rpx;
+  }
+  .buydai image{
+    width: 90rpx;
+  }
+  .stay{
+    width: 28rpx;
+    height: 28rpx;
+    background: #FF3B30;
+    border: 1rpx solid #FFFFFF;
+    border-radius: 50%;
+    font-size: 16rpx;
+    color:white;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 28rpx;
+    position: absolute;
+    top: -1rpx;
+    right: -8rpx;
+  }
+  .gouwuche{
+    width: 500rpx;
+    height: 90rpx;
+    border-radius: 50px 0 0 50px;
+    text-align: right;
+    padding-right: 30rpx;
+    line-height: 90rpx;
+    color:white;
+    font-size: 28rpx;
+  }
+  .numsize{
+    font-size: 42rpx;
+  }
+  .buybtn{
+    width: 190rpx;
+    height: 90rpx;
+    background: #F2922F;
+    border-radius: 0 50rpx 50rpx 0;
+    text-align: center;
+    line-height: 90rpx;
+    font-size: 30rpx;
+    color:white; 
+  }
+  /*购物袋入口样式 end */
+
+  /*购物袋样式 start*/
+  .shade{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    background: rgba(0,0,0,0.70);
+    display:flex;
+    flex-direction: column;
+  }
+  .hui{
+    flex:1;
+  }
+  .shoppbox{
+    width: 100%;
+    height:870rpx;
+    overflow-y: scroll;
+    background: #FFFFFF;
+    border-radius: 10rpx 10rpx 0 0;
+    display:flex;
+    flex-direction: column;
+  }
+  .shoptop{
+    width:100%;
+    height:70rpx;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding:0 20rpx;
+    font-size: 24rpx;
+    color: #F2922F;
+    border-bottom: 1rpx solid #EBEBEB;
+  }
+  .qing image{
+    width:24rpx;
+    height:24rpx;
+  }
+  .qing{
+    color:#999;
+    display:flex;
+    align-items: center;
+  }
+  .shopcontent1{
+    flex:1;
+    overflow: scroll;
+    padding-left: 20rpx;
+  }
+  .goods_list2{
+    width: 100%;
+    min-height: 205rpx;
+    background: #FFFFFF;
+    border-bottom: 1rpx solid #EBEBEB;
+    display:flex;
+    padding-right: 30rpx;
+    box-sizing: border-box;
+  }
+  .shopimg{
+    width: 160rpx;
+    height: 160rpx;
+  }
+  .list_left2{
+    width:160rpx;
+    min-height: 200rpx;
+    display:flex;
+    align-items: center;
+    margin-right: 20rpx;
+  }
+  .list_right{
+    flex:1;
+    padding:20rpx 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .good_title{
+    max-height:84rpx;
+    font-weight: 600;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;/*显示几行*/
+    line-height: 42rpx;
+    font-size: 28rpx;
+    color:#333;
+  }
+  .spec{
+    font-size: 24rpx;
+    line-height: 24rpx;
+    color: #999;
+    font-weight: 500;
+    margin-top: 7rpx;
+  }
+  .goodbottom{
+    line-height: 30rpx;
+    margin-top: 14rpx;
+  }
+  .price2{
+    font-size: 28rpx;
+    color: #EF0000;
+  }
+  .discount{
+    font-size: 36rpx;
+    color: #FF3B30;
+  }
+  .price{
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 24rpx;
+    margin-top: 14rpx;
+    text-decoration: line-through;
+  }
+  .mou1{
+    font-size: 24rpx;
+    color:#999;
+    padding-left: 27rpx;
+    text-decoration:line-through;
+  }
+  .original{
+    text-decoration: line-through;
+    margin-left: 20rpx;
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 24rpx;
+  }
+  .saleItem{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .saleItem text{
+    display: inline-block;
+    border: 1rpx solid #FF3B30;
+    border-radius: 4rpx;
+    font-size: 20rpx;
+    color: #FF3B30;
+    height:28rpx;
+    padding:0 10rpx;
+    margin-right: 20rpx;
+    margin-top:10rpx;
+  }
+  /*购物袋样式 end*/

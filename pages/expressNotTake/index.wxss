@@ -1,0 +1,203 @@
+/* pages/expressNotTake/index.wxss */
+.order_wrap {
+  width: 100%;
+}
+.head_hint{
+  width: 100%;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  color: white;
+  background: rgba(242,146,47,0.70);
+  position: fixed;
+  top: 0;
+  left:0;
+}
+.sign_content{
+  padding: 60rpx 20rpx 220rpx 20rpx;
+}
+.phonePadding{
+  padding-bottom: 270rpx;
+}
+.sign_item{
+  min-height: 100rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow: 0 0 6rpx 3rpx #EBEBEB;
+  margin-top: 20rpx;
+}
+.sign_item_title{
+  height: 100rpx;
+  background: #F8F8F8;
+  line-height: 100rpx;
+  font-size: 32rpx;
+  color: #333;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+.sign_item_list{
+   background: white;
+   height: 116rpx;
+   padding: 20rpx 0;
+   border-bottom: 1rpx solid #ebebeb;
+   box-sizing: border-box;
+   display: flex;
+   justify-content: flex-start;
+}
+
+.aloneChoose{
+  height: 76rpx;
+  padding: 0 20rpx;
+  display: flex;
+  align-items: center;
+  
+}
+.aloneChoose image{
+  width: 32rpx;
+  height: 32rpx;
+}
+.sign_right{
+  height: 76rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sign_source{
+  font-size: 30rpx;
+  color: #333;
+}
+.express{
+  padding-right: 30rpx;
+}
+.sign_code{
+  font-size: 32rpx;
+  color: #999;
+  display: flex;
+}
+.signcode{
+  width: 210rpx;
+}
+.code_color{
+  color: #333;
+}
+.codeAll_color{
+  color: #F2922F;
+}
+.sign_box{
+  background: #fff;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1rpx solid #ebebeb;
+  align-items: center;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 100rpx;
+  left: 0;
+}
+.sign_for{
+  width: 188rpx;
+  height: 70rpx;
+  border-radius:70rpx;
+  background: #F2922F;
+  text-align: center;
+  line-height: 70rpx;
+  color: white;
+  font-size: 26rpx;
+}
+
+.allbuy{
+  height: 100rpx;
+  font-size: 28rpx;
+  color: #313131;
+  display: flex;
+  align-items: center;
+}
+.allbuy image{
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 10rpx;
+}
+.tab_bottom {
+  width: 100%;
+  height: 100rpx;
+  border-top: 1rpx solid #ebebeb;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background:#fff;
+}
+
+.tab_list {
+  flex: 1;
+  font-size: 22rpx;
+  color: #333;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab_active {
+  color: #f2922f;
+}
+
+.tab_list image {
+  width: 44rpx;
+  height: 44rpx;
+  vertical-align:bottom;
+  margin-top: 10rpx;
+}
+.tab_text{
+  margin-top: 5rpx;
+}
+.no_list{
+  text-align: center;
+}
+.no_list image{
+  width:450rpx;
+  height:450rpx;
+  margin-top:82rpx;
+  margin-bottom: 20rpx;
+}
+.no_text{
+  font-size: 24rpx;
+  color: #333333;
+  line-height: 24rpx;
+}
+.no_phone{
+  text-align: center;
+}
+.no_phone image{
+  width:450rpx;
+  height:450rpx;
+  margin-top:82rpx;
+  margin-bottom: 20rpx;
+}
+.no_button{
+  width:180rpx;
+  height:60rpx;
+  border: 2rpx solid #F2922F;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #F2922F;
+  text-align: center;
+  line-height: 60rpx;
+  margin:0 auto;
+  margin-top: 40rpx;
+}
+
+.bottomActive{
+  border-bottom: 0;
+}
+.sign_phone{
+  bottom:150rpx;
+}
+.tab_phone{
+  bottom:50rpx;
+}

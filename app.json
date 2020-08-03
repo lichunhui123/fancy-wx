@@ -1,0 +1,98 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/fingerMall/index",
+    "pages/shoppingCar/index",
+    "pages/cloudStore/index",
+    "pages/personalOrderList/index",
+    "pages/shoppingDiscountCloud/index",
+    "pages/drawDiscount/index",
+    "pages/shoppingOrder/index",
+    "pages/cloudStoreDetail/index",
+    "pages/water/index",
+    "pages/personal/index",
+    "pages/personalWaterDiscount/index",
+    "pages/waterGoodDetail/index",
+    "pages/waterAddaddress/index",
+    "pages/waterAddress/index",
+    "pages/group/index",
+    "pages/homeAddress/index",
+    "pages/homeDiscount/index",
+    "pages/homeCommunity/index",
+    "pages/homeCommunitySeach/index",
+    "pages/fingerMallGoodDetail/index",
+    "pages/shoppingDiscount/index",
+    "pages/shoppingPaySucceed/paySucceed",
+    "pages/personalSetting/index",
+    "pages/personalBindPhone/index",
+    "pages/personalChangePhone/index",
+    "pages/personalHistoryOrder/index",
+    "pages/personalWaterHistoryOrderList/index",
+    "pages/personalWaterHistoryOrderDetail/index",
+    "pages/personalOrderDetail/index",
+    "pages/groupGoodDetail/index",
+    "pages/express/index",
+    "pages/expressProtocol/index",
+    "pages/expressAddsbook/index",
+    "pages/expressOrderDetail/index",
+    "pages/expressSupportValue/index",
+    "pages/expressSuccess/index",
+    "pages/expressAddaddress/index",
+    "pages/expressSelectSite/index",
+    "pages/expressNotTake/index",
+    "pages/expressOrder/index",
+    "pages/selfHelpPurchasing/index",
+    "pages/selfHelpShoppingCar/index",
+    "pages/nearbyStores/index",
+    "pages/searchStores/index",
+    "pages/networkTimeout/networkTimeout",
+    "pages/scanPickUp/index",
+    "pages/setAddress/setAddress",
+    "pages/webview/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#F2922F",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "selectedIconPath": "/image/tabhome.png",
+        "iconPath": "/image/tabhome1.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/shoppingCar/index",
+        "selectedIconPath": "/image/tabshop.png",
+        "iconPath": "/image/tabshop1.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/personal/index",
+        "selectedIconPath": "/image/tabmy.png",
+        "iconPath": "/image/tabmy1.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 6000,
+    "downloadFile": 6000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "位置信息将用于商品地区库存、附近网点等服务"
+    }
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx8cd2e2224bc5d697",
+    "wx27dd83e373846f22"
+  ],
+  "sitemapLocation": "sitemap.json"
+}

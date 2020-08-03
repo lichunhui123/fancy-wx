@@ -1,0 +1,27 @@
+.growthValueToast{
+  position:fixed;
+  bottom:120rpx;
+  left:20rpx;
+  z-index: 100;
+}
+.growthValue{
+  position:absolute;
+  left:-200rpx;
+  width:196rpx;
+  height:72rpx;
+}
+.img{
+  width:196rpx;
+  height:72rpx;
+  position:absolute;
+}
+.title{
+  position:absolute;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  height:50rpx;
+  width:120rpx;
+  line-height: 50rpx;
+  left:80rpx;
+  top:22rpx;
+}

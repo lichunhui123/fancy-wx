@@ -1,0 +1,20 @@
+<view class="support_value">
+    <view class="support_con">
+    <view class="support_title">物品声明价值</view>
+    <view class="support_value_num">
+        <input type="number" value="{{declarativeValueAmount}}" bindinput="changeDeclarativeValueAmount"/>
+        <text>元</text>
+    </view>
+    <view class="support_expense">保费：<text>¥{{guaranteeValueAmount}}</text></view>
+    <view class="support_tip">
+        <view class="tip_title">温馨提示：</view>
+        <view class="tip_desc">
+            <view>1.请按物品实际价值来填写物品声明价值。</view>
+            <view>2.运送过程中出现丢失或破损，会按物品声明的 实际价值进行一定比例赔付。保价不超过30万元 (含)，超额保价部分无法理赔。</view>
+            <view>3.客户寄递货物时向我司 声明货物价值，并支付相应费用。若配送过程中由于京东责任造成损失的， 京东会按照声明价值和损失比例进行赔偿。</view>
+            <view>4.保费费率的计算规则：单票声明价值500元(含)以下1元/票；500-1000元 (含) 以下：2元/票；1000元以上：5‰（价格进位规则：四舍五入取整) ，保价上限30万元。</view>
+        </view>
+    </view>
+    <view class="support_button" bindtap="sure">确定</view>
+    </view>
+</view>

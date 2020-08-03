@@ -1,0 +1,26 @@
+.timeout-imgCon{
+    margin-top: 82rpx;
+    position:relative;
+    left:50%;
+    margin-left:-225rpx;
+}
+.timeout-img{
+    width:450rpx;
+    height:450rpx;
+}
+.timeout-connection{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #333333;
+    text-align: center;
+    line-height: 28rpx;
+    margin-top: 20rpx;
+}
+.timeout-refresh{
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #F2922F;
+    text-align: center;
+    line-height: 24rpx;
+    margin-top: 20rpx;
+}

@@ -1,0 +1,64 @@
+<!--pages/expressNotTake/index.wxml-->
+<view class="order_wrap">
+	<view class="head_hint" wx:if="{{!noPhone&&!noData}}">亲，您的手机尾号{{phoneSub}}的以下快件请带我回家~</view>
+	<view class="head_hint" wx:if="{{!noPhone&&noData}}">亲，您手机尾号{{phoneSub}}没有待取快件，快去指尖生活派首页逛逛吧~</view>
+	<view class="head_hint" wx:if="{{noPhone}}">亲，请先绑定手机号才能取件哦~</view>
+	<view class="sign_content {{isPhoneX?'phonePadding':''}}" wx:if="{{listData.length>0&&phone}}">
+		<view class="sign_item" wx:for="{{listData}}" wx:key="index">
+			<view class="sign_item_title">{{item.mecName}}</view>
+			<view wx:if="{{item.list&&item.list.length>0}}">
+				<view class="sign_item_list {{item.list.length==1?'bottomActive':''}}" wx:for="{{item.list}}" wx:for-item="val" wx:for-index="ind" wx:key="{{val.id}}" bindtap="itemCheck" data-id="{{val.id}}">
+					<view class="aloneChoose">
+						<image src="../../image/{{val.choose?'afterSelect':'beforeSelect'}}.png"></image>
+					</view>
+					<view class="sign_right">
+						<view class="sign_source"><text class="express">{{val.carrierName}}</text><text>{{val.expressCode}}</text></view>
+						<view class="sign_code">
+							<view class="signcode"><text>货架号：</text><text class="code_color">{{val.cargo}}</text></view>取件码：<text class="codeAll_color">{{val.putawaySerialNumber}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="sign_box {{isPhoneX?'sign_phone':''}}" wx:if="{{listData.length>0}}">
+		<view class="allbuy" bindtap="checkall">
+			<image src="../../image/{{allChoose?'afterSelect':'beforeSelect'}}.png"></image>全选
+		</view>
+		<view class="sign_for" bindtap="signClick">签收</view>
+	</view>
+	<!--无结果-->
+	<view class="no_list" wx:if="{{noData&&!noPhone}}">
+			<image src="../../image/nodata.png"/>
+			<view class="no_text">亲，当前没有您待取件信息呢！</view>
+	</view>
+	<!--未绑定手机-->
+	<view class="no_phone" wx:if="{{noPhone}}">
+			<image src="../../image/nodata.png"/>
+			<view class="no_text">您未绑定手机号，无法取件</view>
+			<view class="no_button" bindtap="bindPhone">去绑定</view>
+	</view>
+	<!-- 底部tab -->
+	<view class="tab_bottom {{isPhoneX?'tab_phone':''}}">
+		<view class="tab_list tab_active" bindtap="signFor">
+			<view>
+				<image src="../../image/tab01_active.png"></image>
+			</view>
+			<view class="tab_text">未取件</view>
+		</view>
+		<view class="tab_list" bindtap="sendparcel">
+			<view>
+				<image src="../../image/tab02.png"></image>
+			</view>
+			<view class="tab_text">通知快递</view>
+		</view>
+		<view class="tab_list" bindtap="orderfn">
+			<view>
+				<image src="../../image/tabmy1.png"></image>
+			</view>
+			<view class="tab_text">我的快递</view>
+		</view>
+	</view>
+		<!--成长值 积分 toast-->
+	<growth-value-toast wx:if="{{showGrowthValueToast}}" growth="{{growth}}" credits="{{credits}}"></growth-value-toast>
+</view>

@@ -1,0 +1,119 @@
+<wxs module="filter" src="../../filter/filter.wxs"></wxs>
+<view class="express_con">
+    <view class="address_list">
+        <view class="address_icon"><image src="../../image/send_icon.png"></image></view>
+        <view class="address_text" bindtap="sendClick">
+            <view class="address_selected" wx:if="{{sendAddress.id}}">
+                <text>{{sendAddress.name}}</text><text>{{sendAddress.phone}}</text>
+                <view>{{sendAddress.province}}{{sendAddress.city}}{{sendAddress.area}}{{sendAddress.address}}</view>
+            </view>
+            <view wx:else class="address_default">点击填写寄件人信息</view>
+        </view>
+        <view class="address_book" bindtap="sendClick">
+            <view class="director_icon"><image src="../../image/director.png"></image></view>
+            <view class="director_text">地址簿</view>
+        </view>
+    </view>
+    <view class="address_list">
+        <view class="address_icon"><image src="../../image/consignee_icon.png"></image></view>
+        <view class="address_text" bindtap="receiveClick">
+            <view class="address_selected" wx:if="{{receiveAddress.id}}">
+                <text>{{receiveAddress.name}}</text><text>{{receiveAddress.phone}}</text>
+                <view>{{receiveAddress.province}}{{receiveAddress.city}}{{receiveAddress.area}}{{receiveAddress.address}}</view>
+            </view>
+            <view wx:else class="address_default">点击填写收件人信息</view>
+        </view>
+        <view class="address_book" bindtap="receiveClick">
+            <view class="director_icon"><image src="../../image/director.png"></image></view>
+            <view class="director_text">地址簿</view>
+        </view>
+    </view>
+    <view class="address_null"></view>
+    <view class="address_center">
+        <view class="address_title clear">
+            <view class="title_left">寄件方式</view>
+            <view class="title_right">自送服务点</view>
+        </view>
+        <view class="address_branch">
+            <view class="branch_title">服务门店</view>
+            <view class="branch_con" bindtap="goSelectSite">
+                <view class="branch_icon"><image src="../../image/branch_icon.png"></image></view>
+                <view class="branch_name" wx:if="{{branchesInfo}}">
+                    <view class="branch_name_text">
+                        <view>{{branchesInfo.mecName}}</view>
+                        <view>（{{branchesInfo.distance}}）</view>
+                    </view>
+                    <view class="branch_site">{{branchesInfo.address}}</view>
+                </view>
+                <view class="branch_no" wx:else>附近暂无服务门店</view>
+            </view>
+        </view>
+        <view class="express_way clear">
+            <view class="express_left">选择快递公司</view>
+            <view class="express_right" bindtap="selectExpress" wx:if="{{expressData}}">
+                <image wx:if="{{expressCompany}}" class="express_icon" src="{{expressCompany.iconUrl}}"></image>
+                <text wx:if="{{expressCompany}}" class="express_selected">{{expressCompany.carrierName}}</text>
+                <text wx:else>请选择</text>
+                <image class="right_icon" src="../../image/right_icon.png"></image>
+            </view>
+        </view>
+    </view>
+    <view class="address_null"></view>
+    <view class="express_list">
+        <view class="express_name">重量</view>
+        <view class="express_text" bindtap="selectWeight">
+            <text class="express_active">{{weight}}kg</text>
+            <image src="../../image/right_icon.png"></image>
+        </view>
+    </view>
+    <view class="express_list">
+        <view class="express_name">保价</view>
+        <view class="express_text" bindtap="goSupportValue">
+            <text wx:if="{{guaranteeValueAmount>0}}" class="express_active">{{guaranteeValueAmount}}</text>
+            <text wx:else>建议保价</text>
+            <image src="../../image/right_icon.png"></image>
+        </view>
+    </view>
+    <view class="express_list">
+        <view class="express_name">体积</view>
+        <view class="express_text" bindtap="fillVolume">
+            <text wx:if="{{volume.long&&volume.width&&volume.height}}" class="express_active">{{volume.long}}cm*{{volume.width}}cm*{{volume.height}}cm</text>
+            <text wx:else>必填项，请输入包裹的体积</text>
+            <image src="../../image/right_icon.png"></image>
+        </view>
+    </view>
+    <view class="submit_con {{isPhoneX?'submit_phone':''}}">
+        <view class="submit_left">
+            <view class="submit_price">寄付：<text>¥{{filter.getNum(freightPrice)}}</text></view>
+            <view class="submit_agreement">
+                <image src="{{agree?'../../image/afterSelect.png':'../../image/beforeSelect.png'}}" bindtap="agreeClick"></image>
+                <text class="agreement_text">我已阅读</text>
+                <view bindtap="protocolClick" class="protos">《快件服务协议》</view>
+            </view>
+        </view>
+        <view class="submit_right {{submitStatus?'submit_active':''}}" bindtap="addExpressOrder">下单</view>
+    </view>
+    <view class="tab_bottom {{isPhoneX?'tab_phone':''}}">
+		<view class="tab_list" bindtap="signFor">
+			<view>
+				<image src="../../image/tab01.png"></image>
+			</view>
+			<view class="tab_text">未取件</view>
+		</view>
+		<view class="tab_list tab_active">
+			<view>
+				<image src="../../image/tab02_active.png"></image>
+			</view>
+			<view class="tab_text">通知快递</view>
+		</view>
+		<view class="tab_list" bindtap="orderfn">
+			<view>
+				<image src="../../image/tabmy1.png"></image>
+			</view>
+			<view class="tab_text">我的快递</view>
+		</view>
+	</view>
+    <select-express show="{{showSelectExpress}}" expressData="{{expressData}}" expressCompany="{{expressCompany}}" bind:sure="sureExpress" bind:close="closeExpress"></select-express>
+    <select-weight wx:if="{{showSelectWeight}}" weight="{{weight}}" bind:sure="sureWeight" bind:cancel="cancelWeight"></select-weight>
+    <volume show="{{showVolume}}" volume="{{volume}}" bind:sure="sureVolume" bind:close="closeVolume"></volume>
+</view>

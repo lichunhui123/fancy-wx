@@ -1,0 +1,113 @@
+/* pages/discountChoose/index.wxss */
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+}
+
+.discountWrap {
+  width: 100%;
+  height: 100%;
+  overflow-y:scroll; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #F8F8F8;
+  position: relative;
+}
+.nonuse{
+  width: 710rpx;
+  height: 88rpx;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  background:white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.nonuse image{
+  width: 32rpx;
+  height:32rpx;
+}
+
+.ticket_item {
+  width: 710rpx;
+  height: auto;
+  background: #fff;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket_left {
+  width: 230rpx;
+  height: 116rpx;
+  color: #f2922f;
+  display: flex;
+  font-size: 32rpx;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.price{
+  font-size: 52rpx;
+  padding: 0 6rpx;
+}
+.ticket_right {
+  width: 480rpx;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mk{
+  font-size: 26rpx;
+}
+.ticket_right_con {
+  width: 400rpx;
+  height: 100%;
+  padding: 32rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket_name {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.ticket_time {
+  height: 28rpx;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.ticket_type {
+  height: 24rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+.usebtn image{
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+}
+.nouse{
+  width: 32rpx;
+  height: 88rpx;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+}

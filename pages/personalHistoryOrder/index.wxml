@@ -1,0 +1,16 @@
+<view>
+    <!--<view class="history_list" bindtap="goGroupHistory">
+        <view class="history_list_left">
+            <image src="../../image/pintuantu.png"></image>
+            <text>指尖拼团</text>
+        </view>
+        <view class="history_list_right"><image src="../../image/rightIcon.png"></image></view>
+    </view>-->
+    <view class="history_list" bindtap="goWaterHistory">
+        <view class="history_list_left">
+            <image src="../../image/watertu.png"></image>
+            <text>指尖水管家</text>
+        </view>
+        <view class="history_list_right"><image src="../../image/rightIcon.png"></image></view>
+    </view>
+</view>

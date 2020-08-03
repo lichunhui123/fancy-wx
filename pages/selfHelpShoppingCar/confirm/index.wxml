@@ -1,0 +1,14 @@
+<view class="confirm">
+    <view class="confirm_bg"></view>
+    <view class="confirm_con">
+        <view class="confirm_title">{{confirmConfig.title}}</view>
+        <view class="confirm_content">
+            <view class="content_list" wx:for="{{confirmConfig.content}}" wx:key="index">
+                <view class="contnet_title">{{item.title}}</view>
+                <view class="content_standard">{{item.standard}}</view>
+                <view class="content_tip">{{item.tip}}</view>
+            </view>
+        </view>
+        <view class="sure_btn" bindtap="sureClick" style="color:{{confirmConfig.confirmColor}}">{{confirmConfig.confirmText}}</view>
+    </view>
+</view>
