@@ -3,9 +3,10 @@
 <view class="payformask">
   <view class="maskc" bindtap="maskClick"></view>
   <view class="ensureorder">
-      <view class="sureq {{claimTime?'su_h':''}}">
+      <view class="sureq {{(TabShow&&pinorclo)||(!TabShowc&&(laimTime||pickUpTime)&&pinorclo)?'su_h':''}}">
         <view>该订单内包含自提商品，需要您到点自提，请确认提货信息</view>
-        <view class="sure_time" wx:if="{{claimTime}}">拼团商品预计  <text class="su_ti">{{claimTime}}</text>  自提</view>
+        <view class="sure_time" wx:if="{{(TabShow&&pinorclo==1)||(!TabShowc&&laimTime&&pinorclo==1)}}">拼团商品预计  <text class="su_ti">{{claimTime}}</text>  自提</view>
+        <view class="sure_time" wx:if="{{(TabShow&&pinorclo==2)||(!TabShowc&&pickUpTime&&pinorclo==2)}}">云店商品预计  <text class="su_ti">{{pickUpTime.date}}  {{pickUpTime.hour}}:{{pickUpTime.minute}}（{{pickUpTime.week}}）</text>  可自提</view>
       </view>
       <view class="getorderTab" wx:if="{{TabShow}}">
         <view class="gettorderT" catchtap="groupTabClick"><view class="{{pinorclo==1?'get_active':''}}">拼团</view></view>

@@ -1,5 +1,5 @@
-<!--pages/personalWaterDiscount/index.wxml-->
-<view class="waterdiscount">
+<!-- pages/personalWaterDiscount/index.wxml -->
+<view class="waterdiscount {{noData&&waterTicket.length<1?'waterdiscount_no':''}}">
   <view class="water_item" wx:for="{{waterTicket}}" wx:key="{{index}}" wx:if="{{waterTicket.length>0}}">
     <view class="content">
       <view class="left">
@@ -14,7 +14,8 @@
     </view>
     <view>
       <view class="useexplain">
-        <view bindtap="explainClick" class="explain" data-ind="{{index}}">使用说明
+        <view bindtap="explainClick" class="explain" data-ind="{{index}}">
+          使用说明
           <image src="../../image/{{item.explainShow?'shoptop':'shopbottom'}}.png"></image>
         </view>
       </view>
@@ -28,8 +29,8 @@
     </view>
   </view>
   <view class="nologin" wx:if="{{noData&&waterTicket.length<1}}">
-      <image src="../../image/nodata.png" class="goodnodata"></image>
-      <view class="notitle">暂无可用水票，去首页逛逛吧！</view>
-      <view class="addbottom" catchtap="tobuyWater">点击去购买</view>
-    </view>
+    <image src="../../image/nodata.png" class="goodnodata"></image>
+    <view class="notitle">暂无可用水票，去首页逛逛吧！</view>
+    <view class="addbottom" catchtap="tobuyWater">点击去购买</view>
+  </view>
 </view>

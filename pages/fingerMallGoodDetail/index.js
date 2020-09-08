@@ -13,6 +13,7 @@ Page({
     shoppingNum:0,//购物车数量
     toTopshow: false, //详情底部置顶
     skuCode:null, //商品skuCode
+    showDiscountPrice:false,//是否显示限时折扣价格
     goodsDetail:{}, //商品详情数据
     imgHttp:app.globalData.imgUrl,
     urlImg:[],  //购物车图片
@@ -22,6 +23,222 @@ Page({
     iphone:false,  //苹果适配
     branchesId:'', //拼团站点id
     cloudBranchId:'', //云店站点id
+    showShare:false,//显示分享弹窗
+    showPoster:false,//显示海报图弹窗
+    painting:{},
+    wxCode:"",//小程序页面的小程序码 base64
+    posterImage:"",//海报canvas图
+  },
+  //点击分享好友
+  shareClick(){
+    this.setData({
+      showShare:true
+    })
+  },
+  //取消分享
+  cancelShare(){
+    this.setData({
+      showShare:false
+    })
+  },
+  //点击取消海报弹窗
+  closePoster(){
+    this.setData({
+      showPoster:false
+    });
+  },
+  cancelBubble(){
+    return false;
+  },
+  //弹出海报弹窗
+  getPoster(){
+    this.setData({
+      showShare:false
+    });
+    wx.showLoading({
+      title: '绘制分享图片中',
+      mask: true
+    });
+    if(this.data.wxCode){
+      this.createPosterImage();
+    }else{
+      service.getwxacodeunlimit({
+        "page": "pages/fingerMallGoodDetail/index",
+        "scene": this.data.skuCode,
+        "width": 124
+      }).then(res=>{
+        if(res.data.result==200){
+          this.setData({
+            wxCode:res.data.data
+          },()=>{
+            this.createPosterImage();
+          });
+        }else{
+          wx.hideLoading();
+          wx.showToast({
+            title: '当前网络状态较差，请稍后重试',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      }).catch(()=>{
+        wx.showToast({
+          title: '当前网络状态较差，请稍后重试',
+          icon: 'none',
+          duration: 2000
+        });
+        wx.hideLoading();
+      });
+    }
+  },
+  //生成海报图片
+  createPosterImage(){
+    let wxCode = this.data.wxCode;//小程序码 base64的格式
+    //声明文件系统
+    const fs = wx.getFileSystemManager();
+    //随机定义路径名称
+    let times = new Date().getTime();
+    let codeimg = wx.env.USER_DATA_PATH + '/' + times + '.png';
+
+    //将base64图片写入 转成水机图片
+    fs.writeFile({
+      filePath: codeimg,
+      data: wxCode.slice(22),
+      encoding: 'base64',
+      success: () => {
+        //写入成功了的话，新的图片路径就能用了
+        let salesPrice = "";//销售价
+        if(this.data.goodsDetail.activityId){//参加过活动
+          salesPrice = (this.data.goodsDetail.discountPrice/100).toFixed(2);//折扣价
+        }else{
+          salesPrice = (this.data.goodsDetail.salesPrice).toFixed(2);//销售价
+        }
+        let price = "";//原价或者友商价
+        if(this.data.goodsDetail.activityId){//参加过活动
+          price = (this.data.goodsDetail.salesPrice).toFixed(2);//销售价
+        }else{
+          price = (this.data.goodsDetail.competitorPrice).toFixed(2);//友商价
+        }
+        let priceLeft = "174";//销售价小于10
+        if(salesPrice<10){//销售价小于10
+          priceLeft = "174";
+        }else if(salesPrice<100&&salesPrice>=10){//销售价大于10，小于等于100
+          priceLeft = "200";
+        }else if(salesPrice<1000&&salesPrice>=100){
+          priceLeft = "230";
+        }else if(salesPrice>=1000){
+          priceLeft = "260";
+        }
+        this.setData({
+          showPoster:true,
+          painting:{
+            width: 556,
+            height: 772,
+            clear: true,
+            views: [
+              {
+                type: 'rect',
+                background:"#FFFFFF",//海报背景
+                width: 556,
+                height: 772,
+                left:0,
+                top:0
+              },
+              {
+                type: 'text',
+                content: '指尖生活派',//海报的title
+                fontSize: 32,
+                color: '#333333',
+                textAlign: 'left',
+                top: 40,
+                left: 198,
+                bolder: false
+              },
+              {
+                type: 'image',
+                url: this.data.imgHttp+this.data.urlImg[0],//详情图片
+                top: 112,
+                left: 40,
+                width: 476,
+                height: 476
+              },
+              {
+                type: 'text',
+                content: this.data.goodsDetail.skuName,//商品的名称
+                fontSize: 28,
+                color: '#333333',
+                textAlign: 'left',
+                top: 628,
+                left: 30,
+                width: 336,
+                MaxLineNumber: 1,
+                breakWord: true,
+                bolder: false
+              },
+              {
+                type: 'text',
+                content: '￥',//售价的符号
+                fontSize: 32,
+                color: '#F2922F',
+                textAlign: 'left',
+                top: 692,
+                left: 28
+              },
+              {
+                type: 'text',
+                content: salesPrice,//销售价
+                fontSize: 52,
+                color: '#F2922F',
+                textAlign: 'left',
+                top: 676,
+                left: 56,
+                bolder: true
+              },
+              {
+                type: 'text',
+                content: `￥${price}`,//原价或者友商价
+                fontSize: 24,
+                color: '#999999',
+                textAlign: 'left',
+                top: 698,
+                left: priceLeft,
+                textDecoration: 'line-through'
+              },
+              {
+                type: 'image',
+                url: codeimg,//当前页面的小程序码
+                top: 618,
+                left: 402,
+                width: 124,
+                height: 124
+              },
+            ]
+          },
+        });
+        wx.hideLoading();
+      }
+    });
+  },
+  //分享海报
+  posterGetImage (event) {
+    wx.hideLoading()
+    const { tempFilePath } = event.detail
+    this.setData({
+      posterImage: tempFilePath
+    })
+  },
+  //海报保存
+  posterSave(){
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.posterImage,
+      success (res) {
+        wx.showToast({
+          title: '保存图片成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    })
   },
   //登录成功
   loginSuccess(){
@@ -56,6 +273,7 @@ Page({
     wx.showLoading({title:"加载中..."});
     service.querySkuInfo({
       skuCode:this.data.skuCode,
+      userId:wx.getStorageSync('userId')
     }).then((res)=>{
       console.log('详情',res.data.data);
       this.stopPullDownRefresh();
@@ -71,10 +289,19 @@ Page({
         let ximg = data.goodsPicDetail ? data.goodsPicDetail.split(','):'';
         //当前用户添加购物车数
         data.cartNum=0;
+        let showDiscountPrice = false;//是否显示限时折扣价格
+        if(data.discountStatus == 10){//限时折扣活动
+          if(data.limitPurchaseSettings==3&&data.userBoughtGoodsNum>=data.purchaseQuantity){//超过限购设置
+            showDiscountPrice = false;
+          }else{
+            showDiscountPrice = true;
+          }
+        }
         this.setData({
           goodsDetail:data,
           urlImg:imgs,
-          detailImg:ximg
+          detailImg:ximg,
+          showDiscountPrice
         });
         this.getCartsList();
         this.getShareImg();
@@ -171,11 +398,19 @@ Page({
 
       ctx.setFillStyle('#3C2E2A');                   //分类
       ctx.setFontSize(22);
-      ctx.fillText("指尖电商", 13, 49);
+      if(this.data.goodsDetail.discountStatus==10){//限时折扣 活动
+        ctx.fillText("限时折扣", 13, 49);
+      }else{
+        ctx.fillText("更好甄选", 13, 49);
+      }
 
       ctx.setFillStyle('red');                    //  颜色
       ctx.setFontSize(36);                            //  字号
-      ctx.fillText(this.data.goodsDetail.salesPrice, 51,287);
+      if(this.data.goodsDetail.discountStatus==10){//限时折扣活动
+        ctx.fillText(until.getNum(this.data.goodsDetail.discountPrice/100), 51,287);
+      }else{
+        ctx.fillText(until.getNum(this.data.goodsDetail.salesPrice), 51,287);
+      }
 
       ctx.setFillStyle('red');
       ctx.setFontSize(22);
@@ -304,12 +539,19 @@ Page({
       wx.showToast({
         title: '请添加收货地址',
         icon: 'none'
-      })
+      });
       return
     }
     let presentAddress = wx.getStorageSync("presentAddress");//选择的站点
     let goods = this.data.goodsDetail;
-    console.log(goods)
+    console.log(goods);
+    if(goods.discountStatus == 10&&goods.limitPurchaseSettings==2&&goods.userBoughtGoodsNum>=goods.purchaseQuantity){//参与限时折扣活动
+      wx.showToast({
+        title: '您已超过限购数量',
+        icon: 'none'
+      });
+      return
+    }
     let discountPrice = goods.discountPrice;
     goods.branchesId=presentAddress?presentAddress.siteId:"";    //站点id
     goods.buyerMessage=null;
@@ -326,6 +568,9 @@ Page({
     goods.grouponPriceT=goods.salesPrice;//元
     goods.grouponPrice=floatObj.multiply(goods.salesPrice,100);//元转分
     goods.discountPrice=goods.discountPrice;//分
+    goods.limitPurchaseSettings=goods.limitPurchaseSettings;//限购设置
+    goods.userBoughtGoodsNum=goods.userBoughtGoodsNum;//用户已购数量
+    goods.purchaseQuantity=goods.purchaseQuantity;//限购数量
     let goodsList=[];
     goodsList.push(goods);
     let totalNum='';
@@ -351,9 +596,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let {skuCode}=options;
+    let {skuCode,scene}=options;
     this.setData({
-      skuCode,
+      skuCode:skuCode?skuCode:scene,
     })
   },
 

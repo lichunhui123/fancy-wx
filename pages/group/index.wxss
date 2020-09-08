@@ -422,7 +422,7 @@ html, page {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding-top: 82rpx;
+  padding-top: 162rpx;
 }
 .nologin .goodnodata{
   width: 450rpx;

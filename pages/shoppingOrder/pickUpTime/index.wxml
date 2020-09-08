@@ -1,0 +1,26 @@
+<view class="pickUpTimeWrap">
+  <view class="content">
+    <view class="title">选择自提时间</view>
+    <view class="timesbox">
+      <view class="timeLeft">
+        <view wx:for="{{leftList}}" wx:key="index" class="{{selectTimes.date==item.ldate?'active':''}}" catchtap="chooseDate" data-item="{{item}}">{{item.ldate}}</view>
+      </view>
+      <view class="timeRight">
+        <scroll-view scroll-y="true" class="scroll" scroll-top="{{selectTimes.hourScrTop}}">
+          <view class="timeHour">
+            <view wx:for="{{hourList}}" wx:key="index" class="{{selectTimes.hour==item.hour?'active':''}}" catchtap="chooseHour" data-item="{{item}}">{{item.hour}}时</view>
+          </view>
+        </scroll-view>
+        <scroll-view scroll-y="true" class="scroll" scroll-top="{{selectTimes.minuteScrTop}}">
+          <view class="timeHour">
+            <view wx:for="{{minuteList}}" wx:key="index" class="{{selectTimes.minute==item?'active':''}}" catchtap="chooseMinute" data-item="{{item}}">{{item}}分</view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="bottomButton">
+      <view bindtap="cancel">取消</view>
+      <view bindtap="save">保存</view>
+    </view>
+  </view>
+</view>

@@ -1,7 +1,10 @@
 {
   "pages": [
     "pages/home/index",
+    "pages/cloudStoreGroupSale/index",
+    "pages/cloudStorePreSale/index",
     "pages/fingerMall/index",
+    "pages/fingerMallGoodDetail/index",
     "pages/shoppingCar/index",
     "pages/cloudStore/index",
     "pages/personalOrderList/index",
@@ -20,7 +23,6 @@
     "pages/homeDiscount/index",
     "pages/homeCommunity/index",
     "pages/homeCommunitySeach/index",
-    "pages/fingerMallGoodDetail/index",
     "pages/shoppingDiscount/index",
     "pages/shoppingPaySucceed/paySucceed",
     "pages/personalSetting/index",

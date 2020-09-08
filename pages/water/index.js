@@ -785,7 +785,25 @@ Page({
           if (ecData&&ecData.length > 0) {
             ecData.forEach(ec => {
               if (ec.discountStatus == 10) {   //计算总价格
-                allsum += (ec.discountPrice * 1) * (ec.goodsNum * 1)
+                if(ec.limitPurchaseSettings!=3){
+                  allsum += (ec.discountPrice * 1) * (ec.goodsNum * 1)
+                }
+                // 限时折扣活动（在前多少件参与折扣条件内按折扣价算）
+                if(ec.limitPurchaseSettings==3&& (ec.userBoughtGoodsNum*1 + ec.goodsNum*1)<= (ec.purchaseQuantity*1))   {
+                  allsum += (ec.discountPrice * 1) * (ec.goodsNum * 1)
+                }
+                // 限时折扣活动（超出前多少件参与折扣条件按原价算）
+                if(ec.limitPurchaseSettings==3&&(ec.userBoughtGoodsNum*1 + ec.goodsNum*1)>(ec.purchaseQuantity*1)){
+                  if(ec.userBoughtGoodsNum*1<ec.purchaseQuantity*1){  //用户历史购买小于限购数
+                    let num = ec.purchaseQuantity*1 - ec.userBoughtGoodsNum*1
+                    allsum += (ec.discountPrice*1) * (num * 1)
+                    let num2 = ec.goodsNum*1 - num
+                    allsum += (ec.grouponPrice*1) * (num2 * 1)
+                  }else{
+                    allsum += (ec.grouponPrice*1) * (ec.goodsNum * 1)
+                    ec.nodis=true
+                  }
+                }
               }
               if (ec.discountStatus != 10) {
                 allsum += (ec.grouponPrice * 1) * (ec.goodsNum * 1)

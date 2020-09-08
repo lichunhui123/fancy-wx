@@ -330,8 +330,8 @@ html, page {
   margin-bottom: 20rpx;
 }
 .nologin .goodnodata{
-  width: 294rpx;
-  height:236rpx;
+  width: 450rpx;
+  height:450rpx;
   margin-bottom: 40rpx;
 }
 .notitle{

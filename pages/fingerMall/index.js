@@ -46,6 +46,21 @@ Page({
       })
     }
   },
+  //更新分类的角标添加购物车数量
+  updateClassNum(type){
+    let classType = this.data.classType;
+    let newClassType = classType.map(item => {
+      if(item.classCode == this.data.classCode){
+        if(type=="add"){
+          item.skuCount>=0?++item.skuCount:1;
+        }else {
+          --item.skuCount;
+        }
+      }
+      return item;
+    });
+    this.setData({classType:newClassType});
+  },
   //购物车数量
   shoppingnum(){
     service.shoppingnum({
@@ -72,9 +87,9 @@ Page({
   },
   //input框数量输入
   goodInp(e){
-    let inpValue=e.detail.value
-    let dooditem = e.currentTarget.dataset.inpitem
-    let { activityId, carCode,activityCode,skuCode} = dooditem
+    let inpValue=e.detail.value;
+    let dooditem = e.currentTarget.dataset.inpitem;
+    let { activityId, carCode,activityCode,skuCode} = dooditem;
     if(inpValue>=1){
       service.addgoodnum({
         activityId:activityCode,
@@ -83,12 +98,14 @@ Page({
         goodsResource: 10,  //商品来源 10-指尖商城
         goodsNum: inpValue,
       }).then(res => {
-        this.refreshShopping()
         if (res.data.result != 200) {
           wx.showToast({
             title: res.data.message,
             icon: 'none'
           })
+        }else{
+          this.getClassType('no');
+          this.refreshShopping();
         }
       })
     }else{
@@ -101,23 +118,24 @@ Page({
               item.goodnum = 0
             }
             return item
-          })
+          });
           this.setData({
             goodsList:newdata,
             shoppingdata: [],
             shoppingdata1: [],
             totalValue: '0.00'
-          })
-          this.refreshShopping()
+          });
+          this.getClassType('no');
+          this.refreshShopping();
         }
       })  
     }
   },
   //购物车input数量输入
   shopgoodInp(e){
-    let inpValue = e.detail.value
-    let shinpitem = e.currentTarget.dataset.shinpitem
-    let { skuId, cartCode, goodsCode, goodsResource, branchesId, activityId } = shinpitem
+    let inpValue = e.detail.value;
+    let shinpitem = e.currentTarget.dataset.shinpitem;
+    let { skuId, cartCode, goodsCode, goodsResource, branchesId, activityId } = shinpitem;
     if (inpValue >= 1) {
       service.addgoodnum({
         branchesId: branchesId,
@@ -128,12 +146,14 @@ Page({
         goodsNum: inpValue,
         activityId: activityId
       }).then(res => {
-        this.refreshShopping()
         if (res.data.result != 200) {
           wx.showToast({
             title: res.data.message,
             icon: 'none'
           })
+        }else{
+          this.getClassType('no');
+          this.refreshShopping();
         }
       })
     }else{
@@ -141,24 +161,29 @@ Page({
           cartCodes: [cartCode]
         }).then(res => {
           if (res.data.result == 200) {
-            this.goodnumreset(goodsCode)
+            this.goodnumreset(goodsCode);
             this.setData({
               shoppingdata: [],
               shoppingdata1: [],
               totalValue: '0.00'
-            })
-            this.refreshShopping()
+            });
+            this.getClassType('no');
+            this.refreshShopping();
           }
         })
       }
   },
   //商品添加
   goodAdd(e){
+    if(this.submit){
+      return;
+    }
+    this.submit=true;
     wx.showLoading({
       title: '加载中',
-    })
-    let dooditem =e.currentTarget.dataset.additem
-    let { skuCode,goodnum,activityId} = dooditem
+    });
+    let dooditem =e.currentTarget.dataset.additem;
+    let { skuCode,goodnum,activityId} = dooditem;
     service.addgoodnum({
       activityId:activityId,
       userId: this.data.userId,
@@ -166,10 +191,11 @@ Page({
       goodsCode: skuCode,
       goodsNum: ++goodnum 
     }).then(res=>{
-      wx.hideLoading()
+      wx.hideLoading();
       if(res.data.result==200){
-        this.refreshShopping()
+        this.refreshShopping('add');
       }else{
+        this.submit = false;
         wx.showToast({
           title: res.data.message,
           icon: 'none'
@@ -192,7 +218,8 @@ Page({
     }).then(res => {
       wx.hideLoading()
       if (res.data.result == 200) {
-        this.refreshShopping()
+        this.getClassType('no');
+        this.refreshShopping();
       } else {
         wx.showToast({
           title: res.data.message,
@@ -203,11 +230,15 @@ Page({
   },
   //商品减少
   goodDel(e){
+    if(this.submit){
+      return;
+    }
+    this.submit=true;
     wx.showLoading({
       title: '加载中',
-    })
-    let dooditem = e.currentTarget.dataset.delitem
-    let { skuCode,carCode, goodnum,activityId} = dooditem
+    });
+    let dooditem = e.currentTarget.dataset.delitem;
+    let { skuCode,carCode, goodnum,activityId} = dooditem;
       if (goodnum>1){
         service.addgoodnum({
           activityId:activityId,
@@ -216,10 +247,11 @@ Page({
           goodsCode: skuCode,
           goodsNum: --goodnum
         }).then(res => {
-          wx.hideLoading()
+          wx.hideLoading();
           if (res.data.result == 200) {
-            this.refreshShopping()
+            this.refreshShopping('sub');
           }else{
+            this.submit = false;
             wx.showToast({
               title: res.data.message,
               icon: 'none'
@@ -247,7 +279,7 @@ Page({
               totalValue:'0.00',
               goodsList: newdataNum
             })
-            this.refreshShopping();
+            this.refreshShopping('sub');
           }else{
             wx.showToast({
               title: res.data.message,
@@ -261,9 +293,9 @@ Page({
   shopgoodDel(e){
     wx.showLoading({
       title: '加载中',
-    })
-    let shdelitem = e.currentTarget.dataset.shdelitem
-    let { skuId, cartCode, goodsCode, goodsResource, goodsNum, branchesId, activityId} = shdelitem
+    });
+    let shdelitem = e.currentTarget.dataset.shdelitem;
+    let { skuId, cartCode, goodsCode, goodsResource, goodsNum, branchesId, activityId} = shdelitem;
     if (goodsNum > 1) {
       service.addgoodnum({
         branchesId: branchesId,
@@ -274,8 +306,9 @@ Page({
         goodsNum: --goodsNum,
         activityId: activityId
       }).then(res => {
-        wx.hideLoading()
+        wx.hideLoading();
         if (res.data.result == 200) {
+          this.getClassType('no');
           this.refreshShopping()
         } else {
           wx.showToast({
@@ -287,20 +320,22 @@ Page({
     } else {
       wx.showLoading({
         title: '加载中',
-      })
+      });
       service.delshoppinggoods({
         cartCodes: [cartCode]
       }).then(res => {
-        wx.hideLoading()
+        wx.hideLoading();
         if (res.data.result == 200) {
           this.setData({
             shoppingdata: [],
             shoppingdata1: [],
             totalValue: '0.00'
-          })
-          this.goodnumreset(goodsCode)
+          });
+          this.goodnumreset(goodsCode);
+          this.getClassType('no');
           this.refreshShopping()
         }else{
+          this.submit = false;
           wx.showToast({
             title: res.data.message,
             icon: 'none'
@@ -315,10 +350,10 @@ Page({
       let arr= [];
       this.data.shoppingdata.forEach(item=>{  //上架的清空
         arr.push(item.cartCode)
-      })
+      });
       this.data.shoppingdata1.forEach(el=>{  //下架的清空
         arr.push(el.cartCode)
-      })
+      });
       wx.showModal({
         content: '确定清空购物车吗？',
         confirmColor: '#F2922F',
@@ -326,22 +361,23 @@ Page({
           if (res.confirm) {
             wx.showLoading({
               title: '加载中',
-            })
+            });
             service.delshoppinggoods({
               cartCodes: arr
             }).then(res => {
-              wx.hideLoading()
+              wx.hideLoading();
               if(res.data.result==200){
                 let newdata = this.data.goodsList.map(item => {     //购物车清空需要手动给列表清0
-                  item.goodnum = 0
+                  item.goodnum = 0;
                   return item
-                })
+                });
                 this.setData({
                   goodsList:newdata,
                   shoppingdata:[],
                   shoppingdata1:[],
                   totalValue: '0.00'
-                })
+                });
+                this.getClassType('no');
                 this.refreshShopping()
               }else{
                 wx.showToast({
@@ -356,33 +392,51 @@ Page({
     }
   },
   //云店商品头部分类-----1
-  getClassType(){
+  getClassType(loadGoods){
     service.fingerMallClass({
-     
+     userId:this.data.userId
     }).then((res) => {
       if (res.data.result == 200) {
         let typedata=res.data.data;
         if(typedata&&typedata.length){
-          this.setData({
-            classType: typedata,
-            classCode: typedata[0].classCode,
-            className: typedata[0].className
-          },()=>{
+          if(this.data.classCode){
+            this.setData({
+              classType: typedata,
+            });
             if(!this.onOff){
               this.onOff = true;//开关控制重复点击
-              this.getGoodslist()
+              if(loadGoods!="no"){//需要加载商品列表时
+                this.getGoodslist()
+              }
             }
-          })
+          }else{
+            this.setData({
+              classType: typedata,
+              classCode: typedata[0].classCode,
+              className: typedata[0].className
+            },()=>{
+              if(!this.onOff){
+                this.onOff = true;//开关控制重复点击
+                if(loadGoods!="no"){//需要加载商品列表时
+                  this.getGoodslist()
+                }
+              }
+            })
+          }
         }else{
           if(!this.onOff){
             this.onOff = true;//开关控制重复点击
-            this.getGoodslist()
+            if(loadGoods!="no"){//需要加载商品列表时
+              this.getGoodslist()
+            }
           }
         }
       }else{
         if(!this.onOff){
           this.onOff = true;//开关控制重复点击
-          this.getGoodslist()
+          if(loadGoods!="no"){//需要加载商品列表时
+            this.getGoodslist()
+          }
         }
       }
     })
@@ -421,13 +475,15 @@ Page({
         }else{
           this.onOff = false;//开关控制重复点击
           this.setData({
-            noData:true
+            noData:true,
+            listNum:0
           })
         }
       }else{
         this.onOff = false;//开关控制重复点击
         this.setData({
-          noData:true
+          noData:true,
+          listNum:0
         })
       }
     }).catch(()=>{
@@ -449,12 +505,12 @@ Page({
     }
   },
   //刷新购物车相关
-  refreshShopping(){
+  refreshShopping(type){
     this.shoppingnum()     //购物车数量
-    this.getshoppingdata()   //购物车列表
+    this.getshoppingdata(type)   //购物车列表
   },
   //购物车商品--------3
-  getshoppingdata(){
+  getshoppingdata(type){
     service.shoppinggoods({
       smallBranchesId: this.data.branchId,
       branchesId:this.data.groupBranchId,
@@ -494,7 +550,25 @@ Page({
           if (ecData&&ecData.length > 0) {//指尖电商
             ecData.forEach(ec => {
               if (ec.discountStatus == 10) {   //计算总价格
-                allsum += (ec.discountPrice * 1) * (ec.goodsNum * 1)
+                if(ec.limitPurchaseSettings!=3){
+                  allsum += (ec.discountPrice * 1) * (ec.goodsNum * 1)
+                }
+                // 限时折扣活动（在前多少件参与折扣条件内按折扣价算）
+                if(ec.limitPurchaseSettings==3&& (ec.userBoughtGoodsNum*1 + ec.goodsNum*1)<= (ec.purchaseQuantity*1))   {
+                  allsum += (ec.discountPrice * 1) * (ec.goodsNum * 1)
+                }
+                // 限时折扣活动（超出前多少件参与折扣条件按原价算）
+                if(ec.limitPurchaseSettings==3&&(ec.userBoughtGoodsNum*1 + ec.goodsNum*1)>(ec.purchaseQuantity*1)){
+                  if(ec.userBoughtGoodsNum*1<ec.purchaseQuantity*1){  //用户历史购买小于限购数
+                    let num = ec.purchaseQuantity*1 - ec.userBoughtGoodsNum*1
+                    allsum += (ec.discountPrice*1) * (num * 1)
+                    let num2 = ec.goodsNum*1 - num
+                    allsum += (ec.grouponPrice*1) * (num2 * 1)
+                  }else{
+                    allsum += (ec.grouponPrice*1) * (ec.goodsNum * 1)
+                    ec.nodis=true
+                  }
+                }
               }
               if (ec.discountStatus != 10) {
                 allsum += (ec.grouponPrice * 1) * (ec.goodsNum * 1)
@@ -705,7 +779,7 @@ Page({
             shoppingdata1:datax,
             combineGood:combineG
           },()=>{
-            this.updatagood(this.data.shoppingdata)  //购物车列表关联
+            this.updatagood(this.data.shoppingdata,type)  //购物车列表关联
           })
         }else{
           this.setData({
@@ -719,21 +793,26 @@ Page({
     })
   },
   //购物车数量和cartcode赋值给对应列表数据------4
-  updatagood(data){
-    let newdataNum =[]
-      newdataNum =this.data.goodsList.map(item => {
-        data.map(el=>{
-          if(item.skuCode==el.goodsCode){
-            item.goodnum=el.goodsNum     //商品数量
-            item.carCode = el.cartCode   //商品减少为0(相当于删除)需要cartcode
-            item.nodis = el.nodis
-          }
-        })
-        return item
-      })
+  updatagood(data,type){
+    let newdataNum =[];
+    newdataNum =this.data.goodsList.map(item => {
+      data.map(el=>{
+        if(item.skuCode==el.goodsCode){
+          item.goodnum=el.goodsNum  ;   //商品数量
+          item.carCode = el.cartCode;   //商品减少为0(相当于删除)需要cartcode
+          item.nodis = el.nodis
+        }
+      });
+      return item
+    });
     this.setData({
       goodsList:newdataNum
-    })
+    },()=>{
+      this.submit = false;//防止重复提交
+      if(type){//更新分类添加购物车的数量
+        this.updateClassNum(type);
+      }
+    });
   },
   //列表手动赋值为0（列表商品数量是根据购物车数量取的，购物车某商品数量小于1时商品不存在，列表需要手动赋值0）
   goodnumreset(goodsCode) {
@@ -786,7 +865,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if(options.classCode){
+      this.setData({
+        classCode:options.classCode
+      })
+    }
   },
   stopinp(){ 
     //input框冒泡

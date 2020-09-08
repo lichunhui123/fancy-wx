@@ -64,7 +64,7 @@
         <view>
           <view class="good_title">{{item.goodsResource==30?item.seriesName:item.storeGoodsName}}</view>
           <view class="spec" wx:if="{{item.goodsResource!=30}}">规格：{{item.storeGoodsSpecification}}</view>
-          <view class="saleItem" wx:if="{{item.type==10}}"><text>{{item.discountRatio}}折</text></view><!--限时折扣-->
+          <view class="saleItem" wx:if="{{item.type==10&&item.discountRatio}}"><text>{{item.discountRatio}}折</text></view><!--限时折扣-->
           <view class="saleItem" wx:if="{{item.type==20&&item.fullDecMoneyList&&item.fullDecMoneyList.length>0}}"><!--满减活动-->
             <text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el">{{el.fullMoney}}减{{el.decMoney}}</text>
           </view>
@@ -103,7 +103,7 @@
             <view>
                 <view class="good_title">{{item.storeGoodsName}}</view>
                 <view class="spec" wx:if="{{item.goodsResource!=30}}">规格：{{item.storeGoodsSpecification}}</view>
-                <view class="saleItem" wx:if="{{item.type==10}}"><text>{{item.discountRatio}}折</text></view><!--限时折扣-->
+                <view class="saleItem" wx:if="{{item.type==10&&item.discountRatio}}"><text>{{item.discountRatio}}折</text></view><!--限时折扣-->
                 <view class="saleItem" wx:if="{{item.type==20&&item.fullDecMoneyList&&item.fullDecMoneyList.length>0}}"><!--满减活动-->
                   <text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el">{{el.fullMoney}}减{{el.decMoney}}</text>
                 </view>

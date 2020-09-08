@@ -907,6 +907,14 @@ const cloudUsableOrder= (param) => {
     acType: 'post'
   })
 };
+//查询指尖商城运费
+const getMallDisMoney= (param) => {
+  return guangtongAjax({
+    data: param,
+    url: `${API.GETMALLDISMONEY}`,
+    acType: 'post'
+  })
+};
 //云店-多人拼团活动详情查询拼团列表
 const getPeopleGroup= (param) => {
   return guangtongAjax({
@@ -931,6 +939,14 @@ const queryHomePagSmallPro= (param) => {
     acType: 'post'
   })
 };
+//首页查询指尖云店商品-好物预售 好货团团
+const getSmallGoodsListByActivity= (param) => {
+  return guangtongAjax({
+    data: param,
+    url: `${API.GETSMALLGOODSLISTBYACTIVITY}`,
+    acType: 'post'
+  })
+};
 //查询更好甄选（指尖电商）的分类列表
 const fingerMallClass = (param) => {
   return guangtongAjax({
@@ -938,7 +954,7 @@ const fingerMallClass = (param) => {
     url: `${API.FINGERMALLCLASS}`,
     acType: 'post'
   })
-}
+};
 //查询更好甄选（指尖电商）的商品列表
 const fingerMallGetGoods = (param) => {
   return guangtongAjax({
@@ -946,7 +962,23 @@ const fingerMallGetGoods = (param) => {
     url: `${API.FINGERMALLGETGOODS}`,
     acType: 'post'
   })
-}
+};
+//更改更好甄选（指尖云店）订单状态 确认收货
+const fingerMallConfirmReceipt = (param) => {
+  return guangtongAjax({
+    data: param,
+    url: `${API.FINGERMALLCONFIRMRECEIPT}`,
+    acType: 'post'
+  })
+};
+//获取指定页面小程序码
+const getwxacodeunlimit = (param) => {
+  return guangtongAjax({
+    data: param,
+    url: `${API.GETWXCODEUNLIMIT}`,
+    acType: 'post'
+  })
+};
 module.exports = {
   requestSubscribeMessage,
   getGroupTemplateId,
@@ -1046,9 +1078,13 @@ module.exports = {
   cloudMarkingOrder,
   cloudDraowOrder,
   cloudUsableOrder,
+  getMallDisMoney,
   getPeopleGroup,
   queryNoticeByUserId,
   queryHomePagSmallPro,
+  getSmallGoodsListByActivity,
   fingerMallClass,
-  fingerMallGetGoods
+  fingerMallGetGoods,
+  fingerMallConfirmReceipt,
+  getwxacodeunlimit
 };

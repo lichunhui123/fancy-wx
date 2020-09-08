@@ -1,31 +1,47 @@
-<!--pages/discount/index.wxml-->
+<!-- pages/discount/index.wxml -->
 <wxs module="numb" src="../../filter/filter.wxs"></wxs>
 <view class="discountWrap">
   <view class="dis_head">
-    <view wx:for="{{discountType}}" wx:key="index" class="head_item {{unused==item.id?'headActive':''}}" data-ind="{{item.id}}" bindtap="headItemClick" >
-        {{item.title}}
-        <view class="head_bottom" wx:if="{{unused==item.id}}"></view>
+    <view wx:for="{{discountType}}" wx:key="index" class="head_item {{unused==item.id?'headActive':''}}" data-ind="{{item.id}}" bindtap="headItemClick">
+      {{item.title}}
+      <view class="head_bottom" wx:if="{{unused==item.id}}"></view>
     </view>
   </view>
   <view class="dis_top"></view>
-  <view class="ticket_content">
-      <!-- 卡券列表 -->
+  <view class="ticket_content {{noData?'ticket_content_no':''}}">
+    <!-- 卡券列表 -->
     <view class="ticket_item" wx:for="{{coupondata}}" wx:key="index">
-      <view class="ticket_left {{unused!=10?'hactive':''}}">  
-        <view wx:if="{{item.cardType==1||item.cardType==10}}">￥<text class="price">{{item.cardAmount}}</text></view>
-        <view wx:if="{{item.cardType==2||item.cardType==20}}">满<text class="price">{{item.fullAmountPrice.full}}</text>减<text class="price">{{item.fullAmountPrice.amount}}</text></view>
-        <view wx:if="{{item.cardType==3||item.cardType==30}}"><text class="price">{{item.discount}}</text>折</view>
-        <view class="mk">{{item.cardType==1?'优惠券':item.cardType==2?'满减券':item.cardType==3?'折扣券':''}}</view>
-        <view class="mk">{{item.cardType==10?'优惠券':item.cardType==20?'满减券':item.cardType==30?'折扣券':''}}</view>
+      <view class="ticket_left {{unused!=10?'hactive':''}}">
+        <view wx:if="{{item.cardType==1||item.cardType==10}}">
+          ￥<text class="price">{{item.cardAmount}}</text>
+        </view>
+        <view wx:if="{{item.cardType==2||item.cardType==20}}">
+          满<text class="price">{{item.fullAmountPrice.full}}</text>减<text class="price">{{item.fullAmountPrice.amount}}</text>
+        </view>
+        <view wx:if="{{item.cardType==3||item.cardType==30}}">
+          <text class="price">{{item.discount}}</text>折
+        </view>
+        <view class="mk">
+          {{item.cardType==1?'优惠券':item.cardType==2?'满减券':item.cardType==3?'折扣券':''}}
+        </view>
+        <view class="mk">
+          {{item.cardType==10?'优惠券':item.cardType==20?'满减券':item.cardType==30?'折扣券':''}}
+        </view>
       </view>
       <view class="ticket_right">
         <view class="ticket_right_con">
           <view class="ticket_name">{{item.cardRange==3?"限指尖云店商品":item.cardName}}</view>
-          <view class="ticket_time {{unused!=10?'hactive':''}}">{{item.startTime}}-{{item.endTime}}</view>
+          <view class="ticket_time {{unused!=10?'hactive':''}}">
+            {{item.startTime}}-{{item.endTime}}
+          </view>
           <view class="ticket_type">适用于{{item.applicableGoods==0?'全部':'指定'}}商品</view>
         </view>
-        <view class="employ" wx:if="{{unused==20}}"><image src="../../image/yishiyong.png"></image></view>
-        <view class="employ" wx:if="{{unused==30}}"><image src="../../image/yiguoqi.png"></image></view>
+        <view class="employ" wx:if="{{unused==20}}">
+          <image src="../../image/yishiyong.png"></image>
+        </view>
+        <view class="employ" wx:if="{{unused==30}}">
+          <image src="../../image/yiguoqi.png"></image>
+        </view>
       </view>
     </view>
     <view class="nologin" wx:if="{{noData}}">

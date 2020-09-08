@@ -122,13 +122,13 @@ html, page {
 }
 .addbottom{
   width: 188rpx;
-  height: 70rpx;
+  height: 60rpx;
   background: #FFFFFF;
   border: 2rpx solid #F2922F;
   border-radius: 34rpx;
   color: #F2922F;
   font-size: 26rpx;
   text-align: center;
-  line-height: 70rpx;
+  line-height: 60rpx;
   margin-top: 20rpx;
 }

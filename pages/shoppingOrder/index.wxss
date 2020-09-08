@@ -125,13 +125,41 @@ html, page {
   font-size: 28rpx;
   color: #999;
 }
+.order_time_left{
+  display:flex;
+  align-items: center;
+}
+.order_type{
+  position: relative;
+  width: 98rpx;
+  height: 34rpx;
+}
+.order_type image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 98rpx;
+  height: 34rpx;
+} 
+.order_type text{
+  width: 98rpx;
+  height: 34rpx;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  color: #FFFFFF;
+  line-height: 34rpx;
+  text-align: center;
+}
 .timeor{
   height: 88rpx;
   font-size: 28rpx;
   color: #5ADAD0;
   display: flex;
   align-items: center;
-  padding-left: 40rpx;
+  padding-left: 10rpx;
 }
 .ecTimer{
 	color:#333;

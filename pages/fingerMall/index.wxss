@@ -24,11 +24,25 @@ html, page {
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;/*显示几行*/
+    position: relative;
 }
 .data_left_list .active{
     color: #333333;
     background: #FFFFFF;
     font-weight: 600;
+}
+.data_left_list .goods_num{
+  position: absolute;
+  right:10rpx;
+  top:10rpx;
+  width:28rpx;
+  height:28rpx;
+  background: #FF3B30;
+  color:#ffffff;
+  border-radius: 50%;
+  font-size: 16rpx;
+  line-height: 28rpx;
+  text-align: center;
 }
 .data_right_list{
     width:578rpx;

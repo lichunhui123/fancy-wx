@@ -192,19 +192,21 @@ html, page {
     background: #F2922F;
 }
 .module_content{
-    margin:56rpx 20rpx 0;
+    padding:56rpx 20rpx 0;
 }
 .module_content_title{
     font-size: 36rpx;
     color: #333333;
     line-height: 36rpx;
     margin-bottom: 36rpx;
+    font-weight: 600;
 }
 .module_content_title text{
     font-size: 22rpx;
     color: #999999;
     line-height: 22rpx;
     margin-left: 14rpx;
+    font-weight: normal;
 }
 .module_content_item{
     position: relative;
@@ -229,6 +231,20 @@ html, page {
     position: relative;
     padding:0 20rpx;
 }
+.look_more{
+  text-align: center;
+}
+.look_more view{
+  font-size:28rpx;
+  color:#333333;
+  width:150rpx;
+  margin-top:104rpx;
+  margin-bottom:20rpx;
+}
+.look_more image{
+  width:60rpx;
+  height:60rpx;
+}
 .list_src image{
     width:180rpx;
     height:180rpx;
@@ -239,6 +255,7 @@ html, page {
     font-size: 24rpx;
     color: #333333;
     line-height: 28rpx;
+    height:28rpx;
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
@@ -550,11 +567,172 @@ html, page {
     width:100%;
     height:100%;
 }
+.fruit_more{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  padding:10rpx 0 20rpx 0;
+}
+.fruit_more text{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #666666;
+}
+.fruit_more image{
+  width:14rpx;
+  height:24rpx;
+  margin-left: 10rpx;
+}
 .bottom{
     font-size: 24rpx;
     color: #999999;
     line-height: 28rpx;
     padding-top: 10rpx;
     padding-bottom: 30rpx;
+    text-align: center;
+}
+.module_content_preSale{
+    height:432rpx;
+    background-image: linear-gradient(211deg, #FFEB76 0%, #FCC065 100%);
+    border-radius: 10rpx;
+    padding:0 20rpx;
+}
+.preSale_top{
+    display:flex;
+    justify-content: space-between;
+    padding:30rpx 0;
+}
+.preSale_top image{
+    width:281rpx;
+    height:32rpx;
+}
+.preSale_time{
+    display:flex;
+}
+.preSale_time view:first-of-type{
+    font-size: 24rpx;
+    color: #744700;
+    line-height: 34rpx;
+    margin-right: 20rpx;
+}
+.preSale_time_con{
+    width:34rpx;
+    height:34rpx;
+    background: #FFFFFF;
+    border-radius: 6rpx;
+    font-size: 20rpx;
+    color: #744700;
+    text-align: center;
+    line-height: 34rpx;
+}
+.preSale_time_sym{
+    font-size: 24rpx;
+    color: #744700;
+    line-height: 34rpx;
+    margin:0 8rpx;
+}
+.preSale_content{
+    height:320rpx;
+    background:#ffffff;
+    border-radius: 10rpx;
+}
+.preSale_list_par{
+    display: flex;
+}
+.preSale_list{
+    margin:30rpx 10rpx 30rpx 20rpx;
+    width:170rpx;
+}
+.preSale_img{
+    width:170rpx;
+    height:170rpx;
+    margin-bottom: 20rpx;
+}
+.preSale_title{
+    font-size: 24rpx;
+    color: #333333;
+    line-height: 28rpx;
+    height:28rpx;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;/*显示几行*/
+}
+.preSale_list .list_price{
+    margin-top: 14rpx;
+}
+.preSale_bottom{
+    position: relative;
+}
+.preSale_right{
+    position: absolute;
+    top:54rpx;
+    right:0;
+    width:67rpx;
+    height:213rpx;
+    border-left: 1px solid #EBEBEB;
+    text-align: center;
+}
+.preSale_right view{
+    width:28rpx;
+    font-size: 28rpx;
+    color: #744700;
+    line-height: 34rpx;
+    margin:16rpx auto 0;
+}
+.preSale_right image{
+    width:32rpx;
+    height:32rpx;
+    margin-top: 12rpx;
+}
+.module_content_group{
+    background: #ffffff;
+    border-radius: 10rpx;
+}
+.group_top{
+    display:flex;
+    justify-content: space-between;
+    padding:0 20rpx;
+}
+.group_top_title{
+    width:282rpx;
+    height:33rpx;
+    padding:30rpx 0;
+}
+.group_list_par{
+    display:flex;
+    overflow:auto;
+    padding-bottom: 30rpx;
+}
+.group_list{
+    width:170rpx;
+    margin:0 10rpx 0 20rpx;
+    position: relative;
+}
+.group_list .list_price{
+    margin-top: 20rpx;
+}
+.group_tip{
+    position:absolute;
+    right:0;
+    top:0;
+    width:72rpx;
+    height:31rpx;
+}
+.group_tip image{
+    position: absolute;
+    left:0;
+    top:0;
+    width:72rpx;
+    height:31rpx;
+}
+.group_tip view{
+    position: absolute;
+    left:0;
+    top:0;
+    width:72rpx;
+    height:31rpx;
+    font-size: 20rpx;
+    color: #FFFFFF;
     text-align: center;
 }

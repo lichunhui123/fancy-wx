@@ -19,13 +19,18 @@ Component({
   lifetimes: {
     attached() {
       console.log(this.properties.orderInfor.claimTime)
-      if(this.properties.orderInfor.claimTime){
+      if(this.properties.orderInfor.claimTime){//拼团自提时间
         this.setData({
           claimTime: util.formatHen(this.properties.orderInfor.claimTime).substring(0,10),
           createTime: this.properties.orderInfor.claimTime+'',
         })
       }
-      if(this.properties.ordergoods.length>0&&this.properties.orderInfor.smTabInd==1){
+      if(this.properties.orderInfor.pickUpTime){//云店自提时间
+        this.setData({
+          pickUpTime:this.properties.orderInfor.pickUpTime
+        })
+      }
+      if(this.properties.ordergoods.length>0&&this.properties.orderInfor.smTabInd==1){//有拼团并且有云店自提订单
         this.setData({
           TabShow:true
         })
@@ -80,6 +85,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    pickUpTime:'', //指尖云店自提订单 自提时间
     claimTime:'',  //预计取货时间   2019-20-1
     createTime:'',  //生成订单取货时间  2019-20-1 13:23:45
     orderCode:'',     //订单code
@@ -90,7 +96,7 @@ Component({
     pinorclo:1 , //拼团云店tab
     TabShow:false, //tab显示
     totalMoney:0,//商品总额
-	discountNum:0,  //已优惠金额
+	  discountNum:0,  //已优惠金额
   },
   /**
    * 组件的方法列表
@@ -187,6 +193,8 @@ Component({
       let groupOrderPhone=this.properties.orderInfor.personTel    //拼团取货人手机号
       let cloudOrderName=this.properties.orderInfor.cloudpickupPerson   //云店订单取货人
       let cloudOrderPhone=this.properties.orderInfor.cloudpersonTel    //云店取货人手机号
+      let pickUpTime = this.properties.orderInfor.pickUpTime;//云店选择的自提时间
+      let smallEstimateReceiveTime=pickUpTime.dates+" "+pickUpTime.hour+":"+pickUpTime.minute+":00";
       service.createorder({
         branchesAddress: presentAddress?presentAddress.deliveryAddress:'',
         branchesId: presentAddress?presentAddress.siteId:'',
@@ -205,7 +213,8 @@ Component({
         orderPrice:floatObj.multiply(this.properties.orderInfor.totalNum,100),
         receiveAddressId:waterXin?waterXin.addId:isdefault?isdefault.addId:'',
         smallDelivery:this.properties.orderInfor.smTabInd==1?20:this.properties.orderInfor.smTabInd==2?'10':null,
-				smallCardCode:this.properties.orderInfor.cardCloud
+        smallCardCode:this.properties.orderInfor.cardCloud,
+        smallEstimateReceiveTime//云店自提时间
       }).then(res=>{
           if(res.data.result==200){
             wx.removeStorageSync('cloudiscount');

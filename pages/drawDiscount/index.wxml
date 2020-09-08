@@ -1,24 +1,35 @@
-<!--pages/discount/index.wxml-->
+<!-- pages/discount/index.wxml -->
 <wxs module="numb" src="../../filter/filter.wxs"></wxs>
 <view class="discountWrap">
-  <view class="ticket_content">
-      <!-- 卡券列表 -->
+  <view class="ticket_content {{noData?'ticket_content_no':''}}">
+    <!-- 卡券列表 -->
     <view class="ticket_item" wx:for="{{discountList}}" wx:key="index">
-      <view class="ticket_left">  
-        <view wx:if="{{item.cardType==10}}">￥<text class="price">{{item.cardMoneyT}}</text></view>
-        <view wx:if="{{item.cardType==30}}"><text class="price">{{item.discountRatioT?item.discountRatioT:'-'}}</text>折</view>
+      <view class="ticket_left">
+        <view wx:if="{{item.cardType==10}}">
+          ￥<text class="price">{{item.cardMoneyT}}</text>
+        </view>
+        <view wx:if="{{item.cardType==30}}">
+          <text class="price">{{item.discountRatioT?item.discountRatioT:'-'}}</text>折
+        </view>
         <view class="mk">{{item.fullMoney?'订单满'+item.fullMoneyT+'元':'无门槛'}}</view>
       </view>
       <view class="ticket_right {{item.usetag=='usetag'?'prno':''}}">
         <view class="ticket_right_con">
           <view class="ticket_name">限指尖云店商品</view>
           <view class="ticket_time">
-          {{item.cardType==10?'优惠券 ':item.cardType==20?'满减券 ':item.cardType==30?'折扣券 ':''}}
-          {{item.validityType==1?item.startTime +' - '+ item.endTime:item.validityType==2?'领券之后当日生效，有效期'+item.validityDay+'天':item.validityType==3?'领券之后'+item.effectiveDay+'天生效，有效期'+item.validityDay+'天':''}}</view>
-          <view class="ticket_type" bindtap="cardExplain" data-explain="{{item.useExplain}}">卡券说明 <image src="../../image/rightIcon.png"></image></view>
-          <view class="usebtn" bindtap="rightaway" wx:if="{{item.usetag!='usetag'}}" data-caco="{{item.cardCode}}">立即领取</view>
+            {{item.cardType==10?'优惠券 ':item.cardType==20?'满减券 ':item.cardType==30?'折扣券 ':''}}
+          {{item.validityType==1?item.startTime +' - '+ item.endTime:item.validityType==2?'领券之后当日生效，有效期'+item.validityDay+'天':item.validityType==3?'领券之后'+item.effectiveDay+'天生效，有效期'+item.validityDay+'天':''}}
+          </view>
+          <view class="ticket_type" bindtap="cardExplain" data-explain="{{item.useExplain}}">
+            卡券说明<image src="../../image/rightIcon.png"></image>
+          </view>
+          <view class="usebtn" bindtap="rightaway" wx:if="{{item.usetag!='usetag'}}" data-caco="{{item.cardCode}}">
+            立即领取
+          </view>
         </view>
-        <view class="employ" wx:if="{{item.usetag=='usetag'}}"><image src="../../image/yilingqu.png"></image></view>
+        <view class="employ" wx:if="{{item.usetag=='usetag'}}">
+          <image src="../../image/yilingqu.png"></image>
+        </view>
       </view>
     </view>
     <view class="nologin" wx:if="{{noData}}">
@@ -35,5 +46,4 @@
       <view class="surebtn" bindtap="cardExplainSure">确定</view>
     </view>
   </view>
-  
 </view>

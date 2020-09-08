@@ -481,7 +481,24 @@ Page({
         }
         //参与折扣（不包括云店的活动商品）
         if(item.discountStatus == 10 &&!item.type) {
-          allsum += (item.discountPrice*1) * (item.goodsNum * 1)
+          if(item.limitPurchaseSettings!=3){
+            allsum += (item.discountPrice * 1) * (item.goodsNum * 1)
+          }
+          // 限时折扣活动（在前多少件参与折扣条件内按折扣价算）
+          if(item.limitPurchaseSettings==3&& (item.userBoughtGoodsNum*1 + item.goodsNum*1)<= (item.purchaseQuantity*1))   {
+            allsum += (item.discountPrice * 1) * (item.goodsNum * 1)
+          }
+          // 限时折扣活动（超出前多少件参与折扣条件按原价算）
+          if(item.limitPurchaseSettings==3&&(item.userBoughtGoodsNum*1 + item.goodsNum*1)>(item.purchaseQuantity*1)){
+            if(item.userBoughtGoodsNum*1<item.purchaseQuantity*1){  //用户历史购买小于限购数
+              let num = item.purchaseQuantity*1 - item.userBoughtGoodsNum*1
+              allsum += (item.discountPrice*1) * (num * 1)
+              let num2 = item.goodsNum*1 - num
+              allsum += (item.grouponPrice*1) * (num2 * 1)
+            }else{
+              allsum += (item.grouponPrice*1) * (item.goodsNum * 1)
+            }
+          }
         }
         //云店限时折扣活动
         if(item.type ==10&& item.limitPurchaseSettings!=3){
@@ -750,6 +767,10 @@ Page({
               el.discountPriceT = getNum(floatObj.divide(el.discountPrice, 100))
               el.grouponPriceT = getNum(floatObj.divide(el.grouponPrice, 100))
               el.select=true
+              el.nodis=false
+              if(el.purchaseQuantity!=null&&el.userBoughtGoodsNum*1>=el.purchaseQuantity*1){//超过限购设置 显示原价
+                el.nodis =true
+              }
             })
           }
           let combineG = false;//是否是满减活动的组合商品
@@ -915,8 +936,12 @@ Page({
               this.setWaterOrderAmend();//修改地址更改状态
             }
           })
+        }else{
+          this.getshoppingdata();//获取购物车数据
         }
       }
+    }).catch(res=>{
+      this.getshoppingdata();//获取购物车数据
     })
   },
   //修改地址更改状态

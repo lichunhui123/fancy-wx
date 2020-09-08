@@ -19,7 +19,7 @@
           <view class="detailc1_img_title">
             <view class="price_left">
               <!--商品加入过活动的-->
-              <view wx:if="{{goodsDetail.activityId}}" class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.discountPrice/100)}}</text><text class="pricet" wx:if="{{goodsDetail.competitorPrice}}">原价：{{numb.getNum(goodsDetail.salesPrice)}}</text></view>
+              <view wx:if="{{showDiscountPrice}}" class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.discountPrice/100)}}</text><text class="pricet" wx:if="{{goodsDetail.competitorPrice}}">原价：{{numb.getNum(goodsDetail.salesPrice)}}</text></view>
               <!--商品没有加入活动-->
               <view wx:else class="price_left_title">￥<text class="priceo">{{numb.getNum(goodsDetail.salesPrice)}}</text><text class="pricet" wx:if="{{goodsDetail.competitorPrice}}">{{goodsDetail.competitorName}}{{goodsDetail.competitorName?"：":""}}{{numb.getNum(goodsDetail.competitorPrice)}}</text></view>
             </view>
@@ -36,7 +36,7 @@
       <view class="detailc2">
         规格：{{goodsDetail.goodsSpec}}
         <view class="share">
-            <button formType="submit" open-type="share">
+            <button formType="submit" bindtap="shareClick">
               <image src="../../image/fenx.png"></image>
               <text class="sharetitle ">分享好友</text>
             </button>
@@ -79,8 +79,24 @@
       <view class="addbuy" bindtap="goBuy">立即购买</view>
     </view>
     <view class="tabbarIphone" wx:if="{{iphone}}"></view>
-    <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+    <canvas canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
   </view>
+  <!-- 分享弹窗 -->
+  <view class="shareMask" wx:if="{{showShare}}">
+    <view class="shareCon">
+      <button class="shareBtn" formType="submit" open-type="share">立即分享</button>
+      <view class="shareBtn" bindtap="getPoster">生成海报 保存分享</view>
+    </view>
+    <view class="shareCancel" bindtap="cancelShare">取消</view>
+  </view>
+  <!-- 分享弹窗 -->
+  <!-- 生成分享海报 -->
+  <view class="shareMask" wx:if="{{showPoster}}" bindtap="closePoster">
+    <image src="{{posterImage}}" class="posterImage" catchtap="cancelBubble"></image>
+    <canvasdrawer painting="{{painting}}" bind:getImage="posterGetImage" catchtap="cancelBubble"></canvasdrawer>
+    <view class="posterSave" catchtap="posterSave">保存图片</view>
+  </view>
+  <!-- 生成分享海报 -->
   <!-- 用户授权登录 -->
   <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
   <!-- 用户授权登录 -->

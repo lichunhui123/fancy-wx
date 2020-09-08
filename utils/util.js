@@ -144,19 +144,19 @@ const getAppointTime = (timeList, weekList) => {
     return otherDay;
   }
   let day1 = {
-    ldate: nowDate.getMonth() + 1 + "月" + nowDate.getDate() + "日",
-    ltime: nowDate.getTime(),
-    lyear: nowDate.getFullYear(),
-    lweek: nowDate.getDay() == 0 ? 7 : nowDate.getDay(),
-    timeList: timeList,
-    lweekChina: weekListChina[nowDate.getDay() - 1],
-    today: true
+    ldate: nowDate.getMonth() + 1 + "月" + nowDate.getDate() + "日",//当前时间 "8月27日"
+    ltime: nowDate.getTime(),//当前时间戳
+    lyear: nowDate.getFullYear(),//当前时间 "2020年"
+    lweek: nowDate.getDay() == 0 ? 7 : nowDate.getDay(),//今天是周几 1，2，3，4，5，6，7
+    timeList: timeList,//['21','22','23','24'] 几点组成的数组
+    lweekChina: weekListChina[(nowDate.getDay() == 0 ? 7 : nowDate.getDay()) - 1],//今天是周几 转中文 周几
+    today: true//是否是今天
   };
   let timelist1 = [];
   let index = timeList.indexOf(hour);
   if (index > -1) {
-    timelist1 = timeList.slice(index + 1, timeList.length);
-  } else if (hour > timeList[timeList.length - 1]) {
+    timelist1 = timeList.slice(index + 1, timeList.length);//截取今天已经过去的时间
+  } else if (hour > timeList[timeList.length - 1]) {//如果当前时间已经大于所有的开放平台设置的配送时间时
     timelist1 = [];
   } else {
     timelist1 = timeList;
@@ -164,7 +164,7 @@ const getAppointTime = (timeList, weekList) => {
   day1.timeList = timelist1;
   let day2 = {};
   let day3 = {};
-  if (weekList.length > 0) {
+  if (weekList.length > 0) {//[0,0,0,1,1,1,0] => [周一，周二 ... 周日]
     while (weekList[day1.lweek - 1] == 0) {
       //[1,1,1,1,1,0,0]
       day1.today = false;
@@ -212,6 +212,7 @@ module.exports = {
   formatTime: formatTime,
   getNum,
   formatLocation,
+  add0,
   formatChine,
   formitTime,
   formatTimestamp,

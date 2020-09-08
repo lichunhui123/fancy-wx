@@ -137,7 +137,7 @@
         </view>
       </view>
     </view>
-    <view class="gooddetail">
+    <view class="gooddetail" wx:if="{{detailImg.length>0}}">
       <view class="good_detail_title">— · 商品详情 · —</view>
       <view class="imgdetail">
         <block wx:for="{{detailImg}}" wx:key="index">

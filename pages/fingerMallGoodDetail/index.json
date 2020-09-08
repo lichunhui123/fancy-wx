@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "authorization-login": "/component/authorizationLogin/index"
+    "authorization-login": "/component/authorizationLogin/index",
+    "canvasdrawer": "/component/canvasdrawer/canvasdrawer"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

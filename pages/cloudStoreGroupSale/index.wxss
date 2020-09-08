@@ -1,0 +1,163 @@
+.activity_bg_img{
+    width:100%;
+    height:860rpx;
+}
+.activity_bg_img image{
+    width:100%;
+    height:100%;
+}
+.activity_bg_color{
+    width:100%;
+    background-image: linear-gradient(180deg, #FA6271 0%, #FFFFFF 89%);
+}
+.activity_con{
+    position: relative;
+    top:-117rpx;
+    left:50%;
+    transform: translate(-50%);
+    background: #fff;
+    border-radius: 20rpx;
+    width:710rpx;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.08);
+}
+.preSale_top{
+    display:flex;
+    justify-content: space-between;
+    padding:40rpx 30rpx 48rpx;
+}
+.preSale_top image{
+    width:281rpx;
+    height:32rpx;
+}
+.preSale_time{
+    display:flex;
+}
+.preSale_time view:first-of-type{
+    font-size: 24rpx;
+    color: #333333;
+    line-height: 34rpx;
+    margin-right: 20rpx;
+}
+.preSale_time_con{
+    width:34rpx;
+    height:34rpx;
+    background: #333333;
+    border-radius: 6rpx;
+    font-size: 20rpx;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 34rpx;
+}
+.preSale_time_sym{
+    font-size: 24rpx;
+    color: #333333;
+    line-height: 34rpx;
+    margin:0 8rpx;
+}
+.groupSale_list_par{
+    display:flex;
+    flex-wrap: wrap;
+}
+.groupSale_list{
+    position: relative;
+    width:210rpx;
+    padding-left:20rpx;
+    margin-bottom: 20rpx;
+}
+
+.groupSale_bottom{
+    border-bottom: 1rpx solid #EBEBEB;
+}
+.goods_src{
+    width:210rpx;
+    height:210rpx;
+}
+.goods_price{
+    font-size: 0;
+    margin-top: 14rpx;
+}
+.goods_price text:nth-child(1){
+    font-size: 24rpx;
+    color: #FF3B30;
+}
+.goods_price text:nth-child(2){
+    font-size: 28rpx;
+    color: #FF3B30;
+    line-height: 28rpx;
+}
+.goods_price text:nth-child(3){
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 20rpx;
+    text-decoration: line-through;
+    margin-left: 12rpx;
+}
+.goods_name{
+    font-size: 24rpx;
+    color: #333333;
+    height:24rpx;
+    line-height: 24rpx;
+    margin-top: 12rpx;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;/*显示几行*/
+}
+.group_tip{
+    position:absolute;
+    right:10rpx;
+    top:20rpx;
+    width:72rpx;
+    height:31rpx;
+}
+.group_tip image{
+    position: absolute;
+    left:0;
+    top:0;
+    width:72rpx;
+    height:31rpx;
+}
+.group_tip view{
+    position: absolute;
+    left:0;
+    top:0;
+    width:72rpx;
+    height:31rpx;
+    font-size: 20rpx;
+    color: #FFFFFF;
+    text-align: center;
+}
+.goodBuy_icon{
+    position: fixed;
+    left:30rpx;
+    bottom:40rpx;
+}
+.goodBuy_icon image{
+    width:90rpx;
+    height:104rpx;
+}
+.goodBuy_icon view{
+    position: absolute;
+    right:0;
+    top:0;
+    background: #FF3B30;
+    border: 2rpx solid #FFFFFF;
+    font-size: 16rpx;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 50%;   
+    width: 28rpx;  
+    height: 28rpx;
+    line-height: 28rpx;
+    box-sizing: border-box;
+}
+.noMore{
+  position: relative;
+  top:-90rpx;
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 28rpx;
+  padding-top: 10rpx;
+  padding-bottom: 30rpx;
+  text-align: center;
+}

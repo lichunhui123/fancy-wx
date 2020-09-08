@@ -25,10 +25,10 @@
                 <swiper-item wx:if="{{notice.sendExpress>0}}">
                     <view>代寄订单已发货！</view>
                 </swiper-item>
-                <swiper-item wx:if="{{notice.payWait>0}}">
+                <swiper-item wx:if="{{notice.payWait>0}}" bindtap="goOrder" data-index="10">
                     <view>您有订单待付款哦！</view>
                 </swiper-item>
-                <swiper-item wx:if="{{notice.receive>0}}">
+                <swiper-item wx:if="{{notice.receive>0}}" bindtap="goOrder" data-index="30">
                     <view>您有订单待收货哦！</view>
                 </swiper-item>
             </swiper>
@@ -67,21 +67,71 @@
             </view>
         </view>
     </view>
-    <view class="module_content" wx:if="{{cloudStore.length>0}}">
+    <view class="module_content" wx:if="{{cloudStore.length>0||preSaleGoods.length>0||groupSaleGoods.length>0}}"><!-- -->
         <view class="module_content_title">指尖云店<text>好物就在身边</text></view>
-        <view class="module_content_item">
+        <!--云店好物预售-->
+        <view class="module_content_preSale" style="margin-bottom:30rpx;" wx:if="{{preSaleGoods.length>0}}">
+            <view class="preSale_top">
+                <image src="../../image/preSale_title.png"/>
+                <view class="preSale_time" wx:if="{{!hasStart}}">
+                    <view>距开始</view>
+                    <view class="preSale_time_con">{{countdownTime.hour}}</view>
+                    <view class="preSale_time_sym">:</view>
+                    <view class="preSale_time_con">{{countdownTime.minute}}</view>
+                    <view class="preSale_time_sym">:</view>
+                    <view class="preSale_time_con">{{countdownTime.second}}</view>
+                </view>
+            </view>
+            <view class="preSale_bottom">
+                <swiper class="preSale_content" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+                    <swiper-item wx:for="{{preSaleGoods}}" wx:for-item="val" wx:key="index">
+                        <view class="preSale_list_par">
+                            <view class="preSale_list" wx:for="{{val}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}">
+                                <image class="preSale_img" src="{{imgUrl+item.goodsPic}}"/>
+                                <view class="preSale_title">{{item.goodsName}}</view>
+                                <view class="list_price">￥<text class="list_price_text1">{{numb.getNum(item.prePrice)}}</text><text class="list_price_text2">￥{{numb.getNum(item.showSalesPrice)}}</text></view>
+                            </view>
+                        </view>
+                    </swiper-item>
+                </swiper>
+                <view class="preSale_right" bindtap="goPreSale">
+                    <view>立即抢购</view>
+                    <image src="../../image/home_right.png"/>
+                </view>
+            </view>
+        </view>
+        <!--云店好货团团-->
+        <view class="module_content_group" style="margin-bottom:30rpx;" wx:if="{{groupSaleGoods.length>0}}">
+            <view class="group_top">
+                <image class="group_top_title" src="../../image/group_title.png"/>
+                <view class="goin" bindtap="goGroupSale">进去逛逛<image src="../../image/right_icon_new.png"></image></view>
+            </view>
+            <view class="group_list_par">
+                <view class="group_list" wx:for="{{groupSaleGoods}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}">
+                    <view class="group_tip"><image src="../../image/group_tip.png"/><view>{{item.groupCount}}人团</view></view>
+                    <image class="preSale_img" src="{{imgUrl+item.goodsPic}}"/>
+                    <view class="preSale_title">{{item.goodsName}}</view>
+                    <view class="list_price">￥<text class="list_price_text1">{{numb.getNum(item.prePrice)}}</text><text class="list_price_text2">￥{{numb.getNum(item.showSalesPrice)}}</text></view>
+                </view>
+            </view>
+        </view>
+        <view class="module_content_item" wx:if="{{cloudStore.length>0}}">
             <image class="module_content_banner" src="{{imgUrl}}/mallImages/20200622/t7KaQ656bj6NjndXTaGkW6RyyYTTNj63.png"></image>
             <view class="module_content_list_par">
-                <view class="module_content_list" wx:for="{{cloudStore}}" wx:for-item="item" wx:key="index" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}">
+                <view class="module_content_list" wx:for="{{cloudStore}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}" wx:if="{{index<7}}">
                     <view class="list_src"><image src="{{imgUrl+item.showGoodsPic}}"/></view>
                     <view class="list_name">{{item.goodsName}}</view>
                     <view class="list_price">¥<text class="list_price_text1">{{numb.getNum(item.showSalesPrice)}}</text><text class="list_price_text2" wx:if="{{item.showFriendlyPrice}}">¥{{numb.getNum(item.showFriendlyPrice)}}</text></view>
                     <view class="list_buy" catchtap="cloudGoodsAddCar" data-goodsitem="{{item}}"><image src="../../image/shopp.png"></image></view>
                 </view>
+                <view class="module_content_list look_more" bindtap="goSmallShopPage" wx:if="{{cloudStore.length>7}}">
+                  <view>查看更多</view>
+                  <image src="../../image/more.png"/>
+                </view>
             </view>
         </view>
     </view>
-    <view class="module_content" wx:if="{{datas.length>0&&fingerMall.length>0}}">
+    <view class="module_content" wx:if="{{datas.length>0||fingerMall.length>0}}">
         <view class="module_content_title">更好甄选<text>全球好货直邮到家</text></view>
         <view class="discount_time" wx:if="{{datas.length>0}}">
             <view class="dis_title">
@@ -115,7 +165,7 @@
             </view>
         </view>
         <view class="fruit_con" wx:for="{{fingerMall}}" wx:key="index" wx:if="{{fingerMall.length>0}}">
-            <view class="fruit_img"><image src="https://img.goola.cn/{{item.classPic}}"></image></view>
+            <view class="fruit_img" bindtap="viewMore" data-itdetail="{{item}}" wx:if="{{item.classPic}}"><image src="https://img.goola.cn/{{item.classPic}}"></image></view>
             <view class="fruit_goods">
                 <view class="fruit_item" wx:for="{{item.mallGoodsInfos}}" wx:key="index" wx:for-item="it" bindtap="fingerMallGoodsDetailClick" data-itdetail="{{it}}" wx:if="{{index<item.num*10}}">
                     <image src="{{imgUrl+numb.getImg(it.goodsPics)}}"></image>
@@ -130,9 +180,10 @@
                     <view class="fruit_buy" catchtap="addCarClick" data-goodsitem="{{it}}"><image src="../../image/shopp.png"></image></view>
                 </view>
             </view>
+            <view class="fruit_more" wx:if="{{item.mallGoodsInfos.length>10}}" bindtap="viewMore" data-itdetail="{{item}}"><text>查看更多</text><image src="../../image/rightIcon.png"/></view>
         </view>
     </view>
-    <view class="bottom" wx:if="{{fingerMall.length>0}}">—— 不好意思，已经到底啦 ——</view>
+    <view class="bottom" wx:if="{{fingerMall&&fingerMall.length>0}}">—— 不好意思，已经到底啦 ——</view>
     <!--会员码-->
     <member-mask receiptBarCode="{{receiptBarCode}}" bind:cancel="cancelmask" wx:if="{{crownShow}}"></member-mask>
      <!-- 用户授权登录 -->

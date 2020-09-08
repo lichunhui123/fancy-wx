@@ -213,6 +213,8 @@ Page({
             })
           }
           if(info.orderResource==40){//云店
+            let time = info.estimateReceiveTime;
+            info.estimateReceiveTime = time?time.substring(5):"";//自提时间
             info.buyOneGetOneList=[];//买一送一 赠品列表
             info.secondHalfPriceDiscount = 0;//第二件半价优惠信息 分
             info.manyPriManyFolds="";//多件多折的折扣设置
@@ -309,6 +311,8 @@ Page({
           })
         }
         if(item.orderResource==40){//云店
+          let time = item.estimateReceiveTime;
+          item.estimateReceiveTime = time?time.substring(5):"";//自提时间
           item.buyOneGetOneList = [];//买一送一 赠品列表
           item.secondHalfPriceDiscount = 0;//第二件半价优惠信息 分
           item.manyPriManyFolds = "";//多件多折的折扣设置
@@ -590,27 +594,52 @@ Page({
       confirmColor:"#F2922F",
       success(res){
         if (res.confirm) {//点击确认
-          service.mallReceipt({
-            operatorId: wx.getStorageSync("userId"),//操作人ID
-            orderCode: t.data.orderCode//订单编号
-          }).then(res => {
-            if (res.data.result == 200) {
-              wx.showToast({
-                title: '订单确认收货成功！',
-                icon: 'none',
-                duration: 2000
-              });
-              t.setData({
-                orderStatus:40
-              });
-            } else {
-              wx.showToast({
-                title: res.data.message,
-                icon: 'none',
-                duration: 2000
-              });
-            }
-          })
+          if(t.data.orderResource==40){//云店
+            service.mallReceipt({
+              operatorId: wx.getStorageSync("userId"),//操作人ID
+              orderCode: t.data.orderCode//订单编号
+            }).then(res => {
+              if (res.data.result == 200) {
+                wx.showToast({
+                  title: '订单确认收货成功！',
+                  icon: 'none',
+                  duration: 2000
+                });
+                t.setData({
+                  orderStatus:40
+                });
+              } else {
+                wx.showToast({
+                  title: res.data.message,
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
+            })
+          }else{//更好甄选（指尖商城）
+            service.fingerMallConfirmReceipt({
+              updateId: wx.getStorageSync("userId"),//操作人ID
+              orderCode: t.data.orderCode,//订单编号
+              type:2//确认发货
+            }).then(res => {
+              if (res.data.result == 200) {
+                wx.showToast({
+                  title: '订单确认收货成功！',
+                  icon: 'none',
+                  duration: 2000
+                });
+                t.setData({
+                  orderStatus:40
+                });
+              } else {
+                wx.showToast({
+                  title: res.data.message,
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
+            })
+          }
         }
       }
     })

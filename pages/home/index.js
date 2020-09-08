@@ -26,12 +26,21 @@ Page({
         headBannerPic:"/mallImages/20200717/Zit5FAN6DdMkSXTxrym5ScXF83Ry73ye.png",//banner图片地址
       },
       {
-        headBannerPic:"/mallImages/20200717/MCpWGAkCbxtdbQYjTXb3bz5Jba55XZQj.png",//banner图片地址
+        headBannerPic:"/mallImages/20200901/a4fxQJb22XeAmwJKEz376WcQYR4CpFMZ.png",//banner图片地址
       },
       {
         headBannerPic:"/mallImages/20200717/MXREk5GbSSSSTeE4bXX2awTMxkZ2m5py.png",//banner图片地址
       }
     ],//banner配置
+    preSaleGoods:[],//指尖云店-好物预售
+    hasStart:false,//好物预售活动是否已开始
+    countdownTime:{//指尖云店-好物预售 距开始时间
+      day: '00',
+      hour: '00',
+      minute: '00',
+      second: '00',
+    },
+    groupSaleGoods:[],//指尖云店-好货团团
     cloudStore:[],//指尖云店-精选
     fingerMall:[],//指尖电商
     branchId: '',  //拼团站点id
@@ -46,6 +55,7 @@ Page({
     datas: [], //限时折扣商品列表
     systemInfo:null, //设备信息
     city:'', //选择城市/定位城市
+    orderIndex:"",//跳转订单页面
   },
   // 微信授权定位
   getUserLocation(){
@@ -144,13 +154,6 @@ Page({
           city:city,
           selectAddress: res.result.address
         });
-        //查询首页云店商品
-        let address={
-          cityName:city,
-          longitude: long,
-          latitude: lati
-        };
-        this.queryHomePagSmallPro(address);
       },
       fail: function (res) {
       }
@@ -219,6 +222,10 @@ Page({
                 //设置最近的站点ID
                 this.setData({
                   cloudBranchId:data[0].siteId
+                },()=>{
+                  this.queryHomePagSmallPro();//获取云店精选
+                  this.getSmallGoodsListByActivity(80);//好物预售
+                  this.getSmallGoodsListByActivity(90);//好货团团
                 });
               }
             }
@@ -296,7 +303,7 @@ Page({
               headBannerPic:"/mallImages/20200717/Zit5FAN6DdMkSXTxrym5ScXF83Ry73ye.png",//banner图片地址
             },
             {
-              headBannerPic:"/mallImages/20200717/MCpWGAkCbxtdbQYjTXb3bz5Jba55XZQj.png",//banner图片地址
+              headBannerPic:"/mallImages/20200901/a4fxQJb22XeAmwJKEz376WcQYR4CpFMZ.png",//banner图片地址
             },
             {
               headBannerPic:"/mallImages/20200717/MXREk5GbSSSSTeE4bXX2awTMxkZ2m5py.png",//banner图片地址
@@ -345,6 +352,15 @@ Page({
         })
       }
     })
+  },
+  //点击跳转我的订单页面
+  goOrder(e){
+    let index = e.currentTarget.dataset.index;
+    this.setData({
+      showLogin: true,
+      path: "order",
+      orderIndex:index
+    });
   },
   //点击获取会员码弹出弹层
   getReceiptBarcode(){
@@ -415,15 +431,24 @@ Page({
       path:"express"
     });
   },
+  //to好物预售
+  goPreSale(){
+    this.setData({
+      showLogin:true,
+      path:"preSale"
+    });
+  },
+  //to好货团团
+  goGroupSale(){
+    this.setData({
+      showLogin:true,
+      path:"groupSale"
+    });
+  },
   //查询指尖云店-指尖精选商品
-  queryHomePagSmallPro(address){
-    let long = address.longitude;
-    let lati = address.latitude;
+  queryHomePagSmallPro(){
     service.queryHomePagSmallPro({
-      cityName:address.cityName,
-      longitude:long,//经度
-      latitude:lati,//纬度
-      tudeType:"1005"
+      branchesId:this.data.cloudBranchId
     }).then(res=>{
       if(res.data.result==200){
         let data = res.data.data;
@@ -445,11 +470,90 @@ Page({
       }
     })
   },
+  //查询指尖云店-好物预售 好货团团
+  getSmallGoodsListByActivity(type){
+    clearInterval(this.timer);
+    let data = {
+      branchesId:this.data.cloudBranchId,
+      type //80-好物预售 90-多人拼团
+    };
+    if(type==90){
+      data.pageNo=1;
+      data.pageSize=6;
+    }
+    service.getSmallGoodsListByActivity(data).then(res=>{
+      if(res.data.result==200){
+        let data = res.data.data;
+        if(data&&data.length>0){
+          data.forEach(item=>{//图片截取
+            item.goodsPic=item.goodsPic.split(',')[0];
+          })
+          if(type==80){//80-好物预售
+            let hasStart = false;//是否已开始
+            let startTime = (new Date(data[0].startTime.replace(/-/g,"/"))).getTime();
+            let times = (startTime - (new Date()).getTime()) / 1000;//距开始时间
+            if(times<=0){
+              hasStart = true;//是否已开始
+            }else{
+              this.countdown(times);
+            }
+            let result = [];
+            for(let i=0;i<data.length;i+=3) {
+              result.push(data.slice(i, i + 3));
+            }
+            this.setData({
+              hasStart,//好物预售活动是否已开始
+              preSaleGoods:result,//指尖云店-好物预售
+            })
+          }else{
+            this.setData({
+              groupSaleGoods:data,//指尖云店-好货图团
+            })
+          }
+        }
+
+      }
+
+    })
+  },
+  //倒计时时间计算
+  countdown(times) {
+    this.timer = null;
+    this.timer = setInterval(() => {
+      let day = 0,
+        hour = 0,
+        minute = 0,
+        second = 0;//时间默认值
+      if (times > 0) {
+        day = Math.floor(times / (60 * 60 * 24));
+        hour = Math.floor(times / (60 * 60)) - (day * 24);
+        minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+      }
+      if (day <= 9) day = '0' + day;
+      if (hour <= 9) hour = '0' + hour;
+      if (minute <= 9) minute = '0' + minute;
+      if (second <= 9) second = '0' + second;
+      times--;
+
+      this.setData({
+        countdownTime: {
+          day: day,
+          hour: hour,
+          minute: minute,
+          second: second,
+        },
+      });
+      if (times <= 0) {
+        clearInterval(this.timer);
+      }
+    }, 1000);
+  },
   //指尖云店商品详情
   cloudGoodsDetailClick(e){
-    let { goodsCode}=e.currentTarget.dataset.itdetail;
+    let { goodsCode,activityCode}=e.currentTarget.dataset.itdetail;
     wx.navigateTo({
-      url: '/pages/cloudStoreDetail/index?storeGoodsId=' + goodsCode,
+      url: '/pages/cloudStoreDetail/index?storeGoodsId=' + goodsCode + '&activityCode=' + activityCode,
     })
   },
   //指尖云店商品添加购物车
@@ -688,6 +792,13 @@ Page({
       url: '/pages/fingerMallGoodDetail/index?skuCode=' + skuCode,
     })
   },
+  //更好甄选（指尖云店）查看更多
+  viewMore(e){
+    let { classCode } = e.currentTarget.dataset.itdetail;
+    wx.navigateTo({
+      url: '/pages/fingerMall/index?classCode=' + classCode,
+    })
+  },
   //更好甄选（指尖电商）添加购物车授权
   addCarClick(e){
     let item= e.currentTarget.dataset.goodsitem;
@@ -796,6 +907,12 @@ Page({
         url: '/pages/homeAddress/index',
       })
     }
+    //我的订单
+    if(this.data.path=="order"){
+      wx.navigateTo({
+        url:"/pages/personalOrderList/index?index="+this.data.orderIndex
+      })
+    }
     //取件
     if(this.data.path=="scanPickUp"){
       wx.navigateTo({
@@ -873,8 +990,20 @@ Page({
       this.cloudGoodsAddCardata();
     }
     //更好甄选（指尖商城）添加购物车
-    if (this.data.path == "fingerMallAddShop") {
+    if(this.data.path == "fingerMallAddShop") {
       this.getshoppingdata()
+    }
+    //跳转指尖云店-好物预售
+    if(this.data.path == "preSale"){
+      wx.navigateTo({
+        url: '/pages/cloudStorePreSale/index',
+      })
+    }
+    //跳转指尖云店-好货团团
+    if(this.data.path == "groupSale"){
+      wx.navigateTo({
+        url: '/pages/cloudStoreGroupSale/index',
+      })
     }
   },
   /**
@@ -926,11 +1055,27 @@ Page({
       branchId:presentAddress?presentAddress.siteId:'',
       cloudBranchId:currentCloudShop?currentCloudShop.siteId:'',
       datas:[],
+      fingerMall:[],//更好甄选（指尖电商）
       systemInfo,
       selectAddress:'',
+      cloudStore:[],//云店精选
+      preSaleGoods:[],//指尖云店-好物预售
+      hasStart:false,//好物预售活动是否已开始
+      countdownTime:{//指尖云店-好物预售 距开始时间
+        day: '00',
+        hour: '00',
+        minute: '00',
+        second: '00',
+      },
+      groupSaleGoods:[],//指尖云店-好货团团
     },()=>{
       if(this.data.branchId){//如果有选择网点
         this.getBannerConfig();      //获取banner配置
+      }
+      if(this.data.cloudBranchId){//如果有云店站点
+        this.queryHomePagSmallPro();//获取云店精选
+        this.getSmallGoodsListByActivity(80);//好物预售
+        this.getSmallGoodsListByActivity(90);//好货团团
       }
     });
     if(wx.getStorageSync("isaddress")) {//如果有选择收货地址
@@ -938,13 +1083,11 @@ Page({
       this.setData({
         selectAddress:itemData.provinceName+itemData.cityName+itemData.districtName+itemData.address
       });
-      this.queryHomePagSmallPro(itemData);
     }else if(wx.getStorageSync("isdefault")){//如果有默认收货地址
       let itemData = wx.getStorageSync("isdefault");
       this.setData({
         selectAddress:itemData.provinceName+itemData.cityName+itemData.districtName+itemData.address
       });
-      this.queryHomePagSmallPro(itemData);
     }
     if(wx.getStorageSync('userId')){
       this.queryNoticeByUserId();//查询用户通知提示
@@ -982,17 +1125,48 @@ Page({
    */
   onPullDownRefresh: function () {
     let t=this;
-    this.setData({
-      datas: [],
-    });
-    clearInterval(discountTimer);
     wx.showLoading({title:"加载中..."});
+    clearInterval(discountTimer);
+    let systemInfo = wx.getSystemInfoSync(); //获取设备信息
+    let presentAddress = wx.getStorageSync("presentAddress");//拼团站点
+    let currentCloudShop = wx.getStorageSync("currentCloudShop");//云店站点
+    this.setData({
+      branchId:presentAddress?presentAddress.siteId:'',
+      cloudBranchId:currentCloudShop?currentCloudShop.siteId:'',
+      datas:[],
+      fingerMall:[],//更好甄选（指尖电商）
+      systemInfo,
+      selectAddress:'',
+      cloudStore:[],//云店精选
+      preSaleGoods:[],//指尖云店-好物预售
+      hasStart:false,//好物预售活动是否已开始
+      countdownTime:{//指尖云店-好物预售 距开始时间
+        day: '00',
+        hour: '00',
+        minute: '00',
+        second: '00',
+      },
+      groupSaleGoods:[],//指尖云店-好货团团
+    },()=>{
+      if(this.data.branchId){//如果有选择网点
+        this.getBannerConfig();      //获取banner配置
+      }
+      if(this.data.cloudBranchId){//如果有云店站点
+        this.queryHomePagSmallPro();//获取云店精选
+        this.getSmallGoodsListByActivity(80);//好物预售
+        this.getSmallGoodsListByActivity(90);//好货团团
+      }
+    });
     if(wx.getStorageSync("isaddress")) {//如果有选择收货地址
       let itemData = wx.getStorageSync("isaddress");
-      this.queryHomePagSmallPro(itemData);
+      this.setData({
+        selectAddress:itemData.provinceName+itemData.cityName+itemData.districtName+itemData.address
+      });
     }else if(wx.getStorageSync("isdefault")){//如果有默认收货地址
       let itemData = wx.getStorageSync("isdefault");
-      this.queryHomePagSmallPro(itemData);
+      this.setData({
+        selectAddress:itemData.provinceName+itemData.cityName+itemData.districtName+itemData.address
+      });
     }
     if(wx.getStorageSync('userId')){
       this.queryNoticeByUserId();//查询用户通知提示

@@ -36,6 +36,7 @@ Page({
     cloudTakeAddress: '',   //取货地址-----云店
     newclaimTime:'',  //到货时间
     orderInfor:{
+      pickUpTime:null,//自提时间--指尖云店自提订单
       claimTime: '',  //预计取货时间--按最晚
       pickupPerson: '',  //取货人
       personTel: '',   //取货人电话
@@ -80,6 +81,7 @@ Page({
     eCShopData:[], //电商数据
     ecunit:0,   //电商件数
     ecMoney:0,  //电商商品总额 元
+    ecDisMoney:0, //电商运费总额 元
     smTabInd:'', //自提1  配送2  
     submitTrue:true, //允许提交
     cloudData:[], //云店数据
@@ -103,6 +105,9 @@ Page({
     secondHalfPrice:0,//第二件半价减少金额 元
     manyPriManyFoldsListStr:"",//多件多折活动折扣设置
     manyMorePrice:0,//多件多折减少的金额 元
+    showPickUpTime:false, //自提时间选择弹框
+    smallTakeTime:null,//设置的自提时间段 以及备货时间
+    smallTakeWeek:[],//设置的自提时间周
   },
   //水管家去首页
   goWaterHome(){
@@ -123,7 +128,7 @@ Page({
       }
     }
     if(this.data.cloudData.length>0&&this.data.smTabInd==1){ //云店
-      if(this.data.orderInfor.cloudpickupPerson&&this.data.orderInfor.cloudpersonTel){
+      if(this.data.orderInfor.cloudpickupPerson&&this.data.orderInfor.cloudpersonTel&&this.data.orderInfor.pickUpTime){
         judge4=true
       }else{
         judge4=false
@@ -163,6 +168,29 @@ Page({
     },()=>{
       this.conChange()
       this.totalMoney()
+    })
+  },
+  //打开云店自提弹窗
+  getPickUpTime(){
+    this.setData({
+      showPickUpTime:true
+    })
+  },
+  //取消云店自提的弹窗
+  pickUpCancel(){
+    this.setData({
+      showPickUpTime:false
+    })
+  },
+  //云店自提时间保存
+  pickUpSave(e){
+    //设置自提时间
+    this.setData({
+      showPickUpTime:false,
+      ['orderInfor.pickUpTime']:e.detail.selectTimes
+    },()=>{
+      console.log(e.detail.selectTimes);
+      this.conChange()
     })
   },
   //云店配送
@@ -412,6 +440,13 @@ Page({
     if (this.data.orderInfor.cloudpersonTel.length!=11 &&this.data.cloudData.length>0&&this.data.smTabInd==1){
       wx.showToast({
         title: '"云店"收货人联系方式错误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!this.data.orderInfor.pickUpTime &&this.data.cloudData.length>0&&this.data.smTabInd==1){
+      wx.showToast({
+        title: '请选择云店自提时间',
         icon: 'none'
       })
       return
@@ -843,9 +878,17 @@ Page({
     }).then(res=>{
       console.log('配送',res)
       if(res.data.result==200){
-        let data=res.data.data
+        let data=res.data.data;
+        let smallTakeTime={
+          startTime:JSON.parse(data.smallTakeTime).startTime,//自提开始时间
+          endTime:JSON.parse(data.smallTakeTime).endTime,//自提结束时间
+          smallStockTime:data.smallStockTime,//备货时间
+        };
+        console.log(smallTakeTime);
         this.setData({
-          dispatchdata:data
+          dispatchdata:data,
+          smallTakeTime,
+          smallTakeWeek:data.smallTakeWeek.split(',')
         })
         if(data.smallDeliveryStatus==20){
           this.setData({
@@ -876,6 +919,39 @@ Page({
           ['orderInfor.smTabInd']:1
         },()=>{
           this.conChange()
+        })
+      }
+    })
+  },
+  //获取指尖商城配送费
+  getMallDisMoney(){
+    let waterXin = wx.getStorageSync('isaddress');
+    let isdefault = wx.getStorageSync('isdefault');
+    let areaName = "";
+    if(waterXin){
+      areaName = waterXin.districtName;
+    }else{
+      areaName = isdefault.districtName;
+    }
+    if(!areaName){
+      return;
+    }
+    let mallCartInfoDtos = [];
+    this.data.eCShopData.forEach(item=>{
+      mallCartInfoDtos.push({
+        goodsCode: item.goodsCode,//商品编码
+        goodsNum: item.goodsNum ? item.goodsNum : item.goodsCount,//商品数量
+      })
+    })
+    service.getMallDisMoney({
+      areaName:areaName,//地区名称
+      mallCartInfoDtos:mallCartInfoDtos//商品列表
+    }).then(res=>{
+      if(res.data.result==200){
+        this.setData({
+          ecDisMoney:res.data.data.distribution,//电商运费总额 元
+        },()=>{
+          this.totalMoney()
         })
       }
     })
@@ -938,11 +1014,38 @@ Page({
       let ecMoney=0  //电商商品总额
       if(ecMallArr.length>0){
         ecMallArr.forEach(val=>{
-          val.goodsNum=val.goodsNum?val.goodsNum:'1'
-          ecunit += val.goodsNum * 1
-          val.markItem = val.discountStatus == 10 ? val.discountPrice * val.goodsNum : val.grouponPrice * val.goodsNum   // 单个商品总价 分
-          val.goodItem= getNum(floatObj.divide(val.markItem,100))  
-          ecMoney += val.markItem*1  //总额
+          val.goodsNum=val.goodsNum?val.goodsNum:'1';
+          ecunit += val.goodsNum * 1;
+          val.markItem = 0 ;// 单个商品总价 分
+          if(val.discountStatus == 10) {//参与限时折扣活动
+            if(val.limitPurchaseSettings!=3){//不限制
+              val.markItem = (val.discountPrice * 1) * (val.goodsNum * 1);
+              ecMoney += (val.discountPrice * 1) * (val.goodsNum * 1)
+            }
+            // 限时折扣活动（在前多少件参与折扣条件内按折扣价算）
+            if(val.limitPurchaseSettings==3&& (val.userBoughtGoodsNum*1 + val.goodsNum*1)<= (val.purchaseQuantity*1))   {
+              val.markItem = (val.discountPrice * 1) * (val.goodsNum * 1);
+              ecMoney += (val.discountPrice * 1) * (val.goodsNum * 1)
+            }
+            // 限时折扣活动（超出前多少件参与折扣条件按原价算）
+            if(val.limitPurchaseSettings==3&&(val.userBoughtGoodsNum*1 + val.goodsNum*1)>(val.purchaseQuantity*1)){
+              if(val.userBoughtGoodsNum*1<val.purchaseQuantity*1){  //用户历史购买小于限购数
+                let num = val.purchaseQuantity*1 - val.userBoughtGoodsNum*1
+                val.markItem += (val.discountPrice*1) * (num * 1);
+                ecMoney += (val.discountPrice*1) * (num * 1);
+                let num2 = val.goodsNum*1 - num;
+                val.markItem += (val.grouponPrice*1) * (num2 * 1);
+                ecMoney += (val.grouponPrice*1) * (num2 * 1)
+              }else{
+                val.markItem = (val.grouponPrice*1) * (val.goodsNum * 1);
+                ecMoney += (val.grouponPrice*1) * (val.goodsNum * 1)
+              }
+            }
+          }else{//不参与限时折扣活动
+            val.markItem = (val.grouponPrice*1) * (val.goodsNum * 1);
+            ecMoney += (val.grouponPrice*1) * (val.goodsNum * 1)  //总额
+          }
+          val.goodItem= getNum(floatObj.divide(val.markItem,100))
         })
       }
 
@@ -1379,10 +1482,11 @@ Page({
 	},
   //计算总合计
   totalMoney(){
-    let groupNum = floatObj.multiply(this.data.groupNum,100) //拼团金额 元转分
-    let mealNum = floatObj.multiply(this.data.mealNum,100)  //套餐金额 元转分
-    let ecNum = floatObj.multiply(this.data.ecMoney,100)  //商城金额 元转分
-    let clNum = floatObj.multiply(this.data.clMoney,100)  //云店金额 元转分
+    let groupNum = floatObj.multiply(this.data.groupNum,100) //拼团金额
+    let mealNum = floatObj.multiply(this.data.mealNum,100)  //套餐金额
+    let ecNum = floatObj.multiply(this.data.ecMoney,100)  //商城金额
+    let ecDisMoney = floatObj.multiply(this.data.ecDisMoney,100)  //指尖商城运费金额 元转分
+    let clNum = floatObj.multiply(this.data.clMoney,100)  //云店金额
     let consupMoney =this.data.consupMoney  //云店优惠金额
 
     // 配送费计算
@@ -1427,7 +1531,7 @@ Page({
         ['orderInfor.postage']:'0.00'
       })
     }
-    let zmoney = groupNum*1 + mealNum*1 + this.data.waterNum*1 + ecNum*1 + clNum*1 - consupMoney*1
+    let zmoney = groupNum*1 + mealNum*1 + this.data.waterNum*1 + ecNum*1 + ecDisMoney*1 + clNum*1 - consupMoney*1
     let totalDiscount = this.data.orderInfor.discountCloudNum*1 + this.data.fullAcMoney*1 + this.data.discountCard*1 + this.data.secondHalfPrice*1 + this.data.manyMorePrice*1;//总的优惠 拼团+云店
     let totalDiscountSplit = totalDiscount.toString().split(".");
     if(totalDiscountSplit.length>1&&totalDiscountSplit[1].length>3){
@@ -1526,6 +1630,9 @@ Page({
         this.getColudDispatch()  //配送信息
 				this.getDisCloudList() //云店可用优惠券
 				this.cloudHj()
+      }
+      if(this.data.eCShopData.length>0){//指尖商城商品
+        this.getMallDisMoney();//获取指尖商城的运费
       }
     }
   },

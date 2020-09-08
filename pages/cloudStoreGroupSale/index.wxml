@@ -1,0 +1,36 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view>
+    <view class="activity_bg_img">
+      <image mode="widthFix" src="http://img.goola.cn/mallImages/20200828/YhzrG2idbhhenCGJcz4Qf8pKbCTX63jk.png"/>
+    </view>
+    <view class="activity_bg_color">
+      <view class="activity_con">
+        <view class="preSale_top">
+            <image src="../../image/group_title.png"/>
+            <view class="preSale_time">
+                <view>距结束</view>
+                <view class="preSale_time_con">{{countdownTime.day}}</view>
+                <view class="preSale_time_sym">天</view>
+                <view class="preSale_time_con">{{countdownTime.hour}}</view>
+                <view class="preSale_time_sym">:</view>
+                <view class="preSale_time_con">{{countdownTime.minute}}</view>
+                <view class="preSale_time_sym">:</view>
+                <view class="preSale_time_con">{{countdownTime.second}}</view>
+            </view>
+        </view>
+        <view class="groupSale_list_par">
+            <view wx:for="{{groupSaleGoods}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}" class="groupSale_list {{item.hasBorder?'groupSale_bottom':''}}">
+                <view class="group_tip"><image src="../../image/group_tip.png"/><view>{{item.groupCount}}人团</view></view>
+                <image class="goods_src" src="{{imgUrl+item.goodsPic}}"/>
+                <view class="goods_name">{{item.goodsName}}</view>
+                <view class="goods_price"><text>￥</text><text>{{numb.getNum(item.prePrice)}}</text><text>￥{{numb.getNum(item.showSalesPrice)}}</text></view>
+            </view>
+        </view>
+        <view class="goodBuy_icon" wx:if="{{shoppNum>0}}" bindtap="goBuyCar">
+            <image src="../../image/buydai.png"/>
+            <view>{{shoppNum}}</view>
+        </view>
+      </view>
+      <view class="noMore" wx:if="{{noMore}}">—— 不好意思，已经到底啦 ——</view>
+    </view>
+</view>

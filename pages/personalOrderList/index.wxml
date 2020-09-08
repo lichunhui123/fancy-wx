@@ -1,75 +1,105 @@
 <wxs module="numFr" src="../../filter/filter.wxs"></wxs>
-<view class="order_con">
-    <view class="order_top">
-        <view wx:for="{{tabArr}}" wx:key="index" class="top_item {{orderStatus==item.orderStatus?'active':''}}" bindtap="getOrderChange" data-index="{{item.orderStatus}}">
-            <text class="top_text">{{item.name}}</text>
-            <view class='Num_icon' wx:if="{{item.orderNum}}">
-                <image class='Num_iconImg' src="../../image/Oval.png"></image>
-                <view class='num_text'>{{item.orderNum}}</view>
-            </view>
-        </view>
+<view class="order_con {{noData?'order_con_no':''}}">
+  <view class="order_top">
+    <view wx:for="{{tabArr}}" wx:key="index" class="top_item {{orderStatus==item.orderStatus?'active':''}}" bindtap="getOrderChange" data-index="{{item.orderStatus}}">
+      <text class="top_text">{{item.name}}</text>
+      <view class='Num_icon' wx:if="{{item.orderNum}}">
+        <image class='Num_iconImg' src="../../image/Oval.png"></image>
+        <view class='num_text'>{{item.orderNum}}</view>
+      </view>
     </view>
-    <view class="order_detail">
-        <view class="order_list" wx:if="{{orderList&&orderList.length>0}}" wx:for="{{orderList}}" wx:key="index">
-            <view class="list_top" bindtap="toOrderDetail" data-item="{{item}}">
-                <view class="list_top_left">
-                    <text class="list_top_left_text" wx:if="{{item.orderStatus==10||item.orderStatus==20||item.orderStatus==30||item.orderStatus==31}}">下单时间：{{item.createTime}}</text>
-                    <text class="list_top_left_text" wx:if="{{item.orderStatus==40}}">{{item.orderResource==5?"取货时间":"完成时间"}}：{{item.doneTime}}</text>
-                    <text class="list_top_left_text" wx:if="{{item.orderStatus==50}}">取消时间：{{item.cancelTime}}</text>
-                    <!--水管家订单待收货状态才有此按钮-->
-                    <view class="list_top_left_btn" wx:if="{{item.sendCode}}" catchtap="cancelSend" data-sendcode="{{item.sendCode}}">取消派送</view>
-                </view>
-                <text class="list_top_right" style="color:#FF3B30" wx:if="{{item.orderStatus==10}}">待付款</text>
-                <text class="list_top_right" style="color:#007AFF" wx:if="{{item.orderStatus==20}}">待配送</text>
-                <text class="list_top_right" style="color:#F2922F" wx:if="{{item.orderStatus==30||item.orderStatus==31}}">待收货</text>
-                <text class="list_top_right" style="color:#333333" wx:if="{{item.orderStatus==40}}">已完成</text>
-                <text class="list_top_right" style="color:#999999" wx:if="{{item.orderStatus==50}}">已取消</text>
-            </view>
-            <view class="order_list_con" bindtap="toOrderDetail" data-item="{{item}}">
-                <view class="list_con_left {{item.orderItemList.length>1?'left_con_overflow':''}}" wx:if="{{item.orderItemList}}">
-                    <!--自提-->
-                    <view class="list_icon" wx:if="{{item.orderType==20&&item.orderStatus!=10}}"><image src="../../image/tlziti.png"></image></view>
-                    <!--派送-->
-                    <view class="list_icon" wx:if="{{item.orderType==10&&item.orderStatus!=10}}"><image src="../../image/tlpeisong.png"></image></view>
-                    <view class="goods_par" wx:for="{{item.orderItemList}}" wx:for-item='cell' wx:key="i" wx:if="{{item.orderItemList.length==1}}">
-                        <image wx:if="{{cell.setmealPhoto}}" src="{{imgHttp+numFr.splitImg(cell.setmealPhoto)}}"></image>
-                        <image wx:else src="{{imgHttp+numFr.splitImg(cell.goodsPhoto)}}"></image>
-                        <view class="goods_right">
-                            <view>{{cell.goodsName}}</view>
-                            <view>规格：{{cell.specifications}}</view>
-                        </view>
-                    </view>
-                    <view class="img_par" wx:for="{{item.orderItemList}}" wx:for-item='cell' wx:key="i" wx:if="{{item.orderItemList.length>1}}">
-                        <image wx:if="{{cell.setmealPhoto}}" src="{{imgHttp+numFr.splitImg(cell.setmealPhoto)}}"></image>
-                        <image wx:else src="{{imgHttp+numFr.splitImg(cell.goodsPhoto)}}"></image>
-                    </view>
-                </view>
-                <view class="list_con_right">
-                    <view class="list_price"><text>¥</text>{{numFr.getNum(item.orderPrice/100)}}</view>
-                    <view class="list_num">共{{item.goodsCount}}件</view>
-                </view>
-            </view>
-            <!--云店商品多人拼团活动的订单 待配送-配送 待收货-自提 状态并且还没有拼团成功 展示去分享 -->
-            <view class="confirm_share" wx:if="{{item.orderResource==40&&(item.orderStatus==20||item.orderStatus==30||item.orderStatus==31)&&item.groupCode&&item.groupStatus==1}}">
-                <view class="confirm_share_left">
-                    <view>该拼团订单还差{{item.surplusCount}}人拼团成功（成功后发货）</view>
-                    <view>剩余拼团时间：{{item.hour}}:{{item.minute}}:{{item.second}}</view>
-                </view>
-                <view class="confirm_share_right">
-                    <button open-type="share" data-item="{{item}}"><image src="../../image/order_share_icon.png"></image><text>去分享</text></button>
-                </view>
-                <canvas  canvas-id="shareImg{{index}}" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
-            </view>    
-            <!--云店商品待收货状态-->
-            <view class="confirm_receipt" wx:elif="{{(item.orderResource==40&&(item.orderStatus==30||item.orderStatus==31))}}">
-                <view></view>
-                <view class="confirm_receipt_right" catchtap="confirmReceipt" data-ordercode="{{item.orderCode}}">确认收货</view>
-            </view>
+  </view>
+  <view class="order_detail">
+    <view class="order_list" wx:if="{{orderList&&orderList.length>0}}" wx:for="{{orderList}}" wx:key="index">
+      <view class="list_top" bindtap="toOrderDetail" data-item="{{item}}">
+        <view class="list_top_left">
+          <text class="list_top_left_text" wx:if="{{item.orderStatus==10||item.orderStatus==20||item.orderStatus==30||item.orderStatus==31}}">
+            下单时间：{{item.createTime}}
+          </text>
+          <text class="list_top_left_text" wx:if="{{item.orderStatus==40}}">
+            {{item.orderResource==5?"取货时间":"完成时间"}}：{{item.doneTime}}
+          </text>
+          <text class="list_top_left_text" wx:if="{{item.orderStatus==50}}">
+            取消时间：{{item.cancelTime}}
+          </text>
+          <!-- 水管家订单待收货状态才有此按钮 -->
+          <view class="list_top_left_btn" wx:if="{{item.sendCode}}" catchtap="cancelSend" data-sendcode="{{item.sendCode}}">
+            取消派送
+          </view>
         </view>
-        <!--无订单-->
-        <view class="nullData" wx:if="{{noData}}">
-            <image src="../../image/nodata.png"></image>
-            <view class="no_text">您还没有订单哟！</view>
+        <text class="list_top_right" style="color:#FF3B30" wx:if="{{item.orderStatus==10}}">
+          待付款
+        </text>
+        <text class="list_top_right" style="color:#007AFF" wx:if="{{item.orderStatus==20}}">
+          待配送
+        </text>
+        <text class="list_top_right" style="color:#F2922F" wx:if="{{item.orderStatus==30||item.orderStatus==31}}">
+          待收货
+        </text>
+        <text class="list_top_right" style="color:#333333" wx:if="{{item.orderStatus==40}}">
+          已完成
+        </text>
+        <text class="list_top_right" style="color:#999999" wx:if="{{item.orderStatus==50}}">
+          已取消
+        </text>
+      </view>
+      <view class="order_list_con" bindtap="toOrderDetail" data-item="{{item}}">
+        <view class="list_con_left {{item.orderItemList.length>1?'left_con_overflow':''}}" wx:if="{{item.orderItemList}}">
+          <!-- 自提 -->
+          <view class="list_icon" wx:if="{{item.orderType==20&&item.orderStatus!=10}}">
+            <image src="../../image/tlziti.png"></image>
+          </view>
+          <!-- 派送 -->
+          <view class="list_icon" wx:if="{{item.orderType==10&&item.orderStatus!=10}}">
+            <image src="../../image/tlpeisong.png"></image>
+          </view>
+          <view class="goods_par" wx:for="{{item.orderItemList}}" wx:for-item='cell' wx:key="i" wx:if="{{item.orderItemList.length==1}}">
+            <image wx:if="{{cell.setmealPhoto}}" src="{{imgHttp+numFr.splitImg(cell.setmealPhoto)}}"></image>
+            <image wx:else src="{{imgHttp+numFr.splitImg(cell.goodsPhoto)}}"></image>
+            <view class="goods_right">
+              <view>{{cell.goodsName}}</view>
+              <view>规格：{{cell.specifications}}</view>
+            </view>
+          </view>
+          <view class="img_par" wx:for="{{item.orderItemList}}" wx:for-item='cell' wx:key="i" wx:if="{{item.orderItemList.length>1}}">
+            <image wx:if="{{cell.setmealPhoto}}" src="{{imgHttp+numFr.splitImg(cell.setmealPhoto)}}"></image>
+            <image wx:else src="{{imgHttp+numFr.splitImg(cell.goodsPhoto)}}"></image>
+          </view>
         </view>
+        <view class="list_con_right">
+          <view class="list_price">
+            <text>¥</text>
+            <text>{{numFr.getNum(item.orderPrice/100)}}</text>
+          </view>
+          <view class="list_num">共{{item.goodsCount}}件</view>
+        </view>
+      </view>
+      <!-- 云店商品多人拼团活动的订单 待配送-配送 待收货-自提 状态并且还没有拼团成功 展示去分享 -->
+      <view class="confirm_share" wx:if="{{item.orderResource==40&&(item.orderStatus==20||item.orderStatus==30||item.orderStatus==31)&&item.groupCode&&item.groupStatus==1}}">
+        <view class="confirm_share_left">
+          <view>该拼团订单还差{{item.surplusCount}}人拼团成功（成功后发货）</view>
+          <view>剩余拼团时间：{{item.hour}}:{{item.minute}}:{{item.second}}</view>
+        </view>
+        <view class="confirm_share_right">
+          <button open-type="share" data-item="{{item}}">
+            <image src="../../image/order_share_icon.png"></image>
+            <text>去分享</text>
+          </button>
+        </view>
+        <canvas canvas-id="shareImg{{index}}" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
+      </view>
+      <!-- 电商（更好甄选）,云店 商品待收货状态 -->
+      <view class="confirm_receipt" wx:elif="{{((item.orderResource==10||item.orderResource==40)&&(item.orderStatus==30||item.orderStatus==31))}}">
+        <view></view>
+        <view class="confirm_receipt_right" catchtap="confirmReceipt" data-ordercode="{{item.orderCode}}" data-orderresource="{{item.orderResource}}">
+          确认收货
+        </view>
+      </view>
     </view>
+    <!-- 无订单 -->
+    <view class="nullData" wx:if="{{noData}}">
+      <image src="../../image/nodata.png"></image>
+      <view class="no_text">您还没有订单哟！</view>
+    </view>
+  </view>
 </view>

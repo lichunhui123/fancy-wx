@@ -315,40 +315,70 @@ Page({
   confirmReceipt(e){
     let t=this;
     let orderCode = e.currentTarget.dataset.ordercode;//订单单号
+    let orderResource = e.currentTarget.dataset.orderresource;//订单来源 10-指尖电商 40-云店
     wx.showModal({
       content:'确定已收到货？',
       cancelColor:"#999999",
       confirmColor:"#F2922F",
       success(res){
         if (res.confirm){//点击确认
-          service.mallReceipt({
-            operatorId:t.data.userId,
-            orderCode:orderCode
-          }).then(res=>{
-            if(res.data.result==200){
-              wx.showToast({
-                title: '订单确认收货成功！',
-                icon: 'none',
-                duration: 2000
-              });
-              t.setData({
-                pageNum:1,
-                orderList:null,
-                noData:false,
-                noMore:false//没有更多了
-              });
-              t.getOrderList(t.data.orderStatus);
-              t.getOrderNum();
-            }else{
-              wx.showToast({
-                title: res.data.message,
-                icon: 'none',
-                duration: 2000
-              });
-            }
-          })
+          if(orderResource==40){//云店
+            service.mallReceipt({
+              operatorId:t.data.userId,
+              orderCode:orderCode
+            }).then(res=>{
+              if(res.data.result==200){
+                wx.showToast({
+                  title: '订单确认收货成功！',
+                  icon: 'none',
+                  duration: 2000
+                });
+                t.setData({
+                  pageNum:1,
+                  orderList:null,
+                  noData:false,
+                  noMore:false//没有更多了
+                });
+                t.getOrderList(t.data.orderStatus);
+                t.getOrderNum();
+              }else{
+                wx.showToast({
+                  title: res.data.message,
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
+            })
+          }else{//更好甄选（指尖商城）
+            service.fingerMallConfirmReceipt({
+              updateId:t.data.userId,
+              orderCode:orderCode,
+              type:2//确认发货
+            }).then(res=>{
+              if(res.data.result==200){
+                wx.showToast({
+                  title: '订单确认收货成功！',
+                  icon: 'none',
+                  duration: 2000
+                });
+                t.setData({
+                  pageNum:1,
+                  orderList:null,
+                  noData:false,
+                  noMore:false//没有更多了
+                });
+                t.getOrderList(t.data.orderStatus);
+                t.getOrderNum();
+              }else{
+                wx.showToast({
+                  title: res.data.message,
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
+            })
+          }
         }
-
       }
     })
   },

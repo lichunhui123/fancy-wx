@@ -98,7 +98,38 @@ page{
     height:86rpx;
 }
 .order_padding_left{
-    padding-left: 40rpx;
+    display:flex;
+    align-items: center;
+}
+.order_padding_left text{
+  font-size: 28rpx;
+  color: #5ADAD0;
+  line-height: 28rpx;
+}
+.order_type{
+  position: relative;
+  width: 98rpx;
+  height: 34rpx;
+  margin-right: 10rpx;
+}
+.order_type image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 98rpx;
+  height: 34rpx;
+} 
+.order_type text{
+  width: 98rpx;
+  height: 34rpx;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  color: #FFFFFF;
+  line-height: 34rpx;
+  text-align: center;
 }
 .order_activity_icon{
     position:relative;
@@ -279,6 +310,24 @@ page{
     line-height: 34rpx;
     text-align: center;
     margin-left: 10rpx;
+}
+.order_express{
+  width:710rpx;
+  padding:0 20rpx 20rpx;
+  box-sizing: border-box;
+  margin:20rpx auto 42rpx;
+  background: #fff;
+  font-size: 28rpx;
+  color: #333333;
+  border-radius: 10rpx;
+}
+.order_express view:nth-child(1){
+  line-height: 80rpx;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.order_express view:nth-child(2),.order_express view:nth-child(3){
+  line-height: 28rpx;
+  margin-top: 20rpx;
 }
 .footer{
     width: 750rpx;
