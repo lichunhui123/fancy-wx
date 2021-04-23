@@ -12,27 +12,19 @@
     <!-- 卡券列表 -->
     <view class="ticket_item" wx:for="{{coupondata}}" wx:key="index">
       <view class="ticket_left {{unused!=10?'hactive':''}}">
-        <view wx:if="{{item.cardType==1||item.cardType==10}}">
-          ￥<text class="price">{{item.cardAmount}}</text>
-        </view>
-        <view wx:if="{{item.cardType==2||item.cardType==20}}">
-          满<text class="price">{{item.fullAmountPrice.full}}</text>减<text class="price">{{item.fullAmountPrice.amount}}</text>
-        </view>
-        <view wx:if="{{item.cardType==3||item.cardType==30}}">
-          <text class="price">{{item.discount}}</text>折
-        </view>
-        <view class="mk">
-          {{item.cardType==1?'优惠券':item.cardType==2?'满减券':item.cardType==3?'折扣券':''}}
-        </view>
-        <view class="mk">
-          {{item.cardType==10?'优惠券':item.cardType==20?'满减券':item.cardType==30?'折扣券':''}}
-        </view>
+        <image wx:if="{{item.cardRange==3}}" src='../../image/cloudStore.png' class="ticket_left_con"></image>
+        <view wx:if="{{item.cardType==1||item.cardType==10}}">¥<text style="margin-left:6rpx">{{item.cardAmount}}</text></view>
+        <view wx:if="{{item.cardType==2||item.cardType==20}}">¥<text style="margin-left:6rpx">{{item.fullAmountPrice.amount}}</text></view>
+        <view wx:if="{{item.cardType==3||item.cardType==30}}"><text style="margin-right:6rpx">{{item.discount}}</text>折</view>
+        
+        <view wx:if="{{item.cardType==2||item.cardType==20}}">订单满{{item.fullAmountPrice.full}}元</view>
+        <view wx:else>{{item.useThreshold>0?"订单满"+item.useThreshold+"元":"无门槛"}}</view>
       </view>
       <view class="ticket_right">
-        <view class="ticket_right_con">
-          <view class="ticket_name">{{item.cardRange==3?"限指尖云店商品":item.cardName}}</view>
+        <view class="ticket_right_con"> 
+          <view class="ticket_name">{{item.cardRange==3?item.mecName:item.cardName}}</view>
           <view class="ticket_time {{unused!=10?'hactive':''}}">
-            {{item.startTime}}-{{item.endTime}}
+            {{item.cardType==1||item.cardType==10?'优惠券 ':item.cardType==2||item.cardType==20?'满减券 ':item.cardType==3||item.cardType==30?'折扣券 ':''}}{{item.startTime}}-{{item.endTime}}
           </view>
           <view class="ticket_type">适用于{{item.applicableGoods==0?'全部':'指定'}}商品</view>
         </view>
@@ -43,10 +35,9 @@
           <image src="../../image/yiguoqi.png"></image>
         </view>
       </view>
-    </view>
+    </view></view>
     <view class="nologin" wx:if="{{noData}}">
       <image src="../../image/nodata.png" class="goodnodata"></image>
       <view class="notitle">暂无卡券</view>
     </view>
   </view>
-</view>

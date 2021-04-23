@@ -88,6 +88,7 @@ Page({
           item.startTime = item.startTime?item.startTime:'-'
           item.endTime = item.endTime?item.endTime:'-'
           item.cardName= item.cardName?item.cardName:'-'
+          item.mecName=item.mecName?item.mecName:'-'
           item.select=false
         })
         this.setData({

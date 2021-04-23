@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "reason": "./reason/index"
+  },
+  "navigationBarTitleText": "申请退款",
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

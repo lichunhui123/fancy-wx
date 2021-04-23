@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "discountCoupon":"/component/discountCoupon/index"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarBackgroundColor":"#FF8C16",
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "指尖生活派",
+  "navigationBarTextStyle": "white",
+  "onReachBottomDistance":0
+}

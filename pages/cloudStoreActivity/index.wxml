@@ -1,0 +1,73 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view>
+  <view class="activity_bg_img">
+    <!--精选商品-->
+    <image wx:if="{{type==1}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/JFmweFhSKafSzGsnfadN77fdspkaj7QX.jpg"></image>
+    <!--限时折扣-->
+    <image wx:if="{{type==2}}" mode="widthFix" src="{{imgUrl}}mallImages/20210421/7dakFmxMMt22drWC3Q5Dxhy6rtz6K5AJ.jpg"></image>
+    <!--多人拼团-->
+    <image wx:if="{{type==3}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/t36PbbnGH6cxweDicyBNm6rerm8ajiH4.jpg"></image>
+    <!--好物预售-->
+    <image wx:if="{{type==4}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/bQFZJk476TMdkKE38zK3He6biyhpNJZQ.jpg"></image>
+    <!--全场满减-->
+    <image wx:if="{{type==5}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/sRH2TxnzPeZijXfzMkNrKYQzbS5Ea3ey.jpg"></image>
+    <!--买一送一-->
+    <image wx:if="{{type==6}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/X2fRkkFs3iXmyRDKFyJet5aMNPx5Y6pw.jpg"></image>
+    <!--第二件半价-->
+    <image wx:if="{{type==7}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/caAZyQ7YhCckfNfrwx7FMcNd6NGYYsw4.jpg"></image>
+    <!--多件多折-->
+    <image wx:if="{{type==8}}" mode="widthFix" src="{{imgUrl}}mallImages/20210401/y24Dtyyz3hhhpGsRdbAFc6mkziJEdbrd.jpg"></image>
+  </view>
+  <view class="activity_bg_color bgColor{{type}}" wx:if="{{activityInfo.length>0}}">
+    <view class="activity_con">
+      <view class="activity_item" 
+        wx:for="{{activityInfo}}" 
+        wx:key="index" 
+        wx:if="{{item.smallGoodsList&&item.smallGoodsList.length>0}}"
+      >
+        <view class="activity_top">
+          <view>
+            <view class="activity_top_name">
+              <view class="activity_title">{{item.branchesName}}</view>
+              <view class="activity_tag" wx:if="{{item.smallDeliveryStatus==10}}">支持自提</view>
+              <view class="activity_tag" wx:if="{{item.smallDeliveryStatus==20}}">支持配送</view>
+              <view class="activity_tag" wx:if="{{item.smallDeliveryStatus==30}}">支持配送/自提</view>
+            </view>
+            <view class="activity_desc" wx:if="{{type==3}}">{{item.groupCount}}人团</view>
+            <view class="activity_desc" wx:if="{{type==5}}"><text wx:for="{{item.fullDecMoneyList}}" wx:for-item="val" wx:key="val">满{{val.fullMoney}}-{{val.decMoney}}</text></view>
+            <view class="activity_desc" wx:if="{{type==6}}">买一送一</view>
+            <view class="activity_desc" wx:if="{{type==7}}">第二件半价</view>
+            <view class="activity_desc" wx:if="{{type==8}}"><text wx:for="{{item.manyPriManyFoldsList}}" wx:for-item="val" wx:key="val">{{val.count}}件{{val.discount/10}}折</text></view>
+          </view>
+          <view class="activity_top_right" bindtap="goCloudStoreHome" data-branchesid="{{item.branchesId}}">进店</view>
+        </view>
+        <view class="activity_goods" 
+          wx:for="{{item.smallGoodsList}}" 
+          wx:for-item="val" 
+          wx:for-index="i" 
+          wx:key="i" 
+          wx:if="{{i<6}}"
+          data-goods="{{val}}"
+          bindtap="goodsClick"
+        >
+          <view class="goods_pic"><image src="{{imgUrl}}{{numb.getImg(val.goodsPic)}}"></image></view>
+          <view class="goods_right">
+            <view>
+              <view class="goods_name">{{val.goodsName}}</view>
+              <view class="goods_desc">规格：{{val.spec}}</view>
+              <view class="goods_tag" wx:if="{{type==6}}">赠同款</view>
+            </view>
+            <view class="goods_price" wx:if="{{val.type==10}}"><text class="price_sign">折扣价</text><text class="price_symbol">¥</text>{{numb.getNum(val.disCountPrice/100)}}<text class="origin_price">¥{{numb.getNum(val.showSalesPrice)}}</text></view>
+            <view class="goods_price" wx:elif="{{val.type==80}}"><text class="price_sign">预售价</text><text class="price_symbol">¥</text>{{numb.getNum(val.prePrice)}}<text class="origin_price">¥{{numb.getNum(val.showSalesPrice)}}</text></view>
+            <view class="goods_price" wx:elif="{{val.type==90}}"><text class="price_sign">团购价</text><text class="price_symbol">¥</text>{{numb.getNum(val.prePrice)}}<text class="origin_price">¥{{numb.getNum(val.showSalesPrice)}}</text></view>
+            <view class="goods_price" wx:else><text class="price_symbol">¥</text>{{numb.getNum(val.showSalesPrice)}}</view>
+          </view>
+        </view>
+        <view class="lookMore" wx:if="{{item.smallGoodsList.length>6}}" bindtap="lookMore" data-groupcode="{{item.groupCode}}" data-branchesid="{{item.branchesId}}">
+          <view>查看更多</view>
+          <image src="../../image/right_icon_new.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

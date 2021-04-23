@@ -2,13 +2,16 @@
 const app=getApp();
 const service = require("../../service/index");
 import floatObj from "../../utils/floatObj";
-import {getNum} from "../../utils/util";
+import {changeCurrentCloudShop} from "../../utils/util";
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    branchId:"",//云店站点id
+    branchName:"",//云店站点名称
+    cityName:"",//云店的所在城市名称
     imgUrl: app.globalData.imgUrl,
     orderCode:'',//订单编号
     payGroupCode:'',//支付分组编码 todo 待付款状态查询接口需要
@@ -28,6 +31,29 @@ Page({
     activityCode:"",//云店多人拼团活动的活动编码
     groupCode:"",//云店多人拼团活动的订单时的拼团编码
     groupStatus:"",//云店多人拼团活动的订单商品的拼团状态 0已取消，1：进行中，2：已完成
+    maskShow:false,//再次购买阴影
+    productList:"",//弹框商品
+    auditStatus:'',//审核状态 1:通过 0：驳回
+    orderType:'',//自提20 配送10
+    soldOutGoodsDtoList:'',//下架商品
+    cartGoodsInfoList:'',//加入购物车商品
+    editFlag:'',//修改地址标识：0，不可修改，1，可修改，默认为1
+    refundStatus:'',//退款状态：1：已退款，2：退款中
+    skuId:'',//再次购买显示
+    reason:'',//退款原因
+    hasTicket:false,//水票购买显示
+    ticketDeduction:''//使用水票1 未使用0
+  },
+   //关闭弹框我在想想
+   cancelmask: function (e) {
+    this.triggerEvent('cancelbutton')
+    this.setData({
+      maskShow: false,
+    })
+  },
+    //跳转到购物车页面
+  toHome(){
+    this.addGoodCard();
   },
   //剩余拼团时间倒计时
   groupCountDownTime(time){
@@ -108,7 +134,7 @@ Page({
 
         ctx.setFillStyle('red');
         ctx.setFontSize(22);
-        ctx.fillText('￥', 30,286);
+        ctx.fillText('￥', 30,286); 
 
         /* 绘制 */
         ctx.stroke()
@@ -187,6 +213,7 @@ Page({
         wx.hideLoading();
         if (res.data.result == 200) {
           let info=res.data.data;
+          let hasTicket = false;
           info.ticketDeduction=0;//水票抵扣
           info.createTime = info.createTime.substring(0,19);//下单时间
           if(info.orderResource==5){//拼团
@@ -197,6 +224,9 @@ Page({
           info.receiveTime = info.receiveTime ? info.receiveTime.substring(0, 19) : '';
           if(info.orderResource==20){//水管家
             info.orderItemList.forEach(val => {
+              if (val.ticketDeduction > 0) {//水票展示
+                hasTicket = true;
+              }
               info.ticketDeduction+=val.ticketDeduction;//水票抵扣数
             })
           }
@@ -213,8 +243,11 @@ Page({
             })
           }
           if(info.orderResource==40){//云店
-            let time = info.estimateReceiveTime;
-            info.estimateReceiveTime = time?time.substring(5):"";//自提时间
+            let receiveTime = info.estimateReceiveTime;//自提时间
+            info.estimateReceiveTime = receiveTime?receiveTime.substring(5):"";//自提时间
+            let delStartTime = info.estimateDeliveryStartTime;//配送开始时间
+            let delEndTime = info.estimateDeliveryEndTime;//配送结束时间
+            info.estimateDeliveryTime = delStartTime?delStartTime.substring(5)+"-"+delEndTime.substring(11):"";//配送时间
             info.buyOneGetOneList=[];//买一送一 赠品列表
             info.secondHalfPriceDiscount = 0;//第二件半价优惠信息 分
             info.manyPriManyFolds="";//多件多折的折扣设置
@@ -256,14 +289,29 @@ Page({
             }
           }
           that.setData({
-            orderResource: info.orderResource,
+            orderResource: info.orderResource,//门店类型
+            branchId: info.branchesId,//云店站点ID
+            branchName: info.mecName,//云店站点名称
             groupCode:info.groupCode,//云店 多人拼团活动的拼团编码
             groupStatus:info.groupStatus,//云店 多人拼团活动拼团状态 0已取消，1：进行中，2：已完成
             surplusCount:info.surplusCount,//云店 多人拼团的剩余拼团人数
             storeGoodsId:info.orderItemList[0].goodsCode,//云店多人拼团商品编码
             activityCode:info.orderItemList[0].activityId,//云店多人拼团活动的活动编码
             orderDetails: [info],//订单详情数据
-            payOrderCode: [that.data.orderCode] //待付款状态 去支付时传参orderCode数组
+            payOrderCode: [that.data.orderCode], //待付款状态 去支付时传参orderCode数组
+            orderType:info.orderType,//配送方式 自提20 配送10
+            goodsPhoto:info.goodsPhoto?info.goodsPhoto:"",//商品图片
+            orderItemCode:info.orderItemCode?info.orderItemCode:"",
+            editFlag:info.editFlag,//修改订单的状态
+            refundStatus:info.refundStatus,//退款按钮
+            orderStatus:info.orderStatus,//订单状态
+            auditStatus: info.auditStatus,//审核状态
+            skuId:info.skuId?info.skuId:"",
+            hasTicket:hasTicket//水票
+          },()=>{
+            if(info.orderResource==40&&info.groupCode&&info.groupStatus==1){
+              this.getBranchInfo();
+            }
           });
         }else{
           wx.showToast({
@@ -274,6 +322,18 @@ Page({
         }
       });
     }
+  },
+  //获取门店信息
+  getBranchInfo(){
+    service.getnewcommunity({
+      branchId: this.data.branchId
+    }).then(res => {
+      if(res.data.result==200){
+        this.setData({
+          cityName:res.data.data.cityName
+        })
+      }
+    })
   },
   //待付款订单详情获取成功
   getWaitePayOrderSuccess(res){
@@ -311,8 +371,11 @@ Page({
           })
         }
         if(item.orderResource==40){//云店
-          let time = item.estimateReceiveTime;
-          item.estimateReceiveTime = time?time.substring(5):"";//自提时间
+          let receiveTime = item.estimateReceiveTime;//自提时间
+          item.estimateReceiveTime = receiveTime?receiveTime.substring(5):"";//自提时间
+          let delStartTime = item.estimateDeliveryStartTime;//配送开始时间
+          let delEndTime = item.estimateDeliveryEndTime;//配送结束时间
+          item.estimateDeliveryTime = delStartTime?delStartTime.substring(5)+"-"+delEndTime.substring(11):"";//配送时间
           item.buyOneGetOneList = [];//买一送一 赠品列表
           item.secondHalfPriceDiscount = 0;//第二件半价优惠信息 分
           item.manyPriManyFolds = "";//多件多折的折扣设置
@@ -450,19 +513,23 @@ Page({
       confirmColor:"#F2922F",
       success(res) {
         if (res.confirm) {
+          wx.showLoading({
+            title:"加载中..."
+          })
           service.cancelMyOrder({
             getPayGroupCode: t.data.payGroupCode,
             userId:wx.getStorageSync("userId")
           }).then((data) => {
+            wx.hideLoading();
             if (data.data.result == 200){
               wx.showToast({
                 title: '取消成功！',
                 icon: 'none',
                 duration: 1000
               });
-              t.setData({
+              t.setData({//订单状态变成已取消
                 zero:true
-              });
+              })
             }else{
               wx.showToast({
                 title: data.data.message,
@@ -471,6 +538,7 @@ Page({
               });
             }
           }).catch(() => {
+            wx.hideLoading();
             wx.showToast({
               title: '取消失败！',
               icon: 'none',
@@ -511,7 +579,7 @@ Page({
     this.onClick=true;
     wx.showLoading({
       mask: true,
-      title: '支付中',
+      title: '加载中...',
     });
     let param={
       openId:wx.getStorageSync("openId"),
@@ -643,18 +711,220 @@ Page({
         }
       }
     })
+  },    
+  //申请退款
+  drawBack(){
+    let item = this.data.orderDetails[0];
+    let receiverName=item.receiverName;//收货人
+    let receiverPhone=item.receiverPhone;//收货联系电话
+    let orderResource = item.orderResource;//门店类型
+    let refundStatus=item.refundStatus;//退款状态：1：已退款，2：退款中，0：退款失败
+    let orderStatus=item.orderStatus;//配送类型
+    if(refundStatus==null){
+      wx.navigateTo({
+        url: `/pages/applicationForDrawback/index?receiverName=${receiverName}&receiverPhone=${receiverPhone}&orderCode=${this.data.orderCode}&orderResource=${orderResource}&orderStatus=${orderStatus}`,
+      })
+    }else{
+      wx.navigateTo({
+        url: `/pages/personalOrderDetail/index?refundStatus=${refundStatus}`,
+      })
+    }
+  },
+  //再次购买经纬度
+  goShoppingCar() {
+    let isdefault=wx.getStorageSync('isdefault');
+    let isaddress=wx.getStorageSync('isaddress');
+    let latitude='';
+    let longitude='';
+    if(isaddress){
+     latitude=isaddress.latitude;
+     longitude=isaddress.longitude;
+     this.buyAgainCheck(latitude,longitude);
+    }else if(isdefault){
+      latitude=isdefault.latitude;
+      longitude=isdefault.longitude;
+      this.buyAgainCheck(latitude,longitude);
+    }else{
+      this.getUserLocation();
+    }
+  },
+  // 微信授权定位
+  getUserLocation(){
+    let that = this;
+    wx.getSetting({
+      success: (res) => {
+        if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
+          wx.showModal({
+            title: '请求授权当前位置',
+            content: '需要获取您的地理位置，请确认授权',
+            success: function (res) {
+              if (res.cancel) {
+                wx.showToast({
+                  title: '拒绝授权',
+                  icon: 'none',
+                  duration: 1000
+                })
+              } else if (res.confirm) {
+                wx.openSetting({
+                  success: function (dataAu) {
+                    if (dataAu.authSetting["scope.userLocation"] == true) {
+                      wx.showToast({
+                        title: '授权成功',
+                        icon: 'success',
+                        duration: 1000
+                      });
+                      //再次授权，调用wx.getLocation的API
+                      that.getLocation();
+                    } else {
+                      wx.showToast({
+                        title: '授权失败',
+                        icon: 'none',
+                        duration: 1000
+                      })
+                    }
+                  }
+                })
+              }
+            }
+          })
+        } else if (res.authSetting['scope.userLocation'] == undefined) {
+          //调用wx.getLocation的API
+          that.getLocation();
+        } else {
+          //调用wx.getLocation的API
+          that.getLocation();
+        }
+      }
+    })
+  },
+  // 微信获得经纬度
+  getLocation(){
+    let that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        let latitude = res.latitude;
+        let longitude = res.longitude;
+        that.buyAgainCheck(latitude,longitude);
+      },
+      fail: function (res) {
+        that.setData({hasLocation:false});
+        wx.showToast({
+          title: '亲，记得打开手机定位哟！',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
+  //再次购买
+  buyAgainCheck(latitude,longitude){
+    let currentCloudShop=wx.getStorageSync('currentCloudShop');//获取本地存储
+    wx.showLoading({
+      title:"加载中..."
+    });
+    service.buyAgainCheck({
+      branchesId:currentCloudShop?currentCloudShop.siteId:"",
+      orderCode:this.data.orderCode,
+      latitude:latitude,
+      longitude:longitude,
+    }).then((res)=>{
+      wx.hideLoading();
+      if(res.data.result!==200){
+        wx.showToast({
+          title: '当前网络状态较差，请稍后重试',
+          icon: 'none',
+        });
+        return;
+      }
+      let soldOutGoodsDtoList=res.data.data.soldOutGoodsDtoList;//已下架商品
+      let cartGoodsInfoList=res.data.data.cartGoodsInfoList;//加入购物车商品
+      if(soldOutGoodsDtoList.length>0&&cartGoodsInfoList.length>0){//已下架商品和加入购物车商品
+       this.setData({
+        soldOutGoodsDtoList:soldOutGoodsDtoList,
+        maskShow:true,
+        cartGoodsInfoList:cartGoodsInfoList,
+       })
+      }else if(soldOutGoodsDtoList.length>0&&cartGoodsInfoList.length==0){//只有已下架的商品
+        wx.showToast({
+          title: '订单中的商品都卖光了，再看看其他商品吧~',
+          icon: 'none',
+        });
+      }else{
+        this.setData({
+          cartGoodsInfoList:cartGoodsInfoList
+        },()=>{
+          this.addGoodCard();
+        })
+      }
+    })
+  },
+  //添加购物车的方法
+  addGoodCard(){
+    wx.showLoading({
+      title:'加载中'
+    })
+    service.saveShoppingCartList(
+      this.data.cartGoodsInfoList
+    ).then((res)=>{
+      wx.hideLoading();
+      if(res.data.result==200){
+        wx.reLaunch({
+          url: `/pages/shoppingCar/index`,
+        })
+      }else{//购买失败
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none',
+        });
+      }
+    })
+  },
+  //修改订单
+  editOrder() {
+    wx.navigateTo({
+      url: `/pages/waterAddress/index?orderCode=${this.data.orderCode}`,
+    })
+  },
+  //查看退款进度
+  schedule(){
+    wx.showLoading({
+      title:"加载中..."
+    });
+    service.getOrderInfo({
+      orderCode:this.data.orderCode,
+      refundMessage:this.data.reason
+     }).then((res)=>{
+       wx.hideLoading();
+     if(res.data.result==200){
+       let auditStatus = res.data.data.auditStatus;
+       let refundStatus = res.data.data.refundStatus;
+       console.log(auditStatus,refundStatus)
+      wx.navigateTo({
+        url: `/pages/applicationForDrawbackResult/index?auditStatus=${auditStatus}&refundStatus=${refundStatus}&orderResource=${this.data.orderResource}&orderStatus=${this.data.orderStatus}`,
+      })
+     }else{
+       wx.showToast({
+         title: res.data.message,
+         icon:'none',
+       })
+     }
+     })
+  },
+  //进店选购
+  goBranch(){
+    changeCurrentCloudShop(this.data.branchId);
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.setData({
-      orderCode:options.orderCode,
-      payGroupCode:options.payGroupCode,
-      orderStatus:options.orderStatus
+      orderCode:options.orderCode?options.orderCode:"",
+      payGroupCode:options.payGroupCode?options.payGroupCode:"",
+      orderStatus:options.orderStatus?options.orderStatus:"",
+      orderResource: options.orderResource?options.orderResource:"",
     });
-    console.log(this.data.orderStatus);
-    this.getOrderInfo();
   },
 
   /**
@@ -675,6 +945,7 @@ Page({
         iphone: isIPhoneX
       })
     }
+    this.getOrderInfo();
   },
 
   /**
@@ -709,12 +980,17 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    //只有多人拼团活动的待配送 待收货订单才又分享
-    if(this.data.groupCode&&(this.data.orderStatus==20||this.data.orderStatus==30||this.data.orderStatus==31)){
-      let shareImg = this.data.shareImg.replace(/^http(?=:)/i, 'https');
+    //只有正在进行的多人拼团活动的待配送 待收货订单才又分享
+    if(this.data.groupCode&&this.data.groupStatus==1&&(this.data.orderStatus==20||this.data.orderStatus==30||this.data.orderStatus==31)){
+      let shareCloundShop = {
+        cityName:this.data.cityName,
+        siteId:this.data.branchId,
+        siteName:this.data.branchName,
+      };
+      let shareImg = this.data.shareImg&&this.data.shareImg.replace(/^http(?=:)/i, 'https');
       return {
         title: `还差${this.data.surplusCount}人即可成团，快来一起拼吧！`, 
-        path: '/pages/cloudStoreDetail/index?storeGoodsId=' + this.data.storeGoodsId + '&activityCode=' + this.data.activityCode + '&groupCode=' + this.data.groupCode + '&groupShare=true',
+        path: '/pages/cloudStoreDetail/index?storeGoodsId=' + this.data.storeGoodsId + '&activityCode=' + this.data.activityCode + '&groupCode=' + this.data.groupCode + '&userId='+ wx.getStorageSync("userId") + '&groupShare=true'+'&shareCloundShop=' + JSON.stringify(shareCloundShop),
         imageUrl: shareImg,
         success: function (res) {
   

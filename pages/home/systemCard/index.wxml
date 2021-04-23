@@ -1,0 +1,52 @@
+<!--pages/home/systemCard/index.wxml-->
+<!-- 系统发放卡券 -->
+<view class="mask">
+  <view class="cardContent">
+    <image src="../../../image/offtop.png" class="offtop" catchtap="closeBtn"></image>
+    <image class="centerIcon" src="../../../image/cat.png"></image>
+    <view class="rightScroll"></view>
+    <view class="cardCenter">
+      <view class="topLeft"></view>
+      <view class="topRight"></view>
+      <view class='bottomLeft'></view>
+      <view class="bottomRight"></view>
+      <view class="cardCenter_top">
+        <view class="cardCenter_name">{{mecName}}</view>
+        <view class="cardCenter_title">恭喜您被选中了！</view>
+        <view class="cardCenter_titleLittle">送您以下优惠</view>
+      </view>
+      <!--卡券列表-->
+      <scroll-view class="ticket_content" scroll-y="true">
+        <view class="ticket_item" wx:for="{{coupondata}}" wx:key='index'>
+          <view class="ticket_left ">
+            <image src='../../../image/cloudStore.png' class="ticket_left_con"></image>
+            <view wx:if="{{item.cardType==1||item.cardType==10}}">
+              ￥<text class="price">{{item.cardAmount}}</text>
+            </view>
+            <view wx:if="{{item.cardType==2||item.cardType==20}}">
+              满<text class="price">{{item.fullAmountPrice.full}}</text>减<text
+                class="price">{{item.fullAmountPrice.amount}}</text>
+            </view>
+            <view wx:if="{{item.cardType==3||item.cardType==30}}">
+              <text class="price">{{item.discount}}</text>折
+            </view>
+            <view class="mk">
+              {{item.useThreshold>0?"满"+item.useThreshold+"可使用":"无门槛"}}
+            </view>
+          </view>
+          <view class="ticket_right">
+            <view class="ticket_right_con">
+              <view class="ticket_time">
+                {{item.startTime}}-{{item.endTime}}
+              </view>
+              <view class="ticket_type">适用于{{item.applicableGoods==0?'全部':'指定'}}商品</view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="cardCenter_bottom">
+        <view class="goUse" bindtap="goSmallShopPage"><text>去使用</text></view>
+      </view>
+    </view>
+  </view>
+</view>

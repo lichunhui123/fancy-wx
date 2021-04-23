@@ -9,8 +9,23 @@ page{
     height:300rpx;
     z-index: -1;
 }
+.top_img{
+    position:absolute;
+    right:0;
+    top:0;
+    width:90rpx;
+    height:90rpx;
+}
 .order_bottom{
     padding-bottom: 100rpx;
+}
+.order_tip{
+    background: rgba(242,146,47,0.70);
+    height:60rpx;
+    font-size: 24rpx;
+    color: #FFFFFF;
+    line-height: 60rpx;
+    text-align: center;
 }
 .order_status{
     font-size: 50rpx;
@@ -18,6 +33,14 @@ page{
     text-align: center;
     line-height: 50rpx;
     margin:50rpx 0;
+}
+.order_status_h{
+    margin-top: 16rpx;
+    margin-bottom: 44rpx;
+    font-size:24rpx;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 24rpx;
 }
 .order_obligation{
     margin:28rpx 0;
@@ -80,31 +103,51 @@ page{
     align-items: center;
     justify-content:space-between;
     font-size: 28rpx;
-    line-height: 28rpx;
+    line-height: 88rpx;
     color: #999999;
     margin:0 20rpx;
+}
+.order_info_top_cloudstore{
+    height:118rpx;
+    box-sizing: border-box;
+    border-bottom:1rpx solid #EBEBEB;
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+    font-size: 28rpx;
+    line-height: 118rpx;
+    color: #999999;
+    margin:0 20rpx;
+}
+.order_padding_left .order_branch{
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 28rpx;
+    font-weight: 600;
+    width: 500rpx;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 .order_discount_icon image{
     width:184rpx;
     height:50rpx;
 }
-.order_info_icon{
-    position:absolute;
-    left:0;
-    top:0;
-}
-.order_info_icon image{
-    width:86rpx;
-    height:86rpx;
-}
 .order_padding_left{
+    display: flex;
+}
+.order_info_top_cloudstore .order_padding_left{
     display:flex;
-    align-items: center;
+    flex-direction: column;
 }
 .order_padding_left text{
   font-size: 28rpx;
   color: #5ADAD0;
-  line-height: 28rpx;
+  line-height: 32rpx;
+}
+.order_info_top_cloudstore .order_padding_left text{
+  margin-top: 10rpx;
 }
 .order_type{
   position: relative;
@@ -165,7 +208,13 @@ page{
     height:50rpx;
     top: 0;
     left: -20rpx;
-    z-index: 2;
+}
+.order_info_preSale_icon{
+  position: absolute;
+  width:68rpx;
+  height:68rpx;
+  top: 0;
+  left: 0;
 }
 .goods_img{
     width:160rpx;
@@ -175,6 +224,7 @@ page{
 .goods_pic{
     width:100%;
     height:100%;
+    border-radius: 10rpx;
 }
 .goods_icon{
     position:absolute;
@@ -303,10 +353,10 @@ page{
 .code_copy{
     width:64rpx;
     height:34rpx;
-    border: 1rpx solid #F2922F;
+    border: 1rpx solid #FF5403;
     border-radius: 10rpx;
     font-size: 24rpx;
-    color: #F2922F;
+    color: #FF5403;
     line-height: 34rpx;
     text-align: center;
     margin-left: 10rpx;
@@ -329,7 +379,7 @@ page{
   line-height: 28rpx;
   margin-top: 20rpx;
 }
-.footer{
+.footer,.footer01{
     width: 750rpx;
     height: 100rpx;
     background: #FFFFFF;
@@ -340,10 +390,6 @@ page{
     position: fixed;
     bottom: 0;
     left: 0;
-}
-.iphone{
-  position: fixed;
-  bottom: 34rpx;
 }
 .tabbarIphone{
   width: 100%;
@@ -476,9 +522,12 @@ page{
   margin-top: 10rpx;
 }
 .mealDetail image{
-  width: 10rpx;
-  height: 10rpx;
-  margin-left: 10rpx;
+  width: 22rpx;
+  height: 12rpx;
+  margin-left: 11rpx;
+}
+.mealDetail_bottom{
+    transform: rotate(180deg);
 }
 .waterp{
   width: 710rpx;
@@ -517,6 +566,7 @@ page{
   width: 100rpx;
   height: 100rpx;
   margin: 0 20rpx;
+  border-radius: 10rpx;
 }
 .order_other_style{
     margin:40rpx 0 20rpx 0;
@@ -552,6 +602,7 @@ page{
     border: 1rpx solid #FF3B30;
     border-radius: 4rpx;
     font-size: 20rpx;
+    line-height: 28rpx;
     color: #FF3B30;
     height:28rpx;
     padding:0 10rpx;
@@ -595,3 +646,145 @@ page{
     height:60rpx;
     margin:0 20rpx;
 }
+/*云店商品 待收货状态 退款*/
+.drawBack_icon{
+    position:absolute;
+    right:0;
+    top:0;
+    width:90rpx;
+    height:90rpx;
+}
+.drawBack_icon image{
+    width:90rpx;
+    height:90rpx;
+}
+.top_icon{
+    position:absolute;
+    right:0;
+    top:0;
+    width:90rpx;
+    height:90rpx;
+}
+.top_icon image{
+    width:90rpx;
+    height:90rpx;
+}
+.footer01{
+    justify-content:center;
+    justify-content: flex-end;
+}
+.footer01 view{
+    width:150rpx;
+    height:70rpx;
+    border-radius: 34rpx;
+    font-size: 26rpx;
+    text-align: center;
+    line-height: 70rpx;
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+.footer_btn01,.footer_btn02{
+    background: #FFFFFF;
+    border: 2rpx solid  #FD7F2A;
+    color:  #FD7F2A;
+    margin-right: 30rpx; 
+}
+.footer_btn05{
+    background: #FD7F2A;
+    color: #FFFFFF;
+    margin-right: 30rpx;
+}
+.footer_btn03{
+    background:  #FFFFFF;
+    color:  #FD7F2A;
+    border: 2rpx solid  #FD7F2A;
+    margin-right: 30rpx;
+}
+.footer_btn04{
+    background:  #FFFFFF;
+    color:  #FD7F2A;
+    border: 2rpx solid  #FD7F2A;
+    margin-right: 20rpx;
+}
+.order_price_time{
+  margin:22rpx 0;
+}
+.order_price_time text{
+  color: #5ADAD0;
+}
+/*再次购买 */
+.mask{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.70);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.modla{
+    width: 540rpx;
+    height: 680rpx;
+    background-color: #fff;
+    color: #333333;
+    font-size: 32rpx;
+    position: absolute;
+    top: 180rpx;
+    left: 120rpx;
+    border-radius: 16rpx;
+    z-index: 9;
+}
+.productList{
+    display: flex;
+    flex-wrap: wrap;
+    height: 160rpx;
+    padding: 40rpx 10rpx;
+    overflow: auto;
+}
+.title>text{
+    display: block;
+}
+.text_top{
+   margin-left: 150rpx;
+   margin-top: 60rpx;
+}
+.text_bottom{
+    margin-left: 44rpx;
+}
+.img{
+    width: 160rpx;
+    height: 160rpx;
+    margin-left: 10rpx;
+}
+.btnBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-rule: #333333;
+    font-size: 32rpx;
+    position: absolute;
+    bottom: 60rpx;
+}
+.btnBox>view{
+    text-align: center;
+    border-radius: 8rpx;
+    font-size: 32rpx;
+    line-height: 32rpx;
+    width: 180rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+.rightBtn{
+    margin-right: 70rpx;
+    margin-left: 40rpx;
+    background-color: #F2922F;
+    color: #FFFFFF;
+}
+.leftBtn{
+    margin-left: 70rpx;
+    border: 2px solid #DDDDDD;
+    color: #999999;
+}
+.iphone{
+    position: fixed;
+    bottom: 34rpx;
+  }

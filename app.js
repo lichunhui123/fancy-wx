@@ -1,63 +1,10 @@
 //app.js
 import Watchdata from './utils/watchdata.js'
-const service = require('/service/index.js');
+const service = require('./service/index.js');
 App({
   onLaunch: function () {
     // 展示本地存储能力
     this.updateManager();
-    //获取用户信息
-    wx.getSetting({
-      success: res => {
-        console.log(res)
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo;
-              var userInfo = res.userInfo;
-              wx.setStorageSync('userInfo', userInfo);
-              var encryptedData = res.encryptedData;
-              var iv = res.iv;
-              //请求后台获取用户数据
-              wx.login({
-                success: function (res) {
-                  const that = this;
-                  if (res.code) {
-                    service.getUser({
-                      code: res.code,
-                        avatarUrl: userInfo.avatarUrl,
-                        nickName: userInfo.nickName,
-                        encryptedData: encryptedData,
-                        iv: iv
-                    }).then(function(res){
-                      console.log(res);
-                        var userInfo = wx.getStorageSync('userId') || null;
-                        wx.setStorageSync('openId', res.data.data.openId);
-                        wx.setStorageSync('userId', res.data.data.userId);
-                        let token = res.data.data.token;
-                        wx.setStorageSync("token", token)
-                    }).catch(function(res){
-                        wx.showToast({
-                          title: '当前网络状态较差，请稍后重试',
-                          icon: 'none',
-                          duration: 2000
-                        })
-                    })
-
-                  }
-                }
-              })
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    });
     this.getSystemInfo()
   },
   // 模拟器model值跟真机上是不一样的，这里通过search()来检索字符串
@@ -65,7 +12,7 @@ App({
     let that = this;
     wx.getSystemInfo({
       success: function (res) {
-        console.log('获取系统信息', res);
+        //console.log('获取系统信息', res);
         let models = res.model;
         if (models.search('iPhone X') != -1 || models.search('iPhone 11') != -1) {
           that.globalData.isIPhoneX = true
@@ -82,9 +29,10 @@ App({
       smallBranchesId:currentCloudShop?currentCloudShop.siteId:'',
       userId: wx.getStorageSync('userId')
     }).then(res => {
-      console.log(res.data.data)
+      //console.log(res.data.data)
       if (res.data.result == 200) {
-          let sum=res.data.data.goodsNumber
+          let sum=res.data.data.goodsNumber;
+          this.globalData.shoppingNum = sum;
           if (sum > 0) {
             wx.setTabBarBadge({
               index: 1,
@@ -151,7 +99,8 @@ App({
     version: "", // 微信版本号
     SDKVersion: "", //客户端基础库版本
     appletVersion: "1.0.0", // 小程序的版本号
-    isIPhoneX: false  //当前设备是否为 iPhone X
+    isIPhoneX: false,  //当前设备是否为 iPhone X
+    shoppingNum: 0 //购物车数量
   },
   Watchdata:new Watchdata()
 });

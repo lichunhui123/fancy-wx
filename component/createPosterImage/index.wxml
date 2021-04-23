@@ -1,0 +1,17 @@
+<view>
+  <!-- 分享弹窗 -->
+  <view class="shareMask" wx:if="{{showShare}}">
+    <view class="shareCon">
+      <button class="shareBtn" formType="submit" open-type="share">立即分享</button>
+      <view class="shareBtn" bindtap="getPoster">生成海报 保存分享</view>
+    </view>
+    <view class="shareCancel" bindtap="cancelShare">取消</view>
+  </view>
+  <!-- 分享弹窗 -->
+  <!-- 生成分享海报 -->
+  <view class="shareMask" wx:if="{{showPoster}}" bindtap="closePoster">
+    <image src="{{posterImage}}" class="posterImage" catchtap="cancelBubble"></image>
+    <canvasdrawer painting="{{painting}}" bind:getImage="posterGetImage" catchtap="cancelBubble"></canvasdrawer>
+    <view class="posterSave" catchtap="posterSave">保存图片</view>
+  </view>
+</view>

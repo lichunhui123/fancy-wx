@@ -1,19 +1,26 @@
 {
   "pages": [
     "pages/home/index",
-    "pages/cloudStoreGroupSale/index",
-    "pages/cloudStorePreSale/index",
+    "pages/cloudStoreHome/index",
+    "pages/cloudStoreList/index",
+    "pages/shoppingCar/index",
+    "pages/personalOrderList/index",
+    "pages/personal/index",
+    "pages/personalOrderDetail/index",
+    "pages/cloudStore/index",
+    "pages/cloudStoreActivity/index",
+    "pages/homeCommunitySeach/index",
+    "pages/cloudStoreSearch/index",
+    "pages/shoppingOrder/index",
+    "pages/personalEditOrder/index",
+    "pages/applicationForDrawback/index",
     "pages/fingerMall/index",
     "pages/fingerMallGoodDetail/index",
-    "pages/shoppingCar/index",
-    "pages/cloudStore/index",
-    "pages/personalOrderList/index",
+    "pages/fingerMallBannerActivity/index",
     "pages/shoppingDiscountCloud/index",
     "pages/drawDiscount/index",
-    "pages/shoppingOrder/index",
     "pages/cloudStoreDetail/index",
     "pages/water/index",
-    "pages/personal/index",
     "pages/personalWaterDiscount/index",
     "pages/waterGoodDetail/index",
     "pages/waterAddaddress/index",
@@ -22,16 +29,11 @@
     "pages/homeAddress/index",
     "pages/homeDiscount/index",
     "pages/homeCommunity/index",
-    "pages/homeCommunitySeach/index",
     "pages/shoppingDiscount/index",
     "pages/shoppingPaySucceed/paySucceed",
     "pages/personalSetting/index",
     "pages/personalBindPhone/index",
     "pages/personalChangePhone/index",
-    "pages/personalHistoryOrder/index",
-    "pages/personalWaterHistoryOrderList/index",
-    "pages/personalWaterHistoryOrderDetail/index",
-    "pages/personalOrderDetail/index",
     "pages/groupGoodDetail/index",
     "pages/express/index",
     "pages/expressProtocol/index",
@@ -45,12 +47,11 @@
     "pages/expressOrder/index",
     "pages/selfHelpPurchasing/index",
     "pages/selfHelpShoppingCar/index",
-    "pages/nearbyStores/index",
-    "pages/searchStores/index",
     "pages/networkTimeout/networkTimeout",
     "pages/scanPickUp/index",
     "pages/setAddress/setAddress",
-    "pages/webview/index"
+    "pages/webview/index",
+    "pages/applicationForDrawbackResult/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -60,7 +61,7 @@
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#F2922F",
+    "selectedColor": "#FF5403",
     "borderStyle": "white",
     "list": [
       {
@@ -84,7 +85,7 @@
     ]
   },
   "networkTimeout": {
-    "request": 6000,
+    "request": 10000,
     "downloadFile": 6000
   },
   "permission": {

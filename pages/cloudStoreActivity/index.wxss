@@ -1,0 +1,206 @@
+.activity_bg_img{
+  width:100%;
+  height:860rpx;
+} 
+.activity_bg_img image{
+  width:100%;
+  height:100%;
+}  
+.activity_bg_color{
+  width:100%;
+}
+/*精选商品*/
+.bgColor1{
+  background-image: linear-gradient(180deg, #6A3A14 0%, #FFFFFF 89%);
+}
+/*限时折扣*/
+.bgColor2{
+  background-image: linear-gradient(180deg, #E8EEEE 0%, #FFFFFF 89%);
+}
+/*多人拼团*/
+.bgColor3{
+  background-image: linear-gradient(180deg, #B7E5F5 0%, #FFFFFF 89%);
+}
+/*好物预售*/
+.bgColor4{
+  background-image: linear-gradient(180deg, #5291DE 0%, #FFFFFF 89%);
+}
+/*全场满减*/
+.bgColor5{
+  background-image: linear-gradient(180deg, #347D46 0%, #FFFFFF 89%);
+}
+/*买一送一*/
+.bgColor6{
+  background-image: linear-gradient(180deg, #91BE00 0%, #FFFFFF 96%);
+}
+/*第二件半价*/
+.bgColor7{
+  background-image: linear-gradient(180deg, #FA6271 0%, #FFFFFF 89%);
+}
+/*多件多折*/
+.bgColor8{
+  background-image: linear-gradient(180deg, #FED073 1%, #FFFFFF 100%);
+}
+.activity_con{
+  position: relative;
+  top:-117rpx;
+  left:50%;
+  transform: translate(-50%);
+  width:710rpx;
+}
+.activity_item{
+  background: #fff;
+  border-radius: 20rpx;
+  width:100%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.08);
+  margin-bottom: 20rpx;
+}
+.activity_top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  height:114rpx;
+  box-sizing: border-box;
+}
+.activity_top_name{
+  display:flex;
+  align-items: center;
+}
+.activity_title{
+  font-size: 32rpx;
+  line-height: 32rpx;
+  color: #333333;
+  font-weight: 600;
+  font-family: PingFangSC-Medium;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  max-height: 32rpx;
+  max-width: 300rpx
+}
+.activity_tag{
+  border: 1rpx solid #FF5403;
+  border-radius: 4rpx; 
+  font-size: 20rpx;
+  color: #FF5403;
+  height:28rpx;
+  line-height: 26rpx;
+  box-sizing: border-box;
+  padding:0 10rpx;
+  margin-left: 14rpx;
+  text-align: center;
+}
+.activity_desc{
+  font-size: 20rpx;
+  line-height: 20rpx;
+  color: #FF5403;
+  margin-top: 10rpx;
+}
+.activity_desc text{
+  margin-right: 10rpx;
+}
+.activity_top_right{
+  width:110rpx;
+  height:60rpx;
+  background: #F2922F;
+  background-image: linear-gradient(218deg, #FF9D37 0%, #FF4F00 100%);
+  border-radius: 30rpx;  
+  font-size: 28rpx;
+  line-height: 60rpx;
+  color: #FFFFFF;
+  text-align: center;
+  font-weight: 600;
+  font-family: PingFangSC-Medium;
+}
+.activity_goods{
+  display:flex;
+  padding:20rpx;
+}
+.goods_pic{
+  width:220rpx;
+  height:220rpx;
+}
+.goods_pic image{
+  width:220rpx;
+  height:220rpx;
+  border-radius: 10rpx;
+}
+.goods_right{
+  margin-left: 20rpx;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.goods_name{
+  font-size: 32rpx;
+  line-height: 44rpx;
+  color: #333333;
+  font-weight: 600;
+  font-family: PingFangSC-Medium;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  max-height: 88rpx;
+}
+.goods_desc{
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 24rpx;
+  margin-top: 4rpx;
+}
+.goods_tag{
+  margin-top:12rpx;
+  border: 1rpx solid #FF5403;
+  border-radius: 4px;
+  width:80rpx;
+  height:28rpx;
+  font-size: 20rpx;
+  color: #FF5403;
+  line-height: 26rpx;
+  box-sizing: border-box;
+  text-align: center;
+}
+.goods_price{
+  font-size: 36rpx;
+  color: #FF5403;
+  line-height: 36rpx;
+  font-weight: 600;
+  font-family: PingFangSC-Medium;
+}
+.price_symbol{
+  font-size: 28rpx;
+}
+.origin_price{
+  margin-left: 10rpx;
+  font-size: 20rpx;
+  line-height: 20rpx;
+  color: #999999; 
+  text-decoration: line-through;
+  font-weight: normal;
+}
+.price_sign{
+  font-size: 20rpx;
+  color: #FF5403;
+  line-height: 28rpx;
+  font-weight: normal;
+  margin-right: 10rpx;
+}
+.lookMore{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height:68rpx;
+}
+.lookMore view{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #666666;
+  margin-right: 10rpx;
+}
+.lookMore image{
+  width:12rpx;
+  height:22rpx;
+}

@@ -21,7 +21,7 @@
       </view> -->
     </view>
   </view>
-  <view class="address_list" wx:if="{{itemData.length<1}}">
+  <view class="address_list" wx:if="{{noData}}">
     <view class="nodata">
       <image src="/image/nodata.png"></image>
       <text>您还未填写地址~</text>

@@ -23,221 +23,41 @@ Page({
     iphone:false,  //苹果适配
     branchesId:'', //拼团站点id
     cloudBranchId:'', //云店站点id
-    showShare:false,//显示分享弹窗
-    showPoster:false,//显示海报图弹窗
-    painting:{},
-    wxCode:"",//小程序页面的小程序码 base64
-    posterImage:"",//海报canvas图
+    showShare:false,//显示分享的弹层
+    goodsInfo:{},//绘制海报商品相关的信息
+    formdata:{},//获取海报的小程序码的请求接口入参
   },
-  //点击分享好友
+  //点击分享打开弹层
   shareClick(){
-    this.setData({
-      showShare:true
-    })
-  },
-  //取消分享
-  cancelShare(){
-    this.setData({
-      showShare:false
-    })
-  },
-  //点击取消海报弹窗
-  closePoster(){
-    this.setData({
-      showPoster:false
-    });
-  },
-  cancelBubble(){
-    return false;
-  },
-  //弹出海报弹窗
-  getPoster(){
-    this.setData({
-      showShare:false
-    });
-    wx.showLoading({
-      title: '绘制分享图片中',
-      mask: true
-    });
-    if(this.data.wxCode){
-      this.createPosterImage();
+    let salePrice = "";//销售价
+    let price = "";//原价
+    let {activityId,discountPrice,salesPrice,competitorPrice,skuName}=this.data.goodsDetail;
+    if(activityId){//参加过活动
+      salePrice = discountPrice?(discountPrice/100).toFixed(2):'';//折扣价
+      price = salesPrice.toFixed(2);//销售价
     }else{
-      service.getwxacodeunlimit({
+      salePrice = salesPrice.toFixed(2);//销售价
+      price = competitorPrice?competitorPrice.toFixed(2):'';//友商价
+    }
+    this.setData({
+      showShare:true,
+      formdata:{//获取小程序码的请求入参
         "page": "pages/fingerMallGoodDetail/index",
         "scene": this.data.skuCode,
         "width": 124
-      }).then(res=>{
-        if(res.data.result==200){
-          this.setData({
-            wxCode:res.data.data
-          },()=>{
-            this.createPosterImage();
-          });
-        }else{
-          wx.hideLoading();
-          wx.showToast({
-            title: '当前网络状态较差，请稍后重试',
-            icon: 'none',
-            duration: 2000
-          });
-        }
-      }).catch(()=>{
-        wx.showToast({
-          title: '当前网络状态较差，请稍后重试',
-          icon: 'none',
-          duration: 2000
-        });
-        wx.hideLoading();
-      });
-    }
-  },
-  //生成海报图片
-  createPosterImage(){
-    let wxCode = this.data.wxCode;//小程序码 base64的格式
-    //声明文件系统
-    const fs = wx.getFileSystemManager();
-    //随机定义路径名称
-    let times = new Date().getTime();
-    let codeimg = wx.env.USER_DATA_PATH + '/' + times + '.png';
-
-    //将base64图片写入 转成水机图片
-    fs.writeFile({
-      filePath: codeimg,
-      data: wxCode.slice(22),
-      encoding: 'base64',
-      success: () => {
-        //写入成功了的话，新的图片路径就能用了
-        let salesPrice = "";//销售价
-        if(this.data.goodsDetail.activityId){//参加过活动
-          salesPrice = (this.data.goodsDetail.discountPrice/100).toFixed(2);//折扣价
-        }else{
-          salesPrice = (this.data.goodsDetail.salesPrice).toFixed(2);//销售价
-        }
-        let price = "";//原价或者友商价
-        if(this.data.goodsDetail.activityId){//参加过活动
-          price = (this.data.goodsDetail.salesPrice).toFixed(2);//销售价
-        }else{
-          price = (this.data.goodsDetail.competitorPrice).toFixed(2);//友商价
-        }
-        let priceLeft = "174";//销售价小于10
-        if(salesPrice<10){//销售价小于10
-          priceLeft = "174";
-        }else if(salesPrice<100&&salesPrice>=10){//销售价大于10，小于等于100
-          priceLeft = "200";
-        }else if(salesPrice<1000&&salesPrice>=100){
-          priceLeft = "230";
-        }else if(salesPrice>=1000){
-          priceLeft = "260";
-        }
-        this.setData({
-          showPoster:true,
-          painting:{
-            width: 556,
-            height: 772,
-            clear: true,
-            views: [
-              {
-                type: 'rect',
-                background:"#FFFFFF",//海报背景
-                width: 556,
-                height: 772,
-                left:0,
-                top:0
-              },
-              {
-                type: 'text',
-                content: '指尖生活派',//海报的title
-                fontSize: 32,
-                color: '#333333',
-                textAlign: 'left',
-                top: 40,
-                left: 198,
-                bolder: false
-              },
-              {
-                type: 'image',
-                url: this.data.imgHttp+this.data.urlImg[0],//详情图片
-                top: 112,
-                left: 40,
-                width: 476,
-                height: 476
-              },
-              {
-                type: 'text',
-                content: this.data.goodsDetail.skuName,//商品的名称
-                fontSize: 28,
-                color: '#333333',
-                textAlign: 'left',
-                top: 628,
-                left: 30,
-                width: 336,
-                MaxLineNumber: 1,
-                breakWord: true,
-                bolder: false
-              },
-              {
-                type: 'text',
-                content: '￥',//售价的符号
-                fontSize: 32,
-                color: '#F2922F',
-                textAlign: 'left',
-                top: 692,
-                left: 28
-              },
-              {
-                type: 'text',
-                content: salesPrice,//销售价
-                fontSize: 52,
-                color: '#F2922F',
-                textAlign: 'left',
-                top: 676,
-                left: 56,
-                bolder: true
-              },
-              {
-                type: 'text',
-                content: `￥${price}`,//原价或者友商价
-                fontSize: 24,
-                color: '#999999',
-                textAlign: 'left',
-                top: 698,
-                left: priceLeft,
-                textDecoration: 'line-through'
-              },
-              {
-                type: 'image',
-                url: codeimg,//当前页面的小程序码
-                top: 618,
-                left: 402,
-                width: 124,
-                height: 124
-              },
-            ]
-          },
-        });
-        wx.hideLoading();
+      },
+      goodsInfo:{
+        urlImg:this.data.imgHttp+this.data.urlImg[0],//海报的商品图片
+        goodsName:skuName,//海报的商品名称
+        salePrice,//海报的商品售价
+        price//海报的商品原价或者友商价
       }
     });
   },
-  //分享海报
-  posterGetImage (event) {
-    wx.hideLoading()
-    const { tempFilePath } = event.detail
+  //关闭分享弹层
+  cancelShare(){
     this.setData({
-      posterImage: tempFilePath
-    })
-  },
-  //海报保存
-  posterSave(){
-    wx.saveImageToPhotosAlbum({
-      filePath: this.data.posterImage,
-      success (res) {
-        wx.showToast({
-          title: '保存图片成功',
-          icon: 'success',
-          duration: 2000
-        })
-      }
+      showShare:false,
     })
   },
   //登录成功
@@ -297,6 +117,14 @@ Page({
             showDiscountPrice = true;
           }
         }
+        let list=res.data.data.weChatInfoList;
+        if(list!==null){
+          list.forEach(item=>{
+            let name=item.name;
+            item.name=name.substr(0,1)+'**'+name.substr(name.length-1,1);
+          })
+          data.weChatInfoList=list;
+        }
         this.setData({
           goodsDetail:data,
           urlImg:imgs,
@@ -317,8 +145,8 @@ Page({
       userId: userId
     }).then((res)=>{
       if(res.data.data){
-        const {cartEffectiveList} = res.data.data;
-        this.setCartNum(cartEffectiveList);
+        const {cartMallEffectiveList} = res.data.data;
+        this.setCartNum(cartMallEffectiveList);
       }
     })
   },
@@ -329,7 +157,7 @@ Page({
     if(carts){
       carts.map((cart) => {
         if (
-            cart.skuCode == goodsDetail.skuCode
+            cart.goodsCode == goodsDetail.skuCode
         ) {
           goodsDetail.cartNum = cart.goodsNum;
         }
@@ -344,6 +172,7 @@ Page({
       smallBranchesId: this.data.cloudBranchId,
       userId: wx.getStorageSync('userId')
     }).then(res => {
+      this.submit=false;//开关控制重复添加购物车的操作
       if (res.data.result == 200) {
         let sum=res.data.data.goodsNumber;
         if (sum > 99) {
@@ -506,6 +335,10 @@ Page({
   },
   //加入购物车
   addShopping(){
+    if(this.submit){
+      return;
+    }
+    this.submit=true;//开关控制重复添加购物车的操作
     wx.showLoading({title:"加载中..."});
     const { goodsDetail} = this.data;
     ++goodsDetail.cartNum;
@@ -525,6 +358,7 @@ Page({
         });
         this.getShoppingNum()
       }else{
+        this.submit=false;//开关控制重复添加购物车的操作
         wx.showToast({
           title: res.data.message,
           icon: 'none',
@@ -535,13 +369,6 @@ Page({
   },
   //立即购买
   goBuy(){
-    if (!wx.getStorageSync('isaddress')&&!wx.getStorageSync('isdefault')) {
-      wx.showToast({
-        title: '请添加收货地址',
-        icon: 'none'
-      });
-      return
-    }
     let presentAddress = wx.getStorageSync("presentAddress");//选择的站点
     let goods = this.data.goodsDetail;
     console.log(goods);

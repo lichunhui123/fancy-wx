@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "fillAddress":"./mask/index"
+    "fillAddress":"./mask/index",
+    "shoppingBag": "/component/shoppingBag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

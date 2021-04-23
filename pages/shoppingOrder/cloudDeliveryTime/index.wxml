@@ -1,0 +1,21 @@
+<view class="deliveryTimeWrap">
+  <view class="content">
+    <view class="title">选择预计送达时间</view>
+    <view class="timesbox">
+      <view class="timeLeft">
+        <view wx:for="{{leftList}}" wx:key="index" class="{{selectTimes.date==item.ldates?'active':''}}" catchtap="chooseDate" data-item="{{item}}">{{item.today?'今天':item.lmonthdate}}（{{item.lweekChina}}）</view>
+      </view>
+      <view class="timeRight">
+        <scroll-view scroll-y="true" class="scroll" scroll-top="{{selectTimes.scrollTop}}">
+          <view class="timeQuanTum">
+            <view wx:for="{{rightList}}" wx:key="index" class="{{selectTimes.startTime==item.startTime?'active':''}}" catchtap="chooseTime" data-item="{{item}}">{{item.startTime}}-{{item.endTime}}（{{postage}}元配送费）</view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="bottomButton">
+      <view bindtap="cancel">取消</view>
+      <view bindtap="save">保存</view>
+    </view>
+  </view>
+</view>

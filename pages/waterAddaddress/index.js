@@ -148,9 +148,9 @@ Page({
   },
   //姓名监听
   inpName(e) {
-    
+    let addsName = util.chOrEnOrNumInput(e.detail.value);
     this.setData({
-      addsName: e.detail.value
+      addsName: addsName
     },()=>{
       this.alltrue()
     })
@@ -169,12 +169,16 @@ Page({
   },
   //详细地址
   inpmonitor(e) {
+    clearTimeout(this.timer);
+    let inpcon = util.chOrEnOrNumInput(e.detail.value);
     this.setData({
-      inpcon: e.detail.value
+      inpcon: inpcon
     },()=>{
       this.alltrue()
     })
-    this.getRegionLocal(e.detail.value)
+    this.timer = setTimeout(()=>{
+      this.getRegionLocal(e.detail.value)
+    },500)
   },
   //详细地址输入失去焦点
   textfocus(){
@@ -264,13 +268,6 @@ Page({
     if (!this.data.subactive) {
       return;
     }
-    if (!util.isGbOrEn(this.data.addsName)){
-      wx.showToast({
-        title: '请输入文字、字母或者数字',
-        icon: 'none'
-      })
-      return;
-    }
     if (this.data.addsTel.length!=11) {
       wx.showToast({
         title: '请输入正确的手机号',
@@ -300,10 +297,16 @@ Page({
         type:1,
         addid:null,    //添加的时候清空addid
         toler,
+      });
+      wx.setNavigationBarTitle({
+        title: "新建配送地址"
       })
     }
     if(type==2){ //2编辑
-      let addid= options.addid
+      wx.setNavigationBarTitle({
+        title: "修改配送地址"
+      });
+      let addid= options.addid;
       service.getwateraddresslist({
         "platform": "wx",
         "requestCode": 1009,

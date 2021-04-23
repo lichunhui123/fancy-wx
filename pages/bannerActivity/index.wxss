@@ -19,6 +19,9 @@
     width:54rpx;
     height:32rpx;
 }
+.activity_title image:last-child{
+  transform: rotate(180deg);
+}
 .activity_title text{
     font-family: PingFangSC-Regular;
     font-size: 32rpx;
@@ -46,6 +49,7 @@
     width:298.6rpx;
     height:299.7rpx;
     margin:20rpx 0 0 37rpx;
+    border-radius: 10rpx;
 }
 .goods_name{
     margin: 13.3rpx 20rpx 0 30rpx;
@@ -93,12 +97,31 @@
     text-decoration: line-through;
     margin-left: 10rpx;
 }
-.goods_car{
-    width:76rpx;
-    height:76rpx;
-    position:absolute;
-    bottom:4rpx;
-    right:6rpx;
+.addbox{
+  width: 196rpx;
+  height: 102rpx;
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  right:-10rpx;
+  bottom:0;
+}
+.addbox .liue{
+  width: 62rpx;
+  height:102rpx;
+  box-sizing: border-box;
+  padding:30rpx 10rpx;
+}
+.addbox image{
+  width: 42rpx;
+  height:42rpx;
+}
+.addbox input{
+  width: 40rpx;
+  height: 42rpx;
+  text-align: center;
+  font-size: 28rpx;
 }
 .goods_bottom{
     background: #F5F5F5;

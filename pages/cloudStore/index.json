@@ -1,5 +1,7 @@
 {
   "usingComponents": {
+    "discountCoupon":"/component/discountCoupon/index",
+    "shoppingBag": "/component/shoppingBag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

@@ -1,9 +1,13 @@
 {
   "usingComponents": {
     "member-mask":"./memberCode/index",
+    "systemCard-mask":"./systemCard/index",
     "authorization-login": "/component/authorizationLogin/index"
   },
   "enablePullDownRefresh": true,
+  "navigationBarBackgroundColor":"#FF610D",
   "backgroundTextStyle": "dark",
-  "navigationBarTitleText": "指尖生活派"
+  "navigationBarTitleText": "指尖生活派",
+  "navigationBarTextStyle": "white",
+  "onReachBottomDistance":0
 }

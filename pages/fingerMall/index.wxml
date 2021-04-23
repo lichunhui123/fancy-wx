@@ -1,139 +1,52 @@
 <wxs module="numb" src="../../filter/filter.wxs"></wxs>
 <view>
     <view class="data_content" style="height:{{contentHeight}}px">
-        <view class="data_left_list" wx:if="{{classType.length>0}}">
-            <view class="{{classCode==item.classCode?'active':''}}" wx:for="{{classType}}" wx:key="index" bindtap="navTypeClick" data-navitem="{{item}}">{{item.className}}<view class="goods_num" wx:if="{{item.skuCount}}">{{item.skuCount}}</view></view>
+      <view class="data_left_list" wx:if="{{classType.length>0}}">
+          <view class="{{classCode==item.classCode?'active':''}}" wx:for="{{classType}}" wx:key="index" bindtap="navTypeClick" data-navitem="{{item}}">{{item.className}}<view class="goods_num" wx:if="{{item.skuCount}}">{{item.skuCount}}</view></view>
+      </view>
+      <scroll-view class="data_right_list" scroll-y='true' style="height:{{contentHeight}}px" bindscrolltolower='scrolltolower'>
+        <view class="nologin" wx:if="{{goodsList.length<1&&noData}}">
+          <image src="../../image/nodata.png" class="goodnodata"></image>
+          <view class="notitle">暂无商品</view>
         </view>
-        <scroll-view class="data_right_list" scroll-y='true' style="height:{{contentHeight}}px" bindscrolltolower='scrolltolower'>
-			<view class="nologin" wx:if="{{goodsList.length<1&&noData}}">
-				<image src="../../image/nodata.png" class="goodnodata"></image>
-				<view class="notitle">暂无商品</view>
-			</view>
-			<view class="data_goods_item" wx:if="{{goodsList.length>0}}" wx:for="{{goodsList}}" wx:key="index" bindtap="goodsDetailClick" data-itdetail="{{item}}">
-                <view class="data_goods_item_left">
-                    <image src="https://img.goola.cn/{{item.goodsPic}}"></image>
-                </view>
-                <view class="data_goods_item_right">
-                    <view class="goods_name">{{item.skuName}}</view>
-                    <view class="goods_spec" wx:if="{{item.goodsSpec}}">规格：{{item.goodsSpec}}</view>
-                    <!--参与折扣活动-->
-                    <view class="goods_price1" wx:if="{{item.activityId}}">
-                        <view class="goods_price_discount"><text class="disnum">折扣价：￥</text><text>{{numb.getNum(item.disCountPrice)}}</text></view>
-                        <view class="goods_price_origin">原价：￥{{numb.getNum(item.salesPrice)}}</view>
-                    </view>
-					<!--其他情况-->
-					<view class="goods_price1" wx:else>
-                        <view class="goods_price_discount"><text class="disnum">￥</text><text>{{numb.getNum(item.salesPrice)}}</text></view>
-                        <view class="goods_price_origin" wx:if="{{item.competitorPrice}}">￥{{numb.getNum(item.competitorPrice)}}</view>
-                    </view>
-                </view>
-                <view class="addBuyIcon" wx:if="{{item.goodnum==0}}" catchtap="goodAdd" data-additem="{{item}}"><image src="../../image/shopp.png"></image></view>
-                <view class="addbox" wx:else>
-                    <view class="liue" catchtap="goodDel" data-delitem="{{item}}">
-                        <image src="../../image/delbutton.png"></image>
-                    </view>
-                    <input type="number" maxlength="4" value="{{item.goodnum}}" bindblur="goodInp" catchtap="stopinp" data-inpitem="{{item}}" />
-                    <view class="liue" catchtap="goodAdd" data-additem="{{item}}">
-                        <image src="../../image/addbutton.png"></image>
-                    </view>
-                </view>
+        <view class="data_goods_item" wx:if="{{goodsList.length>0}}" wx:for="{{goodsList}}" wx:key="index" bindtap="goodsDetailClick" data-itdetail="{{item}}">
+          <view class="data_goods_item_left">
+              <image src="https://img.goola.cn/{{item.goodsPic}}"></image>
+          </view>
+          <view class="data_goods_item_right">
+            <view class="goods_name">{{item.skuName}}</view>
+            <view class="goods_spec" wx:if="{{item.goodsSpec}}">规格：{{item.goodsSpec}}</view>
+            <!--参与折扣活动-->
+            <view class="goods_price1" wx:if="{{item.activityId}}">
+              <view class="goods_price_discount"><text class="disnum">折扣价：</text><text class="disign">￥</text>{{numb.getNum(item.discountPrice/100)}}</view>
+              <view class="goods_price_origin">原价：￥{{numb.getNum(item.salesPrice)}}</view>
             </view>
-        </scroll-view>
+            <!--其他情况-->
+            <view class="goods_price1" wx:else>
+              <view class="goods_price_discount"><text class="disign">￥</text>{{numb.getNum(item.salesPrice)}}</view>
+              <view class="goods_price_origin" wx:if="{{item.competitorPrice}}">￥{{numb.getNum(item.competitorPrice)}}</view>
+            </view>
+          </view>
+          <view class="addbox">
+            <view class="liue" catchtap="goodDel" data-delitem="{{item}}" wx:if="{{item.goodnum>0}}">
+                <image src="../../image/delbutton.png"></image>
+            </view>
+            <input type="number" maxlength="4" value="{{item.goodnum}}" bindblur="goodInp" catchtap="stopinp" data-inpitem="{{item}}" wx:if="{{item.goodnum>0}}"/>
+            <view class="liue" catchtap="goodAdd" data-additem="{{item}}">
+                <image src="../../image/addstore.png"></image>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
     </view>
-    <!-- 底部立即购买 -->
-	<view class="pagebuttom" wx:if="{{shoppnum>0&&goodsList.length>0}}">
-		<view class="buybox">
-			<view class="gouwuche"><text>总计：￥</text><text class="numsize">{{totalValue}}</text></view>
-			<view class="buybtn" bindtap="buyNow">立即购买</view>
-			<view class="buydai">
-				<image src="../../image/buydai.png" mode="widthFix" bindtap="buydaiClick"></image>
-				<view class="stay" wx:if="{{shoppnum>0}}">{{shoppnum>99?'99+':shoppnum}}</view>
-			</view>
-		</view>
-    </view>
-    <!-- 点击购物袋弹起购物车 -->
-	<view class="shade" wx:if="{{srcolloff}}">
-		<view class="hui" bindtap="showoff" catchtouchmove="true"></view>
-		<view class="shoppbox">
-			<view class="shoptop">
-				<view class="qing" bindtap="emptygood">
-					<image src="../../image/delIcon.png"></image><text decode="{{true}}">&nbsp;清空购物车</text>
-				</view>
-			</view>
-			<view class="shopcontent1">
-				<view class="goods_list2" wx:for="{{shoppingdata}}" wx:key="index">
-					<view class="list_left2">
-						<image src="https://img.goola.cn/{{item.goodsPic}}" class="shopimg"></image>
-					</view>
-					<view class="list_right">
-						<view>
-							<view class="good_title">{{item.goodsResource==30?item.seriesName:item.storeGoodsName}}</view>
-							<view class="spec" wx:if="{{item.goodsResource!=30}}">规格：{{item.storeGoodsSpecification}}</view>
-							<view class="saleItem" wx:if="{{item.type==10&&item.discountRatio}}"><text>{{item.discountRatio}}折</text></view><!--限时折扣-->
-                            <view class="saleItem" wx:if="{{item.type==20&&item.fullDecMoneyList&&item.fullDecMoneyList.length>0}}"><!--满减活动-->
-								<text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el">{{el.fullMoney}}减{{el.decMoney}}</text>
-							</view>
-                            <view class="saleItem" wx:if="{{item.type==50}}"><text>买一送一</text></view><!--买一送一-->
-							<view class="saleItem" wx:if="{{item.type==60}}"><!--第二件半价-->
-								<text>买2件，均价￥{{item.averagePrice}}/件</text>
-							</view>
-							<view class="saleItem" wx:if="{{item.type==70&&item.manyPriManyFoldsList&&item.manyPriManyFoldsList.length>0}}"><!--多件多价-->
-								<text wx:for="{{item.manyPriManyFoldsList}}" wx:for-item="el" wx:for-index="i" wx:key="i">{{el.count}}件{{el.discount/10}}折</text>
-							</view>
-						</view>
-						<view class="goodbottom">
-							<!--好物预售-->
-							<view wx:if="{{item.type==80}}">
-								<view class="discount"><text class="disnum">预售价：￥</text><text>{{item.prePrice}}</text></view>
-								<view class="price">原价：￥{{item.grouponPrice}}</view>
-							</view>
-							<view class="price2" wx:if="{{item.type!=80&&item.discountStatus==10&&!item.nodis}}">￥<text class="discount">{{item.discountPrice}}</text><text class="original">{{item.grouponPrice}}</text></view>
-							<view class="price2" wx:if="{{item.type!=80&&item.discountStatus==10&&item.nodis}}">￥<text class="discount">{{item.grouponPrice}}</text></view>
-							<view class="price2" wx:if="{{item.type!=80&&item.goodsResource==5&&item.discountStatus==20}}">￥<text class="discount">{{item.grouponPrice}}</text><text class="mou1">{{item.friendStoreName}}{{item.friendStoreName?':':''}}￥{{item.friendSellPrice}}</text></view>
-							<view class="price2" wx:if="{{item.type!=80&&item.discountStatus!=10&&item.goodsResource!=5}}">￥<text class="discount">{{item.grouponPrice}}</text></view>
-						</view>
-						<view class="addbox">
-							<view class="liue" wx:if="{{item.goodsNum>0}}">
-								<image src="../../image/delbutton.png" catchtap="shopgoodDel" data-shdelitem="{{item}}"></image>
-							</view>
-							<input type="number" maxlength="4" value="{{item.goodsNum}}" bindblur="shopgoodInp" catchtap="stopinp" wx:if="{{item.goodsNum>0}}" data-shinpitem="{{item}}" />
-							<view class="liue">
-								<image src="../../image/addbutton.png" catchtap="shopgoodAdd" data-shadditem="{{item}}"></image>
-							</view>
-						</view>
-					</view>
-				</view>
-
-				<view class="goods_list2" wx:for="{{shoppingdata1}}" wx:key="index">
-					<view class="list_left2">
-						<image src="https://img.goola.cn/{{item.goodsPic}}" class="shopimg"></image>
-					</view>
-					<view class="list_right">
-						<view>
-							<view class="good_title">{{item.storeGoodsName}}</view>
-							<view class="spec" wx:if="{{item.goodsResource!=30}}">规格：{{item.storeGoodsSpecification}}</view>
-							<view class="saleItem" wx:if="{{item.type==10&&item.discountRatio}}"><text>{{item.discountRatio}}折</text></view><!--限时折扣-->
-                            <view class="saleItem" wx:if="{{item.type==20&&item.fullDecMoneyList&&item.fullDecMoneyList.length>0}}"><!--满减活动-->
-								<text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el">{{el.fullMoney}}减{{el.decMoney}}</text>
-							</view>
-                            <view class="saleItem" wx:if="{{item.type==50}}"><text>买一送一</text></view><!--买一送一-->
-							<view class="saleItem" wx:if="{{item.type==60}}"><!--第二件半价-->
-								<text>买2件，均价￥{{item.averagePrice}}/件</text>
-							</view>
-							<view class="saleItem" wx:if="{{item.type==70&&item.manyPriManyFoldsList&&item.manyPriManyFoldsList.length>0}}"><!--多件多价-->
-								<text wx:for="{{item.manyPriManyFoldsList}}" wx:for-item="el" wx:for-index="i" wx:key="i">{{el.count}}件{{el.discount/10}}折</text>
-							</view>
-						</view>
-						<view class="goodbottom">
-							<view class="price2" wx:if="{{item.discountStatus==10}}">￥<text class="discount">{{item.discountPrice}}</text><text class="original">{{item.grouponPrice}}</text></view>
-							<view class="price2" wx:if="{{item.goodsResource==5&&item.discountStatus==20}}">￥<text class="discount">{{item.grouponPrice}}</text><text class="mou1">{{item.friendStoreName}}{{item.friendStoreName?':':''}}￥{{item.friendSellPrice}}</text></view>
-							<view class="price2" wx:if="{{item.discountStatus!=10&&item.goodsResource!=5}}">￥<text class="discount">{{item.grouponPrice}}</text></view>
-						</view>
-					</view>
-				</view>
-			</view>
-			<view class="shopbottom"></view>
-		</view>
-	</view>
-	<!-- <view class="shopbottom" wx:if="{{shoppnum>0&&goodsList.length>0}}"></view> -->
+    <shoppingBag 
+      wx:if="{{shoppNum}}" 
+      catchtouchmove="catchtouchmove"
+      shoppNum="{{shoppNum}}"
+      shoppingDatas="{{shoppingDatas}}"
+      bindemptyshoppingcar="changeShoppGood"
+      bindshoppgooddel="changeShoppGood"
+      bindshoppgoodadd="changeShoppGood"
+      bindshoppgoodinp="changeShoppGood"
+    ></shoppingBag>
 </view>

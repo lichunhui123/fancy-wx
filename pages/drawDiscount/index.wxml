@@ -5,17 +5,18 @@
     <!-- 卡券列表 -->
     <view class="ticket_item" wx:for="{{discountList}}" wx:key="index">
       <view class="ticket_left">
+      <image src='../../image/cloudStore.png' class='tick_left_con' ></image>
         <view wx:if="{{item.cardType==10}}">
           ￥<text class="price">{{item.cardMoneyT}}</text>
         </view>
-        <view wx:if="{{item.cardType==30}}">
+        <view wx:if="{{item.cardType==30}}"> 
           <text class="price">{{item.discountRatioT?item.discountRatioT:'-'}}</text>折
         </view>
         <view class="mk">{{item.fullMoney?'订单满'+item.fullMoneyT+'元':'无门槛'}}</view>
       </view>
-      <view class="ticket_right {{item.usetag=='usetag'?'prno':''}}">
+        <view class="ticket_right {{item.usetag=='usetag'?'prno':''}}">
         <view class="ticket_right_con">
-          <view class="ticket_name">限指尖云店商品</view>
+          <view class="ticket_name">{{siteName}}</view>
           <view class="ticket_time">
             {{item.cardType==10?'优惠券 ':item.cardType==20?'满减券 ':item.cardType==30?'折扣券 ':''}}
           {{item.validityType==1?item.startTime +' - '+ item.endTime:item.validityType==2?'领券之后当日生效，有效期'+item.validityDay+'天':item.validityType==3?'领券之后'+item.effectiveDay+'天生效，有效期'+item.validityDay+'天':''}}
@@ -32,6 +33,7 @@
         </view>
       </view>
     </view>
+
     <view class="nologin" wx:if="{{noData}}">
       <image src="../../image/nodata.png" class="goodnodata"></image>
       <view class="notitle">暂无卡券</view>

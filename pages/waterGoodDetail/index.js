@@ -169,6 +169,10 @@ Page({
       })
       return
     }
+    if(this.submit){
+      return;
+    }
+    this.submit=true;//开关控制重复添加购物车的操作
     wx.showLoading({ title: "加载中..." });
     const userId = wx.getStorageSync('userId');
     service.addgoodnum({
@@ -188,6 +192,7 @@ Page({
         });
         this.getShoppingNum()
       } else {
+        this.submit=false;//开关控制重复添加购物车的操作
         wx.showToast({
           title: res.data.message,
           icon: 'none',
@@ -276,6 +281,7 @@ Page({
       smallBranchesId:currentCloudShop?currentCloudShop.siteId:'',
       userId: wx.getStorageSync('userId')
     }).then(res => {
+      this.submit=false;//开关控制重复添加购物车的操作
       if (res.data.result == 200) {
         let sum = res.data.data.goodsNumber;
         if (sum > 99) {

@@ -1,15 +1,17 @@
-.groupbuy_body{
+.groupbuy_body {
   width: 100%;
   height: 100%;
   background: red;
   box-sizing: border-box;
 }
-.groupbuy_Succeed{
+
+.groupbuy_Succeed {
   width: 100%;
   height: 100%;
   background: #fff;
 }
-.succeed_header{
+
+.succeed_header {
   width: 100%;
   background: #fff;
   font-size: 32rpx;
@@ -18,81 +20,199 @@
   box-sizing: border-box;
   line-height: 1;
 }
-.succeed_img{
+
+.succeed_img {
   width: 151rpx;
   height: 151rpx;
   margin-bottom: 20rpx;
 }
-.succeed_title{
-  color:#333;
+
+.succeed_title {
+  color: #333;
   line-height: 1;
 }
-.succeed_hint{
+
+.succeed_hint {
   width: 100%;
   background: #fff;
   font-size: 24rpx;
   line-height: 1;
-  color:#999;
+  color: #999;
   text-align: center;
   margin-top: 30rpx;
 }
-.QrCode{
+
+.QrCode {
   text-align: center;
   font-size: 24rpx;
   background: #fff;
 }
-.QrCode_img{
+
+.QrCode_img {
   width: 300rpx;
   height: 300rpx;
   margin: 30rpx auto;
   margin-bottom: 0;
 }
-.QrCode_title{
-  color:#999;
+
+.QrCode_title {
+  color: #999;
   line-height: 1;
   margin-top: 30rpx;
 }
-.groupbuy_attention{
+
+.groupbuy_attention {
   width: 100%;
   background: #fff;
 }
-.attention_hint{
+
+.attention_hint {
   text-align: center;
-  color:#F2922F;
+  color: #F2922F;
   font-size: 24rpx;
   line-height: 1;
   margin-top: 20rpx;
 }
-.takeCode{
+
+.takeCode {
   font-size: 24rpx;
-  color:#999;
+  color: #999;
   line-height: 1;
   margin-top: 60rpx;
 }
-.codeNum{
-  color:#F2922F;
+
+.codeNum {
+  color: #F2922F;
 }
-.takeCode_button{
+
+.takeCode_button {
   width: 200rpx;
   height: 60rpx;
   background: #fff;
-  border:1px solid #F2922F;
+  border: 1px solid #F2922F;
   text-align: cneter;
   line-height: 60rpx;
-  margin:20rpx auto 0 auto;
-  color:#F2922F;
+  margin: 20rpx auto 0 auto;
+  color: #F2922F;
   border-radius: 6rpx;
 }
-.gohome_button{
-  width:250rpx;
-  height:88rpx;
-  background:#f2922f;
-  border-radius:8rpx;
-  color:#fff;
-  line-height:88rpx;
-  font-size:32rpx;
-  border-color:#f2922f;
-  text-align: center;
-  margin:0 auto;
-  margin-top: 20rpx;
+
+/*底部按钮*/
+.bottomBtn {
+  padding: 0 162rpx;
+  display: flex;
 }
+
+.gohome_button {
+  width: 188rpx;
+  height: 70rpx;
+  background: #fff;
+  border-radius: 34rpx;
+  color: #f2922f;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  border-color: #f2922f;
+  border: 2rpx solid #F2922F;
+  text-align: center;
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+  margin-right: 50rpx;
+}
+.lookList {
+  width: 188rpx;
+  height: 70rpx;
+  background: #f2922f;
+  border-radius: 34rpx;
+  color: #fff;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  border-color: #f2922f;
+  text-align: center;
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+}
+
+.titleName {
+  width: 100%;
+  height: 100%;
+  background: #F8F8F8;
+  font-size: 36rpx;
+  color: #333333;
+  text-align: center;
+  line-height: 36rpx;
+}
+
+.titleName_top {
+  padding: 40rpx 0;
+}
+
+/*商品列表*/
+.goodsList{
+  width: 750rpx;
+  height: auto;
+  display: flex;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.goodsList_content {
+  width: 345rpx;
+  height: 570rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+}
+.goodsList_content:last-child{
+  margin-right: 0;
+}
+.goodsPic{
+  width: 300rpx;
+  height: 300rpx;
+  padding: 20rpx 23rpx 13rpx 22rpx;
+}
+.goodsList_center{
+  height: 181rpx;
+  text-align: left;
+  padding-left:20rpx;
+}
+.goodsList_center_name {
+  width: 315rpx;
+  font-size: 28rpx;
+  line-height: 42rpx;
+  color: #333333;
+  display: -webkit-box;
+  max-height: 84rpx;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  box-sizing: border-box;
+}
+.goodsList_center_spec {
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #999999;
+  margin-top: 7rpx;
+  margin-bottom: 4rpx;
+}
+.goodsList_price {
+  font-size: 28rpx;
+  color: #FF3B30;
+  text-align: left;
+  padding-left: 20rpx;
+}
+.goodsList_price text:first-of-type{
+  font-size: 36rpx;
+  color: #FF3B30;
+  line-height: 36rpx;
+}
+.goodsList_price text:last-of-type{
+  font-size: 20rpx;
+  color: #999999;
+  line-height: 24rpx;
+  margin-left: 21rpx;
+  text-decoration: line-through;
+}
+
+
+
+

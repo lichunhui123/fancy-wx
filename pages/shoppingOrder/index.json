@@ -1,9 +1,9 @@
 {
   "usingComponents": {
-    "Topayfor":"./topayfor/index",
     "authorizationGetPhone":"../../component/authorizationGetPhone/index",
     "deliveryTime":"./deliveryTime/index",
-    "pickUpTime":"./pickUpTime/index"
+    "pickUpTime":"./pickUpTime/index",
+    "cloudDeliveryTime":"./cloudDeliveryTime/index"
   },
   "navigationBarTitleText": "提交订单"
 }

@@ -33,7 +33,7 @@ page{
 }
 .active .top_text{
     color: #333333;
-    border-bottom: 4rpx solid #F2922F;
+    border-bottom: 4rpx solid #FD7F2A;
 }
 .Num_icon{
     width: 24rpx;
@@ -81,10 +81,27 @@ page{
     justify-content: space-between;
     border-bottom: 1rpx solid #EBEBEB;
 }
+.list_top1{
+    height:118rpx;  
+}
 .list_top_left{
     display:flex;
     align-items: center;
     justify-content:flex-start;
+}
+.order_branch{
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 28rpx;
+    height: 28rpx;
+    width: 500rpx;
+    margin-left: 20rpx;
+    margin-bottom: 10rpx;
+    font-weight: 600;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 .list_top_left_text{
     font-size: 28rpx;
@@ -92,8 +109,32 @@ page{
     line-height: 28rpx;
     margin-left: 20rpx;
 }
+.list_top_left_size{
+  width:98rpx;
+  height:34rpx;
+  position: relative;
+  margin-left: 20rpx;
+}
+.list_top_left_size image{
+  width:98rpx;
+  height:34rpx;
+  position: absolute;
+  left:0;
+  top:0;
+}
+.list_top_left_size view{
+    width:98rpx;
+    height:34rpx;
+    font-size: 20rpx;
+    line-height: 34rpx;
+    color:#FFFFFF;
+    position: absolute;
+    top:0;
+    left:0;
+    text-align: center;
+} 
 .list_top_left_btn{
-    margin-left: 20rpx;
+    margin-right: 20rpx;
     width:120rpx;
     height:48rpx;
     border: 1rpx solid #F2922F;
@@ -113,6 +154,7 @@ page{
     height:200rpx;
     display: flex;
     border-bottom: 1rpx solid #EBEBEB;
+    position:relative;
 }
 .list_con_left{
     display:flex;
@@ -128,8 +170,19 @@ page{
     height:86rpx;
 }
 .list_con_left .list_icon image{
-    width:86rpx;
-    height:86rpx;
+   width:86rpx;
+   height:86rpx;
+}
+.drawBack_icon{
+    position:absolute;
+    right:0;
+    top:0;
+    width:90rpx;
+    height:90rpx;
+}
+.drawBack_icon image{
+    width:90rpx;
+    height:90rpx;
 }
 .left_con_overflow{
     overflow: auto;
@@ -167,6 +220,7 @@ page{
 .list_con_left image{
     width:160rpx;
     height:160rpx;
+    border-radius: 10rpx;
 }
 .list_con_right{
     width:132x;
@@ -218,10 +272,10 @@ page{
     width:174rpx;
     height:60rpx;
     box-sizing: border-box;
-    border: 2rpx solid #F2922F;
+    border: 2rpx solid #FD7F2A;
     border-radius: 34rpx;
     font-size: 26rpx;
-    color: #F2922F;
+    color: #FD7F2A;
     text-align: center;
     line-height: 60rpx;
     margin-right:20rpx;

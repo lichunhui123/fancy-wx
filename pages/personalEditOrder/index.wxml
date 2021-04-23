@@ -1,0 +1,20 @@
+<view>
+    <view class="edit_tip">
+        <image src="../../image/tip_icon.png"></image>
+        <text>订单只能修改一次，敬请原谅</text>
+    </view>
+    <view class="edit_con">
+        <view class="edit_name">姓名<text class="edit_name1">{{name}}</text></view>
+        <view class="edit_phone">电话<text class="edit_name1">{{phone}}</text></view>
+        <view class="edit_item">
+            <view class="edit_text1">省市区</view>
+            <view class="edit_value"><text>{{province}}</text><text>{{city}}</text><text>{{district}}</text></view>
+            <view class="edit_icon"><image src="../../image/wateraddgps.png"></image></view>
+        </view>
+        <view class="edit_item1">
+            <view class="edit_text2">详细地址</view>
+            <view class="edit_value1">{{address}}</view>
+        </view>
+    </view>
+    <view class="submit_btn {{submit?'active':''}}" catchtap="sureEdit">确认修改</view>
+</view>

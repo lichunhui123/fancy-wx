@@ -413,3 +413,41 @@ html, page {
   left: 0;
   background: white;
 }
+/*头像和昵称的轮播*/
+.recordSwiper{
+  height:140rpx;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+}
+.recordSwiperImg{
+  width:40rpx;
+  height:34rpx;
+}
+.recordSwiper_content{
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 140rpx;
+  height:140rpx;
+  width: 335rpx;
+}
+.recordSwiper_content_item {
+  width: 100%;
+}
+.content_swiper_item{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
+}
+.recordSwiper_content_swiper{
+  height: 140rpx;
+  width: 100%;
+}
+ .content_swiper_item image{
+  width:80rpx;
+  height:80rpx;
+  margin-right: 20rpx;
+  border-radius:50%;
+}

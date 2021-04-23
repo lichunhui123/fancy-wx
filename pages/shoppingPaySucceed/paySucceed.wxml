@@ -1,3 +1,4 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
 <view class="groupbuy_body">
     <view class='groupbuy_Succeed'>
         <view class='succeed_header'>
@@ -7,7 +8,28 @@
         <view class="succeed_hint">
           我们会尽快为您配送，期待您再次光临！
         </view>
-        <view class="gohome_button" bindtap="gotoHomeBtn">返回首页</view>
+        <view class="bottomBtn">
+            <view class="gohome_button" bindtap="gotoHomeBtn">返回首页</view>
+            <view class='lookList' bindtap="lookListBtn">查看订单</view>
+        </view>
+    </view>
+    <view class="titleName">
+        <view class='titleName_top'>更好甄选，直邮到家</view>
+    <!--商品列表-->
+        <view class="goodsList">
+            <view class="goodsList_content"  wx:if="{{listData.length>0}}" wx:for="{{listData}}" wx:key="index"
+                bindtap="fingerMallGoodsDetailClick" data-itdetail="{{item}}">
+                <image  class="goodsPic" src="https://img.goola.cn/{{item.goodsPics}}"></image>
+                <view class="goodsList_center">
+                    <view class="goodsList_center_name">{{item.skuName}}</view>
+                    <view class="goodsList_center_spec" wx:if="{{item.goodsSpec}}">规格：{{item.goodsSpec}}</view>
+                </view>
+                <!--商品加入过活动的-->
+                <view class="goodsList_price" wx:if="{{item.activityId}}">￥<text>{{numb.getNum(item.discountPrice/100)}}</text><text>{{numb.getNum(item.salesPrice)}}</text></view>
+                <!--商品没有加入活动-->
+                <view class="goodsList_price" wx:else>￥<text>{{numb.getNum(item.salesPrice)}}</text><text>￥{{numb.getNum(item.competitorPrice)}}</text></view>
+            </view>
+        </view>
     </view>
     <!--成长值 积分 toast-->
     <growth-value-toast wx:if="{{showGrowthValueToast}}" growth="{{growth}}" credits="{{credits}}"></growth-value-toast>

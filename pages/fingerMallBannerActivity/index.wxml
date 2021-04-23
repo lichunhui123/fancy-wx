@@ -1,0 +1,56 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view>
+    <view class="top_pic" wx:if="{{adsBannerPic}}">
+        <image src="{{imgUrl+adsBannerPic}}" mode="widthFix" />
+    </view>
+    <view class="center_con" wx:if="{{navigateDtoList&&navigateDtoList.length>0}}">
+        <view class="activity_list" wx:for="{{navigateDtoList}}" wx:for-item="item" wx:key="index" wx:for-index="index" wx:if="{{item.skuDtoList.length>0}}">
+            <view class="activity_height">
+                <view class="activity_title">
+                    <image src="../../image/activity_title.png"></image>
+                    <text>{{item.navigateTitle}}</text>
+                    <image src="../../image/activity_title.png"></image>
+                </view>
+            </view>
+            <view class="goods_con" wx:if="{{item.skuDtoList}}">
+                <view class="goods_list" wx:for="{{item.skuDtoList}}" wx:for-item="obj" wx:key="index">
+                    <image class="goods_pic" src="{{obj.goodsPics?imgUrl+numb.splitImg(obj.goodsPics):''}}" bindtap="goDetail" data-skuCode="{{obj.skuCode}}"></image>
+                    <view class="goods_name">{{obj.skuName}}</view>
+                    <view class="goods_num">规格:{{obj.goodsSpec}}</view>
+                    <!--参加折扣活动-->
+                    <view class="goods_price">
+                        <view wx:if="{{obj.activityType==10}}">
+                            <view class="discount_price">折扣价:</view>
+                            <text class="price_symbol">¥</text>
+                            <text class="price">{{numb.getNum(obj.discountAmount/100)}}</text>
+                            <view class="badPrice">¥{{numb.getNum(obj.salesPrice/100)}}</view>
+                        </view>
+                        <view wx:else>
+                            <text class="price_symbol">¥</text>
+                            <text class="price">{{numb.getNum(obj.salesPrice/100)}}</text>
+                            <view class="badPrice">¥{{numb.getNum(obj.competitorPrice/100)}}</view>
+                        </view>
+                    </view>
+                    <view class="addbox">
+                        <view class="liue" catchtap="delNewCart" data-goods="{{obj}}" wx:if="{{obj.cartNum>0}}">
+                            <image src="../../image/delbutton.png"></image>
+                        </view>
+                        <input type="number" maxlength="4" value="{{obj.cartNum}}" bindblur="changeInput" catchtap="stopinp" data-goods="{{obj}}" wx:if="{{obj.cartNum>0}}"/>
+                        <view class="liue" catchtap="addUpdateCart" data-goods="{{obj}}">
+                            <image src="../../image/addstore.png"></image>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="goods_bottom" wx:if="{{navigateDtoList.length!=index+1}}"></view>
+        </view>
+    </view>
+    <view class="all_car" wx:if="{{navigateDtoList&&navigateDtoList.length>0&&cartNum>0}}" bindtap="goBuyCar">
+        <view class="{{cartNum<10?'one_car':'more_car'}}">{{cartNum>99?'99+':cartNum}}</view>
+        <image src="../../image/buydai.png"/>
+    </view>
+    <view class="bottom" wx:if="{{navigateDtoList&&navigateDtoList.length>0}}">—— 不好意思，已经到底啦 ——</view>
+    <!-- 用户授权登录 -->
+    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+    <!-- 用户授权登录 -->
+</view>

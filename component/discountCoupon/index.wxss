@@ -1,0 +1,103 @@
+/*遮罩弹层背景*/
+.maskWrap{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.70);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 99999;
+}
+.conpon_content{
+  position: absolute;
+  bottom:0;
+  left:0;
+  width: 100%;
+  background: #F8F8F8;
+  border-radius: 12rpx 12rpx 0 0;
+}
+.conpon_close{
+  width:40rpx;
+  height:70rpx;
+  position:absolute;
+  top:-70rpx;
+  right:30rpx;
+}
+.coupon_title{
+  height:112rpx;
+  font-size: 32rpx;
+  color: #333333;
+  line-height: 112rpx;
+  text-align: center;
+}
+.conpon_list{
+  width:100%;
+  height: 832rpx;
+  overflow: auto;
+}
+.conpon_item{
+  width:710rpx;
+  background: #FFFFFF;
+  border-radius: 10rpx;
+  display:flex;
+  align-items: center;
+  margin:0 auto 20rpx;
+  position: relative;
+}
+.conpon_left{
+  width:190rpx;
+  height:116rpx;
+  margin:33rpx 0 39rpx 0;
+  padding:9rpx 0;
+  text-align: center;
+}
+.conpon_left_price{
+  font-size: 32rpx;
+  color: #F2922F;
+  line-height: 52rpx;
+  height:52rpx;
+}
+.conpon_left_text{
+  font-size: 62rpx;
+}
+.conpon_left_dec{
+  font-size: 26rpx;
+  line-height: 26rpx;
+  color: #F2922F;
+  margin-top: 21rpx;
+}
+.conpon_center{
+  width:367rpx;
+  color:#333333;
+}
+.conpon_center_name{
+  font-size: 32rpx;
+  line-height: 32rpx;
+  margin-bottom: 12rpx;
+}
+.conpon_center_dec{
+  font-size: 28rpx;
+  line-height: 44rpx;
+}
+.conpon_right{
+  margin-left: 17rpx;
+  width:116rpx;
+  height:54rpx;
+  border: 1px solid #F2922F;
+  border-radius: 10rpx;
+  font-size: 24rpx;
+  line-height: 54rpx;
+  color: #F2922F;
+  text-align: center;
+}
+.conpon_has_icon{
+  position:absolute;
+  right:0;
+  top:0;
+}
+.has_icon_img{
+  width:90rpx;
+  height:90rpx;
+}

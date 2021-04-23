@@ -1,0 +1,271 @@
+/*购物袋入口样式 start */
+.pagebuttom{
+  width:100%;
+  height:90rpx;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 999;
+  bottom: 35rpx;
+}
+.buybox{
+  width:690rpx;
+  height:90rpx;
+  background: rgba(0,0,0,0.80);
+  box-shadow: 0 2rpx 8rpx 0 rgba(0,0,0,0.06);
+  border-radius: 50px;
+  display:flex;
+  position: relative;
+}
+.buydai{
+  width: 90rpx;
+  height: 107rpx;
+  position: absolute;
+  left: 60rpx;
+  bottom:-6.6rpx;
+}
+.buydaiImg{
+  width: 90rpx;
+}
+.stay{
+  width: 28rpx;
+  height: 28rpx;
+  background: #FF3B30;
+  border: 1rpx solid #FFFFFF;
+  border-radius: 50%;
+  font-size: 16rpx;
+  color:white;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 28rpx;
+  position: absolute;
+  top: -1rpx;
+  right: -8rpx;
+}
+.gouwuche{
+  width: 500rpx;
+  height: 90rpx;
+  border-radius: 50px 0 0 50px;
+  text-align: right;
+  padding-right: 30rpx;
+  line-height: 90rpx;
+  color:white;
+  font-size: 28rpx;
+}
+.numsize{
+  font-size: 42rpx;
+}
+.buybtn{
+  width: 190rpx;
+  height: 90rpx;
+  background-image: linear-gradient(203deg, #FF9D37 0%, #FF4F00 100%);
+  border-radius: 0 50rpx 50rpx 0;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color:white; 
+}
+/*购物袋入口样式 end */
+
+/*购物袋样式 start*/
+.shade{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  background: rgba(0,0,0,0.70);
+  display:flex;
+  flex-direction: column;
+}
+.hui{
+  flex:1;
+  position: relative;
+}
+.shoppbox{
+  width: 100%;
+  height:870rpx;
+  overflow-y: scroll;
+  background: #FFFFFF;
+  border-radius: 10rpx 10rpx 0 0;
+  display:flex;
+  flex-direction: column;
+}
+.shoptop{
+  width:100%;
+  height:70rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding:0 20rpx;
+  font-size: 24rpx;
+  color: #F2922F;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.qing{
+  color:#999;
+  display:flex;
+  align-items: center;
+}
+.clearImg{
+  width:24rpx;
+  height:24rpx;
+}
+.offtop{
+  width: 40rpx;
+  height: 70rpx;
+  position: absolute;
+  bottom: 0;
+  right: 30rpx;
+}
+.shopcontent1{
+  flex:1;
+  overflow: scroll;
+  padding-left: 20rpx;
+}
+.goods_list2{
+  width: 100%;
+  min-height: 205rpx;
+  background: #FFFFFF;
+  border-bottom: 1rpx solid #EBEBEB;
+  display:flex;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
+.shopimg{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+}
+.list_left2{
+  width:160rpx;
+  min-height: 200rpx;
+  display:flex;
+  align-items: center;
+  margin-right: 20rpx;
+  position:relative;
+}
+.sold{
+  width: 160rpx;
+  height: 160rpx;
+  position: absolute;
+  top: 20rpx;
+  background: rgba(0,0,0,0.70);
+  text-align: center;
+  line-height: 160rpx;
+  color: white;
+  font-size: 24rpx;
+}
+.list_right{
+  flex:1;
+  padding:20rpx 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.good_title{
+  max-height:84rpx;
+  font-weight: 600;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;/*显示几行*/
+  line-height: 42rpx;
+  font-size: 28rpx;
+  color:#333;
+}
+.spec{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #999;
+  font-weight: 500;
+  margin-top: 7rpx;
+}
+.goodbottom{
+  line-height: 30rpx;
+  margin-top: 14rpx;
+}
+.price2{
+  font-size: 28rpx;
+  color: #FF5403;
+}
+.price{
+  font-size: 20rpx;
+  color: #999999;
+  line-height: 24rpx;
+  margin-top: 14rpx;
+  text-decoration: line-through;
+}
+.discount{
+  font-size: 32rpx;
+  line-height: 32rpx;
+}
+.disnum{
+  font-size: 20rpx;
+}
+.disign{
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+.mou1{
+  font-size: 24rpx;
+  color:#999;
+  padding-left: 27rpx;
+  text-decoration:line-through;
+}
+.original{
+  text-decoration: line-through;
+  margin-left: 20rpx;
+  font-size: 20rpx;
+  color: #999999;
+  line-height: 24rpx;
+}
+.saleItem{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.saleItemText{
+  display: inline-block;
+  border: 1rpx solid #FF5403;
+  border-radius: 4rpx;
+  font-size: 20rpx;
+  line-height: 28rpx;
+  color:#FF5403;
+  height:28rpx;
+  padding:0 10rpx;
+  margin-right: 20rpx;
+  margin-top:10rpx;
+}
+.shopbottom{
+  width:100%;
+  height:198rpx;
+}
+.addbox{
+  width: 196rpx;
+  height: 102rpx;
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  right:-10rpx;
+  bottom:-10rpx;
+}
+.addbox .liue{
+  width: 62rpx;
+  height:102rpx;
+  box-sizing: border-box;
+  padding:30rpx 10rpx;
+}
+.addboxImg{
+  width: 42rpx;
+  height:42rpx;
+}
+.addboxInput{
+  width: 40rpx;
+  height: 42rpx;
+  text-align: center;
+  font-size: 28rpx;
+}
+/*购物袋样式 end*/

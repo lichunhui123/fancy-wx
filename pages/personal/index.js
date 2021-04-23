@@ -319,6 +319,20 @@ Page({
       url: '/pages/personalHistoryOrder/index'
     });
   },
+  //跳转指尖拼团
+  togroup(){
+    this.setData({
+      showLogin:true,
+      url: '/pages/group/index'
+    });
+  },
+  //跳转自主购物
+  toselfshopping(){
+    this.setData({
+      showLogin:true,
+      url: '/pages/selfHelpPurchasing/index'
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */

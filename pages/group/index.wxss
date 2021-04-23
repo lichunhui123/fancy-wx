@@ -142,6 +142,7 @@ html, page {
 .goodimg{
   width:220rpx;
   height: 220rpx;
+  border-radius: 10rpx;
 }
 .masks{
   width:220rpx;
@@ -202,8 +203,8 @@ html, page {
   padding:0rpx 10rpx;
 }
 .discount{
-  font-size: 36rpx;
-  line-height: 36rpx;
+  font-size: 32rpx;
+  line-height: 32rpx;
   color: #FF3B30;
 }
 .original{
@@ -219,6 +220,10 @@ html, page {
   padding-right: 18rpx;
 }
 .disnum{
+  font-size: 20rpx;
+}
+.disign{
+  margin-left: 10rpx;
   font-size: 28rpx;
 }
 .price{
@@ -269,149 +274,12 @@ html, page {
 }
 
 .addbox input{
-  width: 72rpx;
+  width: 40rpx;
   height: 42rpx;
   text-align: center;
   font-size: 28rpx;
 }
-.pagebuttom{
-  width:100%;
-  height:90rpx;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  z-index: 999;
-  bottom: 35rpx;
-}
-.buybox{
-  width:690rpx;
-  height:90rpx;
-  background: rgba(0,0,0,0.80);
-  border-radius: 50px;
-  display:flex;
-  position: relative;
-}
-.buydai{
-  width: 90rpx;
-  height: 107rpx;
-  position: absolute;
-  left: 60rpx;
-  bottom:-6.6rpx;
-}
-.buydai image{
-  width: 90rpx;
-}
-.stay{
-  width: 28rpx;
-  height: 28rpx;
-  background: #FF3B30;
-  border: 1rpx solid #FFFFFF;
-  border-radius: 50%;
-  font-size: 16rpx;
-  color:white;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: 28rpx;
-  position: absolute;
-  top: -1rpx;
-  right: -8rpx;
-}
-.gouwuche{
-  width: 500rpx;
-  height: 90rpx;
-  border-radius: 50px 0 0 50px;
-  text-align: right;
-  padding-right: 30rpx;
-  line-height: 90rpx;
-  color:white;
-  font-size: 28rpx;
-}
-.numsize{
-  font-size: 42rpx;
-}
-.buybtn{
-  width: 190rpx;
-  height: 90rpx;
-  background: #F2922F;
-  border-radius: 0 50rpx 50rpx 0;
-  text-align: center;
-  line-height: 90rpx;
-  font-size: 30rpx;
-  color:white; 
-}
-.shade{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  background: rgba(0,0,0,0.70);
-  display:flex;
-  flex-direction: column;
-}
-.hui{
-  flex:1;
-}
-.shoppbox{
-  width: 100%;
-  height:870rpx;
-  overflow-y: scroll;
-  background: #FFFFFF;
-  border-radius: 10rpx 10rpx 0 0;
-  display:flex;
-  flex-direction: column;
-}
-.shoptop{
-  width:100%;
-  height:70rpx;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding:0 20rpx;
-  font-size: 24rpx;
-  color: #F2922F;
-  border-bottom: 1rpx solid #EBEBEB;
-}
-.qing image{
-  width:24rpx;
-  height:24rpx;
-}
-.qing{
-  color:#999;
-  display:flex;
-  align-items: center;
-}
-.shopcontent{
-  flex:1;
-  overflow: scroll;
-  padding-left: 30rpx;
-}
-.shopcontent1{
-  flex:1;
-  overflow: scroll;
-  padding-left: 20rpx;
-}
-.goods_list2{
-  width: 100%;
-  min-height: 205rpx;
-  background: #FFFFFF;
-  border-bottom: 1rpx solid #EBEBEB;
-  display:flex;
-  padding-right: 30rpx;
-  box-sizing: border-box;
-}
-.shopimg{
-  width: 160rpx;
-  height: 160rpx;
-}
-.list_left2{
-  width:160rpx;
-  min-height: 200rpx;
-  display:flex;
-  align-items: center;
-  margin-right: 20rpx;
-}
+
 .shopbottom{
   width:100%;
   height:200rpx;
@@ -427,25 +295,9 @@ html, page {
 .nologin .goodnodata{
   width: 450rpx;
   height:450rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 40rpx;
 }
 .notitle{
   font-size: 24rpx;
   color: #333333;
-}
-.saleItem{
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.saleItem text{
-  display: inline-block;
-  border: 1rpx solid #FF3B30;
-  border-radius: 4rpx;
-  font-size: 20rpx;
-  color: #FF3B30;
-  height:28rpx;
-  padding:0 10rpx;
-  margin-right: 20rpx;
-  margin-top:10rpx;
 }

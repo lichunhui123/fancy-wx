@@ -11,39 +11,57 @@
   </view>
   <view class="order_detail">
     <view class="order_list" wx:if="{{orderList&&orderList.length>0}}" wx:for="{{orderList}}" wx:key="index">
-      <view class="list_top" bindtap="toOrderDetail" data-item="{{item}}">
-        <view class="list_top_left">
-          <text class="list_top_left_text" wx:if="{{item.orderStatus==10||item.orderStatus==20||item.orderStatus==30||item.orderStatus==31}}">
+      <view class="list_top {{item.orderResource==40?'list_top1':''}}" bindtap="toOrderDetail" data-item="{{item}}">
+        <view class="list_tl" wx:if="{{item.orderResource==40}}">
+          <view class="order_branch">{{item.mecName}}</view>
+          <view class="list_top_left_text" wx:if="{{item.orderStatus==10||item.orderStatus==20||item.orderStatus==30||item.orderStatus==31}}">
             下单时间：{{item.createTime}}
-          </text>
-          <text class="list_top_left_text" wx:if="{{item.orderStatus==40}}">
+          </view>
+          <view class="list_top_left_text" wx:if="{{item.orderStatus==40}}">
             {{item.orderResource==5?"取货时间":"完成时间"}}：{{item.doneTime}}
-          </text>
-          <text class="list_top_left_text" wx:if="{{item.orderStatus==50}}">
+          </view>
+          <view class="list_top_left_text" wx:if="{{item.orderStatus==50}}">
             取消时间：{{item.cancelTime}}
-          </text>
-          <!-- 水管家订单待收货状态才有此按钮 -->
-          <view class="list_top_left_btn" wx:if="{{item.sendCode}}" catchtap="cancelSend" data-sendcode="{{item.sendCode}}">
-            取消派送
           </view>
         </view>
-        <text class="list_top_right" style="color:#FF3B30" wx:if="{{item.orderStatus==10}}">
+        <view class="list_top_left" wx:if="{{item.orderResource!==40}}">
+          <view class="list_top_left_size" >
+            <image src="../../image/buyCarRectangle.png" class="img"></image>
+            <view wx:if="{{item.orderResource==10}}">更好甄选</view>
+            <view wx:elif="{{item.orderResource==5}}">指尖拼团</view>
+            <view wx:elif="{{item.orderResource==20||item.orderResource==30}}">水管家</view>
+          </view>
+          <view class="list_top_left_text" wx:if="{{item.orderStatus==10||item.orderStatus==20||item.orderStatus==30||item.orderStatus==31}}">
+            下单时间：{{item.createTime}}
+          </view>
+          <view class="list_top_left_text" wx:if="{{item.orderStatus==40}}">
+            {{item.orderResource==5?"取货时间":"完成时间"}}：{{item.doneTime}}
+          </view>
+          <view class="list_top_left_text" wx:if="{{item.orderStatus==50}}">
+            取消时间：{{item.cancelTime}}
+          </view>
+        </view>
+        <view class="list_top_right" style="color:#FF3B30" wx:if="{{item.orderStatus==10}}">
           待付款
-        </text>
-        <text class="list_top_right" style="color:#007AFF" wx:if="{{item.orderStatus==20}}">
+        </view>
+        <view class="list_top_right" style="color:#5ADAD0" wx:if="{{item.orderStatus==20}}">
           待配送
-        </text>
-        <text class="list_top_right" style="color:#F2922F" wx:if="{{item.orderStatus==30||item.orderStatus==31}}">
+        </view>
+        <view class="list_top_right" style="color:#FF5403" wx:if="{{item.orderStatus==30||item.orderStatus==31}}">
           待收货
-        </text>
-        <text class="list_top_right" style="color:#333333" wx:if="{{item.orderStatus==40}}">
+        </view>
+        <view class="list_top_right" style="color:#333333" wx:if="{{item.orderStatus==40}}">
           已完成
-        </text>
-        <text class="list_top_right" style="color:#999999" wx:if="{{item.orderStatus==50}}">
+        </view>
+        <view class="list_top_right" style="color:#999999" wx:if="{{item.orderStatus==50}}">
           已取消
-        </text>
+        </view>
       </view>
       <view class="order_list_con" bindtap="toOrderDetail" data-item="{{item}}">
+        <!--退款状态 已退款-->
+        <view class="drawBack_icon" wx:if="{{item.refundStatus==1}}"><image src="../../image/yituikuan.png"></image></view>
+        <view class="drawBack_icon" wx:if="{{(item.refundStatus==2||item.auditStatus==2)&&orderStatus!=40}}"><image src="../../image/tuikuanzhong.png"></image></view>
+        <view class="drawBack_icon" wx:if="{{item.refundStatus==0||item.auditStatus==0}}"><image src="../../image/tuikuanshibai.png"></image></view>
         <view class="list_con_left {{item.orderItemList.length>1?'left_con_overflow':''}}" wx:if="{{item.orderItemList}}">
           <!-- 自提 -->
           <view class="list_icon" wx:if="{{item.orderType==20&&item.orderStatus!=10}}">
@@ -91,8 +109,15 @@
       <!-- 电商（更好甄选）,云店 商品待收货状态 -->
       <view class="confirm_receipt" wx:elif="{{((item.orderResource==10||item.orderResource==40)&&(item.orderStatus==30||item.orderStatus==31))}}">
         <view></view>
-        <view class="confirm_receipt_right" catchtap="confirmReceipt" data-ordercode="{{item.orderCode}}" data-orderresource="{{item.orderResource}}">
+        <view class="confirm_receipt_right" catchtap="confirmReceipt" data-ordercode="{{item.orderCode}}" data-orderresource="{{item.orderResource}}" data-auditstatus="{{item.auditStatus}}">
           确认收货
+        </view>
+      </view>
+      <!-- 水管家订单待收货状态才有此按钮 -->
+      <view class="confirm_receipt" wx:if="{{item.sendCode}}">
+        <view></view>
+        <view class="list_top_left_btn" catchtap="cancelSend" data-sendcode="{{item.sendCode}}">
+          取消派送
         </view>
       </view>
     </view>

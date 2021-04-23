@@ -1,0 +1,200 @@
+/* pages/home/systemCard/index.wxss */
+/*卡券弹框*/
+.mask{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.70);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.cardContent{
+  width: 620rpx;
+  height: 796rpx;
+  z-index:9;
+  position: absolute;
+  top: 50%;
+  left: 65rpx;
+  margin-top: -398rpx;
+  border-radius: 12rpx;
+  background-image: linear-gradient(to bottom,#F2922F,#FFD161);
+}
+.cardCenter{
+  width: 580rpx;
+  height: 764rpx;
+  background: #F8F8F8;
+  margin: 16rpx auto;
+  position: relative;
+}
+.centerIcon{
+  width: 209rpx;
+  height: 193rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -104.5rpx;
+  top:-92rpx;
+  z-index: 9;
+}
+.offtop{
+  width: 40rpx;
+  height: 70rpx;
+  position: absolute;
+  top: -70rpx;
+  right: 30rpx;
+}
+.topLeft{
+  width: 25rpx;
+  height: 25rpx;
+  border-radius: 0 0 25rpx 0;
+  background: #F2922F;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.bottomLeft{
+  width: 25rpx;
+  height: 25rpx;
+  border-radius: 0 0 0 25rpx;
+  background: #F2922F;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.topRight{
+  width: 25rpx;
+  height: 25rpx;
+  border-radius: 0 25rpx 0 0;
+  background: #FFD161;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.bottomRight{
+  width: 25rpx;
+  height: 25rpx;
+  border-radius: 25rpx 0 0 0;
+  background: #FFD161;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.cardCenter_name{
+  font-size: 28rpx;
+  color: #333333;
+  text-align: center;
+  line-height: 28rpx;
+  padding-top: 102rpx;
+  margin-bottom: 20rpx;
+}
+.cardCenter_title{
+  font-size: 42rpx;
+  color: #FF3B30;
+  line-height: 42rpx;
+  text-align: center;
+  margin-bottom: 14rpx;
+}
+.cardCenter_titleLittle{
+  font-size: 24rpx;
+  color: #FF3B30;
+  line-height: 24rpx;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+.cardCenter_bottom{
+  position: absolute;
+  bottom: 30rpx;
+  left: 19rpx;
+}
+.goUse{
+  width: 540rpx;
+  height: 70rpx;
+  border-radius: 30rpx;
+  text-align: center;
+  font-size: 28rpx;
+  line-height: 70rpx;
+  color: #fff;
+  background: #F2922F;
+}
+/*优惠券列表*/
+.ticket_content {
+  overflow: auto;
+  height: 384rpx;
+  background: #f8f8f8;
+  width:100%;
+  margin: 0 auto;
+  padding-right: 25rpx;
+  padding-left: 25rpx;
+  box-sizing: border-box;
+}
+.ticket_content_no{
+  background: #fff;
+}
+.ticket_item {
+  width:540rpx;
+  height: auto;
+  background: #fff;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.ticket_left {
+  width: 230rpx;
+  height: 116rpx;
+  color: #f2922f;
+  display: flex;
+  font-size: 32rpx;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ticket_left_con{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 86rpx;
+  height: 86rpx;
+}
+.price{
+  font-size: 52rpx;
+  padding: 0 6rpx;
+  font-weight: 600;
+}
+.ticket_right {
+  width: 334rpx;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mk{
+  font-size: 26rpx;
+}
+.ticket_right_con {
+  width: 334rpx;
+  height: auto;
+  padding: 32rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ticket_name {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.ticket_time {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+  width: 334rpx;
+}
+.ticket_type {
+  height: 24rpx;
+  font-size: 24rpx;
+  color: #999;
+}

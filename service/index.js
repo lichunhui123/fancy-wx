@@ -1,13 +1,13 @@
 const API = require('./api.js').API;
 const guangtongAjax = (prams)=>{
-  const { url, acType, data } = prams;
+  const { url, acType, data, content } = prams;
   return new Promise((resolve, reject) => {
     wx.request({
       url: url,
       method: acType,
       data: data,
       header: {
-        'content-type': 'application/json', // 默认值
+        'content-type': content?'application/x-www-form-urlencoded':'application/json', // 默认值
         "token":wx.getStorageSync('token')||''
       },
       success(res) {
@@ -25,7 +25,7 @@ const guangtongAjax = (prams)=>{
           wx.showToast({
             title: '登录超时',
             icon: 'none',
-            duration: 2000
+            duration: 2000 
           });
           wx.login({
             success: function (res) {
@@ -627,6 +627,7 @@ const getOrderInfo = (param)=>{
     acType: "post"
   })
 };
+
 //取消我的拼团订单
 const cancelMyOrder = (param)=>{
   return guangtongAjax({
@@ -979,6 +980,239 @@ const getwxacodeunlimit = (param) => {
     acType: 'post'
   })
 };
+//退款审核
+const auditRefundOrder=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GET_REFUNDORDER}`,
+    acType:'post'
+  })
+};
+//再次购买商品校验
+const buyAgainCheck=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GET_BUYAGAINCHECK}`,
+    acType:'post'
+  })
+}
+//订单详情修改地址
+const editOfcOrder=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.EDITOFCORDER}`,
+    acType:'post'
+  })
+}
+//加入购物车
+const saveShoppingCartList=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.ADD_GOODSNUMLIST}`,
+    acType:'post'
+  })
+}
+//获取云店商品详情小程序码
+const createSmallWxCode=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.CREATESMALLWXCODE}`,
+    acType:'post'
+  })
+}
+//通过云店商品详情页的参数获取实际需要的参数
+const getSmallWxCodeUnlimit=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETSMALLWXCODEUNLIMIT}`,
+    acType:'post',
+    content:'form'
+  })
+}
+//获取云店搜索框商品
+const getSmallGoodsSearchVocabulary=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETSMALLGOODSSEARCHVOCABULARY}`,
+    acType:'post'
+  })
+}
+//删除用户搜索历史
+const deleteSmallGoodsSearchUser=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.DELETESMALLGOODSSEARCHUSER}`,
+    acType:'post'
+  })
+}
+//搜索微店商品列表
+const getSmallGoodsSearchList=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETSMALLGOODSSEARCHLIST}`,
+    acType:'post'
+  })
+}
+//查询优惠券未查看数量
+const queryCardListByUserAndGoodsAndSelectStatus=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCARDLISTBYUSERANDGOODSANDSELECTSTATUS}`,
+    acType:'post'
+  })
+}
+//查询卡券信息
+const queryCardListByUserAndGoodsAndStatus=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCARDLISTBYUSERANDGOODSANDSTATUS}`,
+    acType:'post'
+  })
+}
+//获取更好甄选2个商品信息
+const querySkuInfoTwo=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYSKUINFOTWO}`,
+    acType:'post'
+  })
+}
+//系统发放优惠券
+const queryCardListBySelectSystem=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCARDLISTBYSELECTSYSTEM}`,
+    acType: 'post'
+  })
+}
+//查询云店所有卡券列表 
+const queryCloudCardList=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCLOUDCARDLIST}`,
+    acType:'post'
+  })
+}
+//查询更好甄选首页banner配置列表
+const queryBannerConfigList=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYBANNERCONFIGLIST}`,
+    acType:'post'
+  })
+}
+//查询更好甄选首页banner配置详情
+const queryBannerConfigDetail=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYBANNERCONFIGDETAIL}`,
+    acType:'post'
+  })
+}
+//查询收藏门店
+const queryCellectBranch=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCELLECTBRANCH}`,
+    acType:'post'
+  })
+}
+//取消收藏门店
+const cancelColleBranches=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.CANCELCOLLEBRANCHES}`,
+    acType:'post'
+  })
+}
+//查询已收藏的门店信息
+const queryColleBranches=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCOLLEBRANCHES}`,
+    acType:'post'
+  })
+}
+//查询云店分组列表
+const getSmallClassList=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETSMALLCLASSLIST}`,
+    acType:'post'
+  })
+}
+//查询云店活动列表
+const queryCloudStoreActivite=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.QUERYCLOUDSTOREACTIVITE}`,
+    acType: 'post'
+  })
+}
+//获取精选商品列表
+const getSelectedGoods=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETSELECTEDGOODS}`,
+    acType:'post'
+  })
+}
+//获取限时折扣商品列表
+const getDiscountInLimitedTime=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.DISOUNTINLIMITEDTIME}`,
+    acType:'post'
+  })
+}
+//获取多人拼团商品列表
+const getGroupTogether=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETGROUPTOGETHER}`,
+    acType:'post'
+  })
+}
+//获取好物预售商品列表
+const getGoodsPresale=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETGOODSPRESALE}`,
+    acType:'post'
+  })
+}
+//获取全场满减商品列表
+const getAllFullReduction=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETALLFULLREDUCTION}`,
+    acType:'post'
+  })
+}
+//获取买一送一商品列表
+const getTwoForOne=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETTWOFORONE}`,
+    acType:'post'
+  })
+}
+//获取第二件半价商品列表
+const getTwoHalfPrice=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETTWOHALFPRICE}`,
+    acType:'post'
+  })
+}
+//获取多件多折商品列表
+const getMorePieceMoreDiscount=(param)=>{
+  return guangtongAjax({
+    data:param,
+    url:`${API.GETMOREPIECEMOREDISCOUNT}`,
+    acType:'post'
+  })
+}
 module.exports = {
   requestSubscribeMessage,
   getGroupTemplateId,
@@ -1086,5 +1320,34 @@ module.exports = {
   fingerMallClass,
   fingerMallGetGoods,
   fingerMallConfirmReceipt,
-  getwxacodeunlimit
-};
+  getwxacodeunlimit,
+  auditRefundOrder,
+  buyAgainCheck,
+  editOfcOrder,
+  saveShoppingCartList,
+  createSmallWxCode,
+  getSmallWxCodeUnlimit,
+  getSmallGoodsSearchVocabulary,
+  deleteSmallGoodsSearchUser,
+  getSmallGoodsSearchList,
+  queryCardListByUserAndGoodsAndSelectStatus,
+  queryCardListByUserAndGoodsAndStatus,
+  querySkuInfoTwo,
+  queryCardListBySelectSystem,
+  queryCloudCardList,
+  queryBannerConfigList,
+  queryBannerConfigDetail,
+  queryCellectBranch,
+  cancelColleBranches,
+  queryColleBranches,
+  getSmallClassList,
+  queryCloudStoreActivite,
+  getSelectedGoods,
+  getDiscountInLimitedTime,
+  getGroupTogether,
+  getGoodsPresale,
+  getAllFullReduction,
+  getTwoForOne,
+  getTwoHalfPrice,
+  getMorePieceMoreDiscount
+}

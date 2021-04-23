@@ -10,14 +10,17 @@ Page({
     firstList: null,//第一次获取的list
     navigateDtoList: null,//商品列表
     imgUrl: app.globalData.imgUrl,//图片域名
+    isNewOpen:true,//是否是第一次打开页面
   },
   //登录成功回调
-  loginSuccess() {
+  loginSuccess(data) {
     this.setData({showLogin:false});
-    let presentAddress = wx.getStorageSync("presentAddress");//选择的站点
-    if (presentAddress) {
-      this.getCarts();
-      this.getBannerDetail();
+    if(data.detail){//说明是第一次授权登录
+      let presentAddress = wx.getStorageSync("presentAddress");//选择的站点
+      if (presentAddress) {
+        this.getCarts();
+        this.getCartsList();
+      }
     }
   },
   //获取活动详情
@@ -89,7 +92,8 @@ Page({
     let t = this;
     service.shoppingnum({
       branchesId: this.data.branchesId,
-      userId: wx.getStorageSync('userId')
+      userId: wx.getStorageSync('userId'),
+      smallBranchesId:wx.getStorageSync('currentCloudShop')?wx.getStorageSync('currentCloudShop').siteId:''
     }).then((res) => {
       let cartNum = res.data.data.goodsNumber;
       t.setData({cartNum});
@@ -121,17 +125,12 @@ Page({
       userId: userId
     }).then((res) => {
       wx.hideLoading();
-      this.hasClick = false;//防止重复提交状态
       if (res.data.result == 200) {
-        wx.showToast({
-          title: '添加成功！',
-          icon: 'success',
-          duration: 2000
-        });
-        let cartNum = ++this.data.cartNum;
-        this.getBannerDetail(1);
-        this.setData({cartNum});
+        let carNum = ++this.data.cartNum;
+        this.getCartsList();
+        this.setData({cartNum:carNum});
       } else {
+        this.hasClick = false;
         wx.showToast({
           title: res.data.message,
           icon: 'none',
@@ -140,8 +139,113 @@ Page({
       }
     })
   },
+  //商品减少
+  delNewCart(e){
+    if(this.hasClick){
+      return;
+    }
+    this.hasClick=true;
+    wx.showLoading({
+      title: '加载中',
+    })
+    let dooditem = e.currentTarget.dataset['goods'];
+    const userId = wx.getStorageSync('userId');
+    let { activityId, goodsCode, cartNum, goodsSource, carCode} = dooditem
+      if (cartNum>1){
+        service.addgoodnum({
+          activityId: activityId,
+          branchesId: this.data.branchesId,
+          goodsCode: goodsCode,
+          goodsNum: cartNum - 1,
+          goodsResource: goodsSource,
+          userId: userId
+        }).then(res => {
+          wx.hideLoading()
+          if (res.data.result == 200) {
+            let carNum = --this.data.cartNum;
+            this.getCartsList();
+            this.setData({cartNum:carNum});
+          }else{
+            this.hasClick = false;
+            wx.showToast({
+              title: res.data.message,
+              icon: 'none'
+            })
+          }
+        }).catch(res=>{
+          this.hasClick = false;
+       })
+      }else{
+        wx.showLoading({
+          title: '加载中',
+        })
+        service.delshoppinggoods({
+          cartCodes: [carCode]
+        }).then(res => {
+          wx.hideLoading()
+          if (res.data.result == 200) {
+            let carNum = --this.data.cartNum;
+            this.getCartsList();
+            this.setData({cartNum:carNum});
+          }else{
+            this.hasClick = false;
+            wx.showToast({
+              title: res.data.message,
+              icon: 'none'
+            })
+          }
+        }).catch(res=>{
+          this.hasClick = false;
+       })
+      }
+  },
+  //input框数量输入
+  changeInput(e){
+    let inpValue=e.detail.value;
+    let dooditem = e.currentTarget.dataset['goods'];
+    const userId = wx.getStorageSync('userId');
+    let { activityId, goodsCode, cartNum, goodsSource, carCode} = dooditem;
+    if(inpValue>=1){
+      service.addgoodnum({
+        activityId: activityId,
+        branchesId: this.data.branchesId,
+        goodsCode: goodsCode,
+        goodsNum: cartNum - 1,
+        goodsResource: goodsSource,
+        userId: userId
+      }).then(res => {
+        if (res.data.result != 200) {
+          this.getCartsList();
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
+        }else{
+          let carNum = this.data.cartNum+(inpValue-cartNum);
+          this.getCartsList();
+          this.setData({cartNum:carNum});
+        }
+      })
+    }else{
+      service.delshoppinggoods({
+        cartCodes: [carCode]
+      }).then(res => {
+        if (res.data.result == 200) {
+          let carNum = this.data.cartNum+(inpValue-cartNum);
+          this.getCartsList();
+          this.setData({cartNum:carNum});
+        }
+      })  
+    }
+  },
+  stopinp(){ 
+    //input框冒泡
+  },
   //跳转详情页
   goDetail: function (e) {
+    this.setData({
+      isNewOpen:false
+    })
     const activityId = e.currentTarget.dataset['activityid'];
     const goodsId = e.currentTarget.dataset['goodsid'];
     wx.navigateTo({
@@ -173,6 +277,17 @@ Page({
     let presentAddress = wx.getStorageSync("presentAddress");//选择的站点
     this.setData({
       branchesId: presentAddress ? presentAddress.siteId :"",    //站点id
+    },()=>{
+      if(this.data.isNewOpen){//第一次打开页面
+        this.getBannerDetail();
+      }else{//从详情页面返回到此页面
+        if(userId){//登录才调用购物车列表接口
+          this.getCartsList();
+        }
+      }
+      if(userId){//登录才调用购物车数量接口
+        this.getCarts();
+      }
     });
   },
 

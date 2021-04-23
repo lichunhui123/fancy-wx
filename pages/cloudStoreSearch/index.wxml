@@ -1,0 +1,99 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view class="searchContent {{noData?'noDataBackground':''}} {{showGoodsContent&&!noData?'hasDataBackground':''}}">
+  <view class="top">
+    <view class="leftBox">
+      <view class="seachinp">
+        <image class="searchIcon" src="../../image/search.png"></image>
+        <input class="inp" placeholder="搜索商品" maxlength="10" value="{{inpValue}}" bindconfirm="inputWatch" bindinput="inputBack"
+          focus="true"></input>
+        <image wx:if="{{inpValue}}" class="deleteIcon" src="../../image/deleteIcon.png" bindtap="clearInput"></image>
+      </view>
+    </view>
+    <view class="searchWord" wx:if="{{showSearchBtn}}" bindtap="searchWord">搜索</view>
+    <view class="rightBox"  wx:else>
+      <image src="../../image/groupshop.png" bindtap="inpshopp" class="groupCard"></image>
+      <view class="title" wx:if="{{sumNumber}}">{{sumNumber}}</view>
+    </view>
+  </view>
+  <view wx:if="{{!showGoodsContent}}">
+    <view class="center" style="margin-bottom: 4rpx;" wx:if="{{userVocabular.length>0}}">
+      <view class="center_top">
+        <view class="center_left"><text>历史搜索</text></view>
+        <view class="center_right" bindtap="delete">
+          <image src="../../image/delIcon.png"></image>
+        </view>
+      </view>
+      <view class="label">
+        <view wx:key="index" wx:for="{{userVocabular}}" bindtap="searchBtn" data-item="{{item}}">{{item}}</view>
+      </view>
+    </view>
+    <view class="center" wx:if="{{hotVocabular.length>0}}">
+      <view class="center_top">
+        <view class="center_left"><text>热门搜索</text></view>
+      </view>
+      <view class="label">
+        <view wx:key="index" wx:for="{{hotVocabular}}" bindtap="searchBtn" data-item="{{item}}">{{item}}</view>
+      </view>
+    </view>
+  </view>
+  <!--商品列表-->
+  <view class="goodsContent" wx:if="{{showGoodsContent&&!noData}}">
+    <view class="goods_top" wx:if="{{message}}">抱歉，没有搜到相关商品，为您推荐以下商品</view>
+    <view class="goodsList">
+      <view class="goodsItem" wx:if="{{listData.length>0}}" wx:for="{{listData}}" wx:key="index"
+        bindtap="goodsDetailClick" data-itdetail="{{item}}">
+        <image class="goodsPic" src="https://img.goola.cn/{{item.goodsPic}}"></image>
+        <view class="goodsDetail">
+          <view class="goodsDetail_top">
+            <view class="goodsName">{{item.goodsName}}</view>
+            <view class="goodsSpec" wx:if="{{item.spec}}">规格：{{item.spec}}</view>
+            <!--满减活动-->
+            <view class="goodsIcon" wx:if="{{item.type==20&&item.fullDecMoneyList&&item.fullDecMoneyList.length>0}}">
+              <text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el" wx:for-index="i"
+                wx:key="i">满{{el.fullMoney}}减{{el.decMoney}}</text>
+            </view>
+            <!--买一送一-->
+            <view class="goodsIcon" wx:if="{{item.type==50}}"><text>买一送一</text></view>
+            <!--第二件半价-->
+            <view class="goodsIcon" wx:if="{{item.type==60}}"><text>买2件，均价￥{{item.averagePrice}}/件</text></view>
+            <!--多件多折-->
+            <view class="goodsIcon"
+              wx:if="{{item.type==70&&item.manyPriManyFoldsList&&item.manyPriManyFoldsList.length>0}}">
+              <text wx:for="{{item.manyPriManyFoldsList}}" wx:for-item="el" wx:for-index="i"
+                wx:key="i">{{el.count}}件{{el.discount/10}}折</text>
+            </view>
+          </view>
+          <view class="goodsDetail_bottom">
+            <view class="goodsBtn" wx:if="{{item.type==10&&!item.nodis}}">折扣价</view>
+            <view class="goodsBtn" wx:if="{{item.type==80}}">预售价</view>
+            <view class="goodsBtn" wx:if="{{item.type==90}}">团购价</view>
+            <!--限时折扣没有超过限购设置-->
+            <view class="goodsPrice" wx:if="{{item.type==10&&!item.nodis}}">￥<text>{{numb.getNum(item.disCountPrice)}}</text><text>￥{{numb.getNum(item.showSalesPrice)}}</text></view>
+            <!--限时折扣超过限购设置-->
+            <view class="goodsPrice" wx:elif="{{item.type==10&&item.nodis}}">￥<text>{{numb.getNum(item.showSalesPrice)}}</text></view>
+            <!--好物预售-->
+            <view class="goodsPrice" wx:elif="{{item.type==80}}">￥<text>{{numb.getNum(item.prePrice)}}</text><text>￥{{numb.getNum(item.showSalesPrice)}}</text></view>
+            <!--多人拼团-->
+            <view class="goodsPrice" wx:elif="{{item.type==90}}">￥<text>{{numb.getNum(item.prePrice)}}</text><text>￥{{numb.getNum(item.showSalesPrice)}}</text></view>
+            <!--其他情况-->
+            <view class="goodsPrice" wx:else>￥<text>{{numb.getNum(item.showSalesPrice)}}</text></view>
+          </view> 
+          <image wx:if="{{item.type==80&&item.state!=20}}" class="goodsShopp" src="../../image/addbuttongray.png" catchtap="goodAddGray"></image>
+          <view wx:if="{{item.type!=90}}" class="addbox">
+            <view class="liue" catchtap="goodDel" data-delitem="{{item}}" wx:if="{{item.goodnum>0}}">
+                <image src="../../image/delbutton.png"></image>
+            </view>
+            <input type="number" maxlength="4" value="{{item.goodnum}}" bindblur="goodInp" catchtap="stopinp" data-inpitem="{{item}}" wx:if="{{item.goodnum>0}}"/>
+            <view class="liue" catchtap="goodAdd" data-additem="{{item}}">
+                <image src="../../image/addstore.png"></image>
+            </view>
+        </view>
+        </view>
+      </view>     
+    </view>
+  </view>
+  <view class="nologin" wx:if="{{noData}}">
+    <image src="../../image/nodata.png" class="goodnodata"></image>
+    <view class="notitle">暂无商品</view>
+  </view>
+</view>

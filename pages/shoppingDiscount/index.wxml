@@ -1,10 +1,10 @@
 <!--pages/discountChoose/index.wxml-->
 <view class="discountWrap">
+  <view class="discountTip">温馨提示：订单金额大于已领卡券时可以使用现有卡券</view>
   <view class="nonuse">
     <text>不使用</text>
     <view class="nouse" bindtap="noUse"><image src="../../image/{{noselect?'afterSelect':'beforeSelect'}}.png"></image></view>
   </view>
-  
   <view class="ticket_item" wx:for="{{discountList}}" wx:key="{{index}}">
     <view class="ticket_left">
       <view>￥<text class="price">{{item.discountAmount}}</text></view>

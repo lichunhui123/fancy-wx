@@ -81,11 +81,11 @@
       </view>
       <view class="detailc2">
         <view class="goodspec">规格：{{goodsDetail.goodsSpec}}</view>
-        <view class="discount_q" wx:if="{{!goodsDetail.type&&(discountList.length>0||hasDrawDiscountList.length>0)}}">
-          <view class="discount_q_item" wx:for="{{hasDrawDiscountList}}" wx:key="index">
+        <view class="discount_q" wx:if="{{!goodsDetail.type&&discountList.length>0}}">
+          <!-- <view class="discount_q_item" wx:for="{{hasDrawDiscountList}}" wx:key="index">
             <view wx:if="{{item.cardType!=30}}">{{item.useThreshold?'满'+item.useThresholdT+'元减'+item.cardMoneyT+'元':item.cardMoneyT+'元'}}</view>
             <view wx:if="{{item.cardType==30}}">{{item.discountRatioT?item.discountRatioT:'-'}}折</view>
-          </view>
+          </view> -->
           <view class="discount_q_item" wx:for="{{discountList}}" wx:key="index">
             <view wx:if="{{item.cardType!=30}}">{{item.useThreshold?'满'+item.useThresholdT+'元减'+item.cardMoneyT+'元':item.cardMoneyT+'元'}}</view>
             <view wx:if="{{item.cardType==30}}">{{item.discountRatioT?item.discountRatioT:'-'}}折</view>
@@ -93,7 +93,7 @@
           </view>
         </view>
         <view class="share">
-          <button formType="submit" open-type="share">
+          <button formType="submit" bindtap="shareClick">
             <image src="../../image/fenx.png"></image>
             <text class="sharetitle ">分享好友</text>
           </button>
@@ -117,24 +117,32 @@
                 <view>还差<span>1人</span>拼成</view>
                 <view>剩余 {{item.hour}}:{{item.minute}}:{{item.second}}</view>
               </view>
-              <view class="detail3_list_btn" bindtap="goGroupBuy" data-groupcode="{{item.groupCode}}">去拼团</view>
+              <view class="detail3_list_btn {{item.isSelf?'detail3_list_btn_gray':''}}" bindtap="{{!item.isSelf?'goGroupBuy':''}}" data-groupcode="{{item.groupCode}}">去拼团</view>
             </view>
           </view>
         </view>
       </view>
-      <view class="detailc3" wx:elif="{{goodsDetail.iconList&&goodsDetail.iconList.length>0}}">
+      <view class="detailc3" wx:elif="{{goodsDetail.weChatInfoList&&goodsDetail.weChatInfoList.length>0}}">
         <view class="detailc3_title">
           <text>购买记录</text>
           <view>已有
             <text class="yel">{{goodsDetail.buyNum}}</text> 人购买，商品共销售
             <text class="yel">{{goodsDetail.soldCount}}</text> 份</view>
         </view>
-        <view class="record">
-          <view wx:for="{{goodsDetail.iconList}}" wx:key="index" class="{{index==9?'recorimg':'recordimg'}}" wx:if="{{index<=9}}">
-            <image wx:if="{{index<9}}" src="{{item}}" class="avader" />
-            <image class="avator-img" wx:if="{{index==9}}" src="../../image/avatar-more.png" />
+        <view class="recordSwiper">
+          <image  class="recordSwiperImg" src="../../image/home_tip.png"></image>
+          <view class="recordSwiper_content">
+            <view class="recordSwiper_content_item">
+              <swiper  class="recordSwiper_content_swiper" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+                <swiper-item class="content_swiper_item" wx:for="{{goodsDetail.weChatInfoList}}" wx:key="index">
+                    <image src="{{item.icon}}" ></image>
+                    <view>{{item.name}}刚刚下单了</view>
+                </swiper-item>
+              </swiper>
+            </view>
           </view>
         </view>
+
       </view>
     </view>
     <view class="gooddetail" wx:if="{{detailImg.length>0}}">
@@ -152,7 +160,7 @@
     <view class="tabbar {{iphone?'iphone':''}}" wx:if="{{groupShare&&groupStatus==1}}">
       <view class="grouphome grouphome1" bindtap="grouphomeClick">
         <image src="../../image/grouphome.png"></image>回首页</view>
-      <view class="goGroup" bindtap="goGroupBuy" data-groupcode="{{groupCode}}">
+      <view class="goGroup {{selfShareGroup?'goGroup_gray':''}}" bindtap="{{!selfShareGroup?'goGroupBuy':''}}" data-groupcode="{{groupCode}}">
         <view>¥<text>{{numb.getNum(goodsDetail.prePrice)}}</text></view>
         <view>还差{{goodsDetail.surplusCount}}人，去拼团</view>
       </view>
@@ -195,7 +203,7 @@
         <view>发起拼团</view>
       </view>
       <!--其他情况-->
-      <view wx:else class="addbuy" bindtap="goBuy">立即购买</view>
+      <view wx:else class="addbuy {{goodsDetail.salableCount==0&&goodsDetail.frozenCount>0?'addbuy_gray':''}}" bindtap="goBuy">{{goodsDetail.salableCount==0&&goodsDetail.frozenCount>0?'还有机会~':'立即购买'}}</view>
     </view>
     <view class="tabbarIphone" wx:if="{{iphone}}"></view>
     <canvas  canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
@@ -214,7 +222,7 @@
                   <view class="mask_time">剩余 {{item.hour}}:{{item.minute}}:{{item.second}}</view>
                 </view>
               </view>
-              <view class="mask_btn" bindtap="goGroupBuy" data-groupcode="{{item.groupCode}}">去拼团</view>
+              <view class="mask_btn {{item.isSelf?'mask_btn_gray':''}}" bindtap="{{!item.isSelf?'goGroupBuy':''}}" data-groupcode="{{item.groupCode}}">去拼团</view>
             </view>
           </view>
           <view class="mask_tip {{groupList.length<6?'fixed_bottom':''}}">仅显示10个正在拼团的人</view>
@@ -241,6 +249,9 @@
         <text class="colorActive">返回首页</text>查看更多活动</view>
     </view>
   </view>
+  <!--分享弹层-->
+  <create-poster-image postUrl="{{postUrl}}" showShare="{{showShare}}" goodsInfo="{{goodsInfo}}" formdata="{{formdata}}" bind:cancelShare="cancelShare"></create-poster-image>
+  <!--分享弹层-->
   <!-- 用户授权登录 -->
   <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
   <!-- 用户授权登录 -->

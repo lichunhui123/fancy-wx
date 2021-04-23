@@ -48,6 +48,13 @@ html, page {
   justify-content: center;
   align-items: center;
 }
+.tick_left_con{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 86rpx;
+  height: 86rpx;
+}
 .price{
   font-size: 52rpx;
   padding: 0 6rpx;
@@ -79,12 +86,14 @@ html, page {
   color: #333;
   margin-bottom: 10rpx;
   font-weight: 600;
+  width: 350rpx;
 }
 
 .ticket_time {
   font-size: 28rpx;
   color: #333;
   margin-bottom: 10rpx;
+  width: 350rpx;
 }
 
 .ticket_type {
@@ -188,19 +197,4 @@ html, page {
 }
 .prno{
   padding-right: 0;
-}
-.nologin{
-  height: 600rpx;
-  background: #f8f8f8;
-  text-align: center;
-}
-.nologin .goodnodata{
-  width: 294rpx;
-  height:236rpx;
-  margin: 240rpx auto 40rpx;
-}
-.notitle{
-  height: 30rpx;
-  font-size: 28rpx;
-  color: #666666;
 }

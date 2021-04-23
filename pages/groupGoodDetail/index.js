@@ -106,6 +106,11 @@ Page({
         "token":wx.getStorageSync('token')||''
       },
       success(res) {
+        let list=res.data.data.list;
+        list.forEach(item=>{
+          let nickname=item.nickname;
+          item.nickname=nickname.substr(0,1)+'**'+nickname.substr(nickname.length-1,1);
+        })
         t.setData({
           totalPeople: res.data.data.total,
           avatars: res.data.data.list
@@ -157,6 +162,7 @@ Page({
       smallBranchesId: this.data.cloudBranchId,
       userId: wx.getStorageSync('userId')
     }).then(res => {
+      this.submit=false;//开关控制重复添加购物车的操作
       if (res.data.result == 200) {
         let sum=res.data.data.goodsNumber;
         if (sum > 99) {
@@ -350,6 +356,10 @@ Page({
   },
   //加入购物车
   addShopping(){
+    if(this.submit){
+      return;
+    }
+    this.submit=true;//开关控制重复添加购物车的操作
     wx.showLoading({title:"加载中..."});
     const userId = wx.getStorageSync('userId');
     const branchId = this.data.branchId;
@@ -373,6 +383,7 @@ Page({
         });
         this.getShoppingNum()
       }else{
+        this.submit=false;//开关控制重复添加购物车的操作
         wx.showToast({
           title: res.data.message,
           icon: 'none',

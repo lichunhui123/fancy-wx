@@ -86,7 +86,8 @@ Page({
     wx.showLoading({title:"加载中"});
     service.getOpenCity({
       userName:this.data.userName,
-      password:this.data.password
+      password:this.data.password,
+      sceneId:this.data.enterType==10?5:6,//云店6，拼团5
     }).then((res)=>{
       wx.hideLoading();
       if(res.data.result==200){

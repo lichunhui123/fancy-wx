@@ -1,6 +1,6 @@
 <!-- pages/personalWaterDiscount/index.wxml -->
 <view class="waterdiscount {{noData&&waterTicket.length<1?'waterdiscount_no':''}}">
-  <view class="water_item" wx:for="{{waterTicket}}" wx:key="{{index}}" wx:if="{{waterTicket.length>0}}">
+  <view class="water_item" wx:for="{{waterTicket}}" wx:key="index" wx:if="{{waterTicket.length>0}}">
     <view class="content">
       <view class="left">
         <image src="https://img.goola.cn/{{item.goodsPic}}"></image>

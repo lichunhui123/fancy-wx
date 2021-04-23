@@ -1,12 +1,15 @@
-const service = require('../../service/index.js')
+const app = getApp();
+const service = require('../../service/index.js');
+import {changeCurrentCloudShop} from "../../utils/util.js";
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
-  var qqmapsdk;
+var qqmapsdk;
   Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+      imgUrl: app.globalData.imgUrl,
       longitude:'',  //经度
       latitude:'',   //纬度
       city:'',   //所在城市
@@ -23,19 +26,23 @@ var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
   },
   //input监听
   inpwatch(e){
-    this.setData({
-      inpValue:e.detail.value
-    },()=>{
+    console.log(e)
+    clearTimeout(this.timer);
+    this.timer = setTimeout(()=>{
       this.setData({
-        listData:[]
-      })
-      if(this.data.inpValue){
+        inpValue:e.detail.value
+      },()=>{
         this.setData({
-          nodataimg:true
+          listData:[]
         })
-        this.getcommunityData()
-      }
-    })
+        if(this.data.inpValue){
+          this.setData({
+            nodataimg:true
+          })
+          this.getcommunityData()
+        }
+      })
+    },300)
   },
   // 微信授权定位
   getUserLocation() {
@@ -120,7 +127,10 @@ var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
       success: (res) => {
         console.log('地理位置', res.result)
         let city = wx.getStorageSync("city") ? wx.getStorageSync("city") : res.result.ad_info.city;
-        wx.setStorageSync('city', city)
+        wx.setStorageSync('city', city);
+        if(city.length>4){
+          city = city.substring(0,4)+"...";
+        }
         this.setData({
           city: city,
           LocalAddress: res.result
@@ -136,23 +146,26 @@ var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
     wx.showLoading({
       title: '加载中',
     });
-    let cityName="";
-    let longitude="";
-    let latitude="";
-    if (wx.getStorageSync("setAddress")) {
+    let cityName=this.data.city;
+    let x=this.data.longitude;let y=this.data.latitude;
+    if(wx.getStorageSync("setAddress")){//如果设置过当前所在城市
+      x = wx.getStorageSync("setAddress").long;
+      y = wx.getStorageSync("setAddress").lati;
       cityName = wx.getStorageSync("setAddress").cityName;
-      longitude = wx.getStorageSync("setAddress").long;
-      latitude = wx.getStorageSync("setAddress").lati;
-    } else {
-      cityName = this.data.city;
-      longitude = this.data.longitude;
-      latitude = this.data.latitude;
+    }else if(wx.getStorageSync("isaddress")){//如果选择过收货地址和水管家收货地址相通
+      x = wx.getStorageSync("isaddress").longitude;
+      y = wx.getStorageSync("isaddress").latitude;
+      cityName = wx.getStorageSync("isaddress").cityName;
+    }else if(wx.getStorageSync("isdefault")){//如果有水管家默认收货地址相通
+      x = wx.getStorageSync("isdefault").longitude;
+      y = wx.getStorageSync("isdefault").latitude;
+      cityName = wx.getStorageSync("isdefault").cityName;
     }
     let scene=this.data.enterType==10?5:this.data.enterType==20?6:''
     service.getcommunity({
       cityName: cityName,
-      longitude: longitude,
-      latitude: latitude,
+      longitude: x,
+      latitude: y,
       scenes: [scene],
       searchContent: this.data.inpValue
     }).then((res) => {
@@ -210,21 +223,11 @@ var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
       })
     }
     if(this.data.enterType==20){  //云店业务
-      wx.setStorageSync('currentCloudShop', itdata)
-        //记录上次的社区
-        var willhistoryData = this.data.currentCloudShop
-        this.setData({
-          currentCloudShop: itdata
-        }, () => {
-          this.setData({
-            historyCloudShop: willhistoryData
-          })
-          //将历史的社区页存入本地，方便再次进入
-          wx.setStorageSync('historyCloudShop', willhistoryData)
-        this.homeback()
+      changeCurrentCloudShop(itdata.siteId,1);
+      wx.navigateBack({
+        delta:2
       })
     }
-
   },
   //返回首页
   homeback(){

@@ -4,7 +4,6 @@ html, page {
   height: 100%;
   font-family: PingFangSC-Regular;
 }
-
 .discountWrap {
   width: 100%;
   height: 100%;
@@ -14,6 +13,18 @@ html, page {
   align-items: center;
   background: #F8F8F8;
   position: relative;
+}
+.discountTip{
+  height: 60rpx;
+  width: 100%;
+  font-size: 24rpx;
+  line-height: 60rpx;
+  text-align: center;
+  color: white;
+  background: rgba(242,146,47,0.70);
+  padding:0 17rpx 0 30rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
 }
 .nonuse{
   width: 710rpx;

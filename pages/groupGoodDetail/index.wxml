@@ -63,10 +63,17 @@
             <text class="yel">{{totalPeople}}</text> 人购买，商品共销售
             <text class="yel">{{goodsDetail.soldOut}}</text> 份</view>
         </view>
-        <view class="record">
-          <view wx:for="{{avatars}}" wx:for-item="item" wx:key="{{item}}" wx:for-index="index" class="{{index==9?'recorimg':'recordimg'}}" wx:if="{{index<=9}}">
-            <image wx:if="{{index<9}}" src="{{item.icon}}" class="avader" />
-            <image class="avator-img" wx:if="{{index==9}}" src="../../image/avatar-more.png" />
+        <view class="recordSwiper">
+          <image  class="recordSwiperImg" src="../../image/home_tip.png"></image>
+          <view class="recordSwiper_content">
+            <view class="recordSwiper_content_item">
+              <swiper  class="recordSwiper_content_swiper" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+                <swiper-item class="content_swiper_item" wx:for="{{avatars}}" wx:key="index">
+                    <image src="{{item.icon}}"></image>
+                    <view>{{item.nickname}}刚刚下单了</view>
+                </swiper-item>
+              </swiper>
+            </view>
           </view>
         </view>
       </view>

@@ -117,9 +117,9 @@ Component({
       }
       let day1 = {
         ldate: nowDate.getFullYear() + "年" +util.add0(nowDate.getMonth() + 1) + "月" + util.add0(nowDate.getDate()) + "日",//当前时间 "2020年08月27日"
-        ldates: nowDate.getFullYear() + "-" +util.add0(nowDate.getMonth() + 1) + "-" + util.add0(nowDate.getDate()),//当前时间 "2020-08-27日"
+        ldates: nowDate.getFullYear() + "-" +util.add0(nowDate.getMonth() + 1) + "-" + util.add0(nowDate.getDate()),//当前时间 "2020-08-27"
         ltime: nowDate.getTime(),//当前时间戳
-        lyear: nowDate.getFullYear(),//当前时间 "2020年"
+        lyear: nowDate.getFullYear(),//当前时间 "2020"
         lweek: nowDate.getDay() == 0 ? 7 : nowDate.getDay(),//今天是周几 1，2，3，4，5，6，7
         timeList: [],//[{hour:'09',minuteList:['00','01']},{hour:'10',minuteList:['00','01']}] 几点几分组成的数组
         lweekChina: weekListChina[(nowDate.getDay() == 0 ? 7 : nowDate.getDay()) - 1],//今天是周几 转中文 周几

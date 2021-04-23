@@ -4,16 +4,16 @@
         <image src="{{imgUrl+adsBannerPic}}" mode="widthFix" />
     </view>
     <view class="center_con" wx:if="{{navigateDtoList&&navigateDtoList.length>0}}">
-        <view class="activity_list" wx:for="{{navigateDtoList}}" wx:for-item="item" wx:key="{{index}}" wx:for-index="index">
+        <view class="activity_list" wx:for="{{navigateDtoList}}" wx:for-item="item" wx:key="index" wx:for-index="index">
             <view class="activity_height">
                 <view class="activity_title">
-                    <image src="../../image/Group02.png"></image>
+                    <image src="../../image/activity_title.png"></image>
                     <text>{{item.navigateTitle}}</text>
-                    <image src="../../image/Group01.png"></image>
+                    <image src="../../image/activity_title.png"></image>
                 </view>
             </view>
             <view class="goods_con" wx:if="{{item.skuDtoList}}">
-                <view class="goods_list" wx:for="{{item.skuDtoList}}" wx:for-item="obj" wx:key="{{index}}">
+                <view class="goods_list" wx:for="{{item.skuDtoList}}" wx:for-item="obj" wx:key="index">
                     <image class="goods_pic" src="{{obj.goodsPic?imgUrl+obj.goodsPic:''}}" bindtap="goDetail" data-activityId="{{obj.activityId}}" data-goodsId="{{obj.storeGoodsId}}"></image>
                     <view class="goods_name">{{obj.storeGoodsName}}</view>
                     <view class="goods_num">已售{{obj.soldOut||0}}份 | 还剩{{obj.repertory||0}}份</view>
@@ -21,10 +21,18 @@
                         <text class="price_symbol">¥</text>
                         <text wx:if="{{obj.discountPrice}}" class="price">{{numb.getNum(obj.discountPrice/100)}}</text>
                         <text wx:else class="price">{{numb.getNum(obj.grouponPrice)}}</text>
-                        <text wx:if="{{obj.discountPrice}}" class="badPrice">{{numb.getNum(obj.grouponPrice)}}</text>
-                        <text wx:else class="badPrice">{{obj.friendStoreName?obj.friendStoreName:''}}¥{{numb.getNum(obj.friendSellPrice)}}</text>
+                        <view wx:if="{{obj.discountPrice}}" class="badPrice">{{numb.getNum(obj.grouponPrice)}}</view>
+                        <view wx:else class="badPrice">{{obj.friendStoreName?obj.friendStoreName:''}}¥{{numb.getNum(obj.friendSellPrice)}}</view>
                     </view>
-                    <image class="goods_car" catchtap="addUpdateCart" src="../../image/goodscart.png" data-goods="{{obj}}"></image>
+                    <view class="addbox">
+                      <view class="liue" catchtap="delNewCart" data-goods="{{obj}}" wx:if="{{obj.cartNum>0}}">
+                        <image src="../../image/delbutton.png"></image>
+                      </view>
+                      <input type="number" maxlength="4" value="{{obj.cartNum}}" bindblur="changeInput" catchtap="stopinp" data-goods="{{obj}}" wx:if="{{obj.cartNum>0}}"/>
+                      <view class="liue" catchtap="addUpdateCart" data-goods="{{obj}}">
+                        <image src="../../image/addstore.png"></image>
+                      </view>
+                    </view>
                 </view>
             </view>
             <view class="goods_bottom" wx:if="{{navigateDtoList.length!=index+1}}"></view>

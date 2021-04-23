@@ -1,0 +1,116 @@
+.edit_tip{
+    background: rgba(242,146,47,0.70);
+    width:100%;
+    height:60rpx;
+    display: flex;
+    align-items: center;
+}
+.edit_tip image{
+    width:32rpx;
+    height:34rpx;
+    margin-left: 192rpx;
+}
+.edit_tip text{
+    font-size: 24rpx;
+    color: #FFFFFF;
+    line-height: 60rpx;
+    margin-left: 16rpx;
+}
+.edit_con{
+    margin-left: 30rpx;
+}
+.edit_title{
+    font-size: 28rpx;
+    color: #333333;
+    line-height: 28rpx;
+    margin:30rpx 0 10rpx 20rpx;
+}
+.edit_item{
+    height:100rpx;
+    border-bottom: 1rpx solid #EBEBEB;
+    display: flex;
+    align-items: center;
+}
+.edit_name {
+    border-bottom: 1rpx solid #EBEBEB;
+    height: 100rpx;
+    font-size: 28rpx;
+    line-height: 28rpx;
+    display: flex;
+    align-items: center;
+}
+.edit_name1{
+    margin-left: 60rpx;
+}
+.edit_phone{
+    border-bottom:1rpx solid #EBEBEB;
+    height: 100rpx;
+    font-size: 28rpx;
+    line-height: 28rpx;
+    display: flex;
+    align-items: center;
+}
+.edit_text{
+    margin-left: 20rpx;
+    font-size: 28rpx;
+    color: #999999;
+    line-height: 28rpx;
+}
+
+.edit_text1{
+    font-size: 30rpx;
+    color: #333333;
+    line-height: 30rpx;
+    width:90rpx;
+    white-space: nowrap;
+}
+.edit_value{
+    width:570rpx;
+    text-align: center;
+}
+.edit_value text{
+    margin-right: 20rpx;
+}
+.edit_value text:last-of-type{
+    margin-right: 0;
+}
+.edit_icon{
+    width:40rpx;
+    height:40rpx;
+}
+.edit_icon image{
+    width:40rpx;
+    height:40rpx;
+}
+.edit_item1{
+    border-bottom: 1rpx solid #EBEBEB;
+}
+.edit_text2{
+    font-size: 30rpx;
+    color: #333333;
+    line-height: 30rpx;
+    margin-top:35rpx;
+}
+.edit_value1{
+    font-size: 30rpx;
+    color: #333333;
+    height: 175rpx;
+    line-height: 50rpx;
+    font-weight: bold;
+    padding:10rpx 30rpx 25rpx 0;
+}
+.submit_btn{
+    width: 100%;
+    height: 100rpx;
+    background: #F2922F;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    color: #FFFFFF;
+}
+.active{
+    background: #F2922F;
+}

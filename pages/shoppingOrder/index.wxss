@@ -33,7 +33,7 @@ html, page {
   border-radius: 10rpx;
   margin-top: 20rpx;
   box-sizing: border-box;
-  padding: 20rpx;
+  padding: 30rpx;
   position: relative;
 }
 .footbox{
@@ -129,6 +129,17 @@ html, page {
   display:flex;
   align-items: center;
 }
+.order_time_name{
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 28rpx;
+  height:28rpx;
+  max-width:490rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;/*显示几行*/
+  overflow: hidden;
+}
 .order_type{
   position: relative;
   width: 98rpx;
@@ -158,11 +169,17 @@ html, page {
   font-size: 28rpx;
   color: #5ADAD0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding-left: 10rpx;
+  padding:0 20rpx;
+  background:#F8F8F8;
+}
+.timeor image{
+  margin-left: 11rpx;
 }
 .ecTimer{
-	color:#333;
+  color:#333;
+  background:#FFFFFF;
 }
 .timeor_active{
   color: #FF3B30;
@@ -182,6 +199,7 @@ html, page {
   justify-content: flex-start;
   align-items: center;
   min-height: 200rpx;
+  position: relative;
 }
 .gooditemt{
   margin: 0 20rpx;
@@ -192,10 +210,18 @@ html, page {
   border-bottom: 1rpx solid #EBEBEB;
   position: relative;
 }
+.goodIcon{
+  position: absolute;
+  left:0;
+  top:0;
+  width:68rpx;
+  height:68rpx;
+}
 .goodimg{
   width: 160rpx;
   height: 160rpx;
   flex-shrink: 0;
+  border-radius: 10rpx;
 }
 .water_icon{
   position: absolute;
@@ -293,9 +319,10 @@ html, page {
   margin-left: 10rpx;
 }
 .goode{
-  height: 30rpx;
-  margin: 30rpx 20rpx 20rpx 20rpx;
+  height: 90rpx;
+  margin: 0 20rpx;
   font-size: 30rpx;
+  line-height: 90rpx;
   color: #333333;
   display: flex;
   justify-content: space-between;
@@ -313,6 +340,7 @@ html, page {
   justify-content: space-between;
   align-items: center;
 }
+
 .goodiss{
   min-height: 40rpx;
   margin: 0rpx 20rpx 20rpx 20rpx;
@@ -325,6 +353,12 @@ html, page {
 .delprice{
   color: #FF3B30;
   font-weight: 600;
+}
+.goodPre{
+  border-top: 1rpx solid #EBEBEB;
+}
+.goodPre text text{
+  color: #5ADAD0;
 }
 .footer{
   width: 100%;
@@ -398,7 +432,6 @@ html, page {
   line-height: 34rpx;
   position: absolute;
   left:40rpx; 
-  z-index: 9;
 }
 
 /* 水管家样式 */
@@ -421,7 +454,7 @@ html, page {
   background: #FFFFFF;
   border-radius: 10rpx;
   box-sizing: border-box;
-  padding: 0 20rpx 20rpx 20rpx;
+  padding: 0 20rpx 30rpx 20rpx;
   position: relative;
 }
 .ec_top{
@@ -441,15 +474,27 @@ html, page {
   height: 34rpx;
   margin-right: 10rpx;
 }
-.water_order_name{
+.order_center{
+  display:flex;
+  align-items: center;
   margin-top: 20rpx;
+}
+.order_center_left{
+  width:64rpx;
+  height:44rpx;
+}
+.order_center_left image{
+  width:44rpx;
+  height:44rpx;
+}
+.water_order_name{
   height: 28rpx;
   font-size: 28rpx;
   color: #333333;
   font-weight: 600;
 }
 .water_order_address{
-  width: 610rpx;
+  width: 530rpx;
   margin-top: 20rpx;
   min-height: 28rpx;
   max-height: 74rpx;
@@ -469,6 +514,13 @@ html, page {
   height: 86rpx;
   position: absolute;
   right: 0;
+  bottom: 0;
+}
+.top_line{
+  width:710rpx;
+  height:6rpx;
+  position: absolute;
+  left: 0;
   bottom: 0;
 }
 .waterz{
@@ -584,9 +636,12 @@ html, page {
   margin-top: 10rpx;
 }
 .mealDetail image{
-  width: 10rpx;
-  height: 10rpx;
-  margin-left: 10rpx;
+  width: 22rpx;
+  height: 12rpx;
+  margin-left: 11rpx;
+}
+.mealDetail_bottom{
+ transform: rotate(180deg);
 }
 .waterp{
   width: 710rpx;
@@ -663,36 +718,38 @@ html, page {
 
 /* 云店样式 */
 .header_tab{
-  height: 88rpx;
   display: flex;
-  font-size: 28rpx;
-  color: #999;
-  border-bottom: 1rpx solid #EBEBEB;
+  height:75rpx;
+  background:#FFF;
 }
-.header_tab_lr{
-  width: 50%;
+.header_tab_t{
+  width:344rpx;
+  height: 75rpx;
   text-align: center;
-  line-height: 88rpx;
+  font-size: 26rpx;
+  line-height: 75rpx;
+  color: #333333;
+}
+.head_tab_active{
+  width:366rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  background:#FFECD8;
+}
+.head_tab_active1{
+  border-radius: 12rpx 46rpx 0 0;
+}
+.head_tab_active2{
+  border-radius: 46rpx 12rpx 0 0;
 }
 .sm_head{
   padding: 0;
-}
-.header_tab_t{
-  display: inline-block;
-  text-align: center;
-  height: 84rpx;
-  line-height: 84rpx;
-}
-.head_tab_active{
-  font-weight: 600;
-  color: #333;
-  border-bottom: 4rpx solid #F2922F;
 }
 .top0{
   margin-top: 0;
 }
 .pad{
-  padding: 20rpx;
+  padding: 30rpx;
 }
 .smRigicon{
   top: 50%;
@@ -813,6 +870,7 @@ html, page {
   border: 1rpx solid #FF3B30;
   border-radius: 4rpx;
   font-size: 20rpx;
+  line-height: 28rpx;
   color: #FF3B30;
   height:28rpx;
   padding:0 10rpx;

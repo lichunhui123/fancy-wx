@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    noData:false,//无数据
     itemData: [],
     userid:'',  //用户id
     type:null,  //地址簿类型
@@ -89,9 +90,21 @@ Page({
       userId: this.data.userid
     }).then((res) => {
       if (res.data.result == 200) {
-        wx.hideLoading()
+        wx.hideLoading();
+        let data = res.data.data;
+        if(data&&data.length>0){
+          this.setData({
+            noData:false,
+            itemData: data
+          })
+        }else{
+          this.setData({
+            noData:true
+          })
+        }
+      }else{
         this.setData({
-          itemData: res.data.data
+          noData:true
         })
       }
     })

@@ -1,0 +1,38 @@
+.result_con{
+    border-top:1rpx solid #DBDBDB;
+}
+.success_img{
+    margin-top: 100rpx;
+    text-align: center;
+    height:156rpx;
+}
+.success_img image{
+    width:156rpx;
+    height:156rpx;
+}
+.success_text{
+    font-size: 32rpx;
+    color: #333333;
+    text-align: center;
+    line-height: 32rpx;
+    margin-top: 30rpx;
+}
+.success_desc{
+    font-size: 24rpx;
+    color: #999999;
+    text-align: center;
+    line-height: 24rpx;
+    margin-top: 20rpx;
+}
+.success_btn{
+    margin:110rpx auto 0;
+    width:188rpx;
+    height:70rpx;
+    border: 2rpx solid #F2922F;
+    border-radius: 34rpx;
+    font-size: 26rpx;
+    color: #F2922F;
+    text-align: center;
+    line-height: 70rpx;
+    box-sizing: border-box;
+}

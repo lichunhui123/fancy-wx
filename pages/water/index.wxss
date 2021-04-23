@@ -93,6 +93,7 @@ html, page {
 .item_img{
   width: 200rpx;
   height: 200rpx;
+  border-radius: 10rpx;
 }
 .item_right{
   flex: 1;
@@ -117,7 +118,7 @@ html, page {
 }
 .item_price{
   font-size: 28rpx;
-  color: #FF3B30;
+  color: #FF5403;
 }
 .item_price_font{
   font-size: 36rpx;
@@ -133,10 +134,10 @@ html, page {
 .buy_meal{
   width: 165rpx;
   height: 54rpx;
-  border: 1rpx solid #F2922F;
+  border: 1rpx solid #FF5403;
   border-radius: 10rpx;
   font-size: 24rpx;
-  color: #F2922F;
+  color: #FF5403;
   line-height: 54rpx;
   padding:0 11rpx;
 }
@@ -195,45 +196,8 @@ html, page {
   font-size: 24rpx;
   color:#999;
 }
-.good_ticket{
-  display:inline-block;
-  height: 34rpx;
-  font-size: 22rpx;
-  color: #FF3B30;
-  border: 1px solid #FF3B30;
-  border-radius: 4px;
-  padding:0rpx 10rpx;
-}
-.discount{
-  font-size: 36rpx;
-  line-height: 36rpx;
-  color: #FF3B30;
-}
-.original{
-  text-decoration: line-through;
-  margin-left: 20rpx;
-  font-size: 20rpx;
-  color: #999999;
-  line-height: 24rpx;
-}
-.discountY{
-  font-size: 36rpx;
-  color: #FF3B30;
-  padding-right: 18rpx;
-}
 .disnum{
   font-size: 28rpx;
-}
-.price{
-  font-size: 24rpx;
-  line-height: 24rpx;
-  margin-top: 14rpx;
-  color: #999999;
-  text-decoration:line-through;
-}
-.price2{
-  font-size: 28rpx;
-  color: #EF0000;
 }
 .mou{
   font-size: 22rpx;
@@ -272,39 +236,10 @@ html, page {
 }
 
 .addbox input{
-  width: 72rpx;
+  width: 40rpx;
   height: 42rpx;
   text-align: center;
   font-size: 28rpx;
-}
-
-
-.pagebuttom{
-  width:100%;
-  height:90rpx;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  z-index: 999;
-  bottom: 35rpx;
-}
-.buybox{
-  width:690rpx;
-  height:90rpx;
-  background: rgba(0,0,0,0.80);
-  border-radius: 50px;
-  display:flex;
-  position: relative;
-}
-.buydai{
-  width: 90rpx;
-  height: 107rpx;
-  position: absolute;
-  left: 60rpx;
-  bottom:-6.6rpx;
-}
-.buydai image{
-  width: 90rpx;
 }
 .stay{
   width: 28rpx;
@@ -325,107 +260,9 @@ html, page {
   top: 5rpx;
   right: -5rpx;
 }
-.gouwuche{
-  width: 500rpx;
-  height: 90rpx;
-  border-radius: 50rpx 0 0 50rpx;
-  text-align: right;
-  padding-right: 30rpx;
-  line-height: 90rpx;
-  color:white;
-  font-size: 28rpx;
-}
-.numsize{
-  font-size: 42rpx;
-}
-.buybtn{
-  width: 190rpx;
-  height: 90rpx;
-  background: #F2922F;
-  border-radius: 0 50rpx 50rpx 0;
-  text-align: center;
-  line-height: 90rpx;
-  font-size: 30rpx;
-  color:white; 
-}
-.shade{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  background: rgba(0,0,0,0.70);
-  display:flex;
-  flex-direction: column;
-}
-.hui{
-  flex:1;
-}
-.shoppbox{
-  width: 100%;
-  height:870rpx;
-  overflow-y: scroll;
-  background: #FFFFFF;
-  border-radius: 10rpx 10rpx 0 0;
-  display:flex;
-  flex-direction: column;
-}
-.shoptop{
-  width:100%;
-  height:70rpx;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding:0 20rpx;
-  font-size: 24rpx;
-  color: #F2922F;
-  border-bottom: 1rpx solid #EBEBEB;
-}
-.qing image{
-  width:24rpx;
-  height:24rpx;
-}
-.qing{
-  color:#999;
-  display:flex;
-  align-items: center;
-}
-.shopcontent{
-  flex:1;
-  overflow: scroll;
-  padding-left: 30rpx;
-}
-.shopcontent1{
-  flex:1;
-  overflow: scroll;
-  padding-left: 20rpx;
-}
-.goods_list2{
-  width: 100%;
-  min-height: 205rpx;
-  background: #FFFFFF;
-  border-bottom: 1rpx solid #EBEBEB;
-  display:flex;
-  padding-right: 30rpx;
-  box-sizing: border-box;
-   position: relative;
-}
-.shopimg{
-  width: 160rpx;
-  height: 160rpx;
-}
-.list_left2{
-  width:160rpx;
-  min-height: 200rpx;
-  display:flex;
-  align-items: center;
-  margin-right: 20rpx;
-}
 .shopbottom{
   width:100%;
   height:150rpx;
-  /* background: white; */
 }
 .nologin{
   width: 100%;
@@ -439,7 +276,7 @@ html, page {
 .nologin .goodnodata{
   width: 450rpx;
   height:450rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 40rpx;
 }
 .notitle{
   font-size: 24rpx;
@@ -523,8 +360,7 @@ html, page {
   left:0;
   width:160rpx;
   height:40rpx;
-  opacity: 0.7;
-  background: #F2922F;
+  background: rgba(255,84,3,0.70);
   font-size: 24rpx;
   color: #FFFFFF;
   text-align: center;
@@ -554,11 +390,11 @@ html, page {
 }
 .addshop_top_price{
   font-size: 32rpx;
-  color: #FF3B30;
+  color: #FF5403;
 }
 .pricet{
   font-size: 52rpx;
-  color: #FF3B30;
+  color: #FF5403;
 }
 .addshop_top_title{
   margin-top: 10rpx;
@@ -619,7 +455,6 @@ html, page {
   color: #333333;
   border-bottom: 1rpx solid #ebebeb;
 }
-
 .tabbar {
   width: 100%;
   height: 100rpx;
@@ -642,7 +477,6 @@ html, page {
   width: 40rpx;
   height: 40rpx;
 }
-
 .groupshop {
   width: 60rpx;
   height: 100rpx;
@@ -655,7 +489,6 @@ html, page {
   color: #999;
   position: relative;
 }
-
 .addgou {
   width: 188rpx;
   height: 66rpx;
@@ -668,7 +501,6 @@ html, page {
   line-height: 66rpx;
   font-size: 26rpx;
 }
-
 .addbuy {
   width: 188rpx;
   height: 70rpx;
@@ -680,12 +512,10 @@ html, page {
   line-height: 70rpx;
   font-size: 28rpx;
 }
-
 .iphone {
   position: fixed;
   bottom: 34rpx;
 }
-
 .tabbarIphone {
   width: 100%;
   height: 34rpx;
@@ -693,20 +523,4 @@ html, page {
   bottom: 0;
   left: 0;
   background: white;
-}
-.saleItem{
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.saleItem text{
-  display: inline-block;
-  border: 1rpx solid #FF3B30;
-  border-radius: 4rpx;
-  font-size: 20rpx;
-  color: #FF3B30;
-  height:28rpx;
-  padding:0 10rpx;
-  margin-right: 20rpx;
-  margin-top: 10rpx;
 }

@@ -54,6 +54,8 @@ Page({
             item.endTime=until.formitTime(item.endTime,20);
             item.cardAmount=floatObj.divide(item.cardAmount,100);
             item.fullAmountPrice=JSON.parse(item.fullAmountPrice);
+            item.useThreshold = item.useThreshold?floatObj.divide(item.useThreshold,100):'-'
+            item.mecName=item.mecName;
             item.discount = item.cardType==30?floatObj.divide(item.discount,100):floatObj.divide(item.discount,10)
           });
           this.setData({
@@ -68,6 +70,16 @@ Page({
       }else{
         this.setData({noData:true});
       }
+    })
+  },
+  //更新卡券信息
+  tilteMessage(){
+    service.queryCardListByUserAndGoodsAndStatus({
+       userId: wx.getStorageSync('userId'),
+       useStatus:10,
+        source:'wx',
+    }).then(res=>{
+        
     })
   },
   /**
@@ -91,9 +103,10 @@ Page({
     wx.hideShareMenu()
     this.setData({
       coupondata: [],
-      noData:false
+      noData:false,
     });
     this.getCoupondata();
+    this.tilteMessage();
   },
 
   /**

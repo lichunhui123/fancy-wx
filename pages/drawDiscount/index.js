@@ -9,8 +9,9 @@ Page({
   data: {
 		branchId: "",
     discountList:[],   //卡券列表
-    cardExplainShow:false,  //卡券说明显示
+    cardExplainShow:false,  //卡券说明显示 
     useExplain:'',  //卡券说明
+    siteName:'',//门店名称
     noData:false
   },
   //获取卡券
@@ -30,11 +31,7 @@ Page({
       console.log(res)
       if(res.data.result==200){
         let notClaimedList=res.data.data.notClaimedList||[]
-        let claimedList =res.data.data.claimedList||[]
-        claimedList.forEach(val=>{
-          val.usetag = 'usetag'
-        })
-        let newlist= [...notClaimedList,...claimedList]
+        let newlist= [...notClaimedList]
         newlist.forEach(item=>{
           item.cardMoneyT = item.cardMoney?floatObj.divide(item.cardMoney,100):'-'
           item.fullMoneyT = item.fullMoney?floatObj.divide(item.fullMoney,100):'-'
@@ -130,9 +127,10 @@ Page({
    */
   onShow: function () {
     wx.hideShareMenu()
-		let currentCloudShop = wx.getStorageSync("currentCloudShop");//选择的站点
+    let currentCloudShop = wx.getStorageSync("currentCloudShop");//选择的站点
 		this.setData({
-			branchId: currentCloudShop ? currentCloudShop.siteId : "",    //站点id
+      branchId: currentCloudShop ? currentCloudShop.siteId : "",    //站点id
+      siteName:currentCloudShop?currentCloudShop.siteName:"",//门店名称
 		});
     this.getDiscountList()
   },

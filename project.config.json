@@ -1,61 +1,171 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": false,
-		"es6": true,
-		"enhance": false,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": false,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.10.2",
-	"appid": "wx2a72b887ab9a224c",
-	"projectname": "gt-fancy-wx",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": []
-		}
-	}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.16.0",
+  "appid": "wx2a72b887ab9a224c",
+  "projectname": "gt-fancy-wx",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "pages/home/index",
+          "pathName": "pages/home/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 1,
+          "name": "pages/personalOrderList/index",
+          "pathName": "pages/personalOrderList/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/personalWaterHistoryOrderDetail/index",
+          "pathName": "pages/personalWaterHistoryOrderDetail/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/personalHistoryOrder/index",
+          "pathName": "pages/personalHistoryOrder/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/applicationForDrawback/index",
+          "pathName": "pages/applicationForDrawback/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/personal/index",
+          "pathName": "pages/personal/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/personalEditOrder/index",
+          "pathName": "pages/personalEditOrder/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/personalOrderDetail/index",
+          "pathName": "pages/personalOrderDetail/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/shoppingPaySucceed/paySucceed",
+          "pathName": "pages/shoppingPaySucceed/paySucceed",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/homeOld/index",
+          "pathName": "pages/homeOld/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/homeOld/index",
+          "pathName": "pages/homeOld/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/cloudStoreHome/index",
+          "pathName": "pages/cloudStoreHome/index",
+          "query": "shareCloudStore= {\"siteName\":\"测试新增门店+1问题\",\"siteId\":\"2926\",\"distance\":858,\"colonel\":\"43\",\"deliveryAddress\":\"长春桥路17海淀区人民政府\",\"cityName\":\"北京市\",\"longitude\":116.303938,\"latitude\":39.965806}",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/cloudStoreHome/index",
+          "pathName": "pages/cloudStoreHome/index",
+          "query": "shareCloudStore= {\"siteName\":\"asgfsfdgd\",\"siteId\":\"1234567\",\"distance\":858,\"colonel\":\"43\",\"deliveryAddress\":\"长春桥路17海淀区人民政府\",\"cityName\":\"北京市\",\"longitude\":116.303938,\"latitude\":39.965806}",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/cloudStoreHome/index",
+          "pathName": "pages/cloudStoreHome/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

@@ -1,0 +1,23 @@
+<view class="maskWrap">
+  <view class="conpon_content">
+    <image bindtap="close" class="conpon_close" src="../../image/close.png"></image>
+    <view class="coupon_title">店铺优惠券</view>
+    <scroll-view class="conpon_list" scroll-y="{{true}}">
+      <view class="conpon_item" wx:for="{{discountList}}" wx:key="index">
+        <view class="conpon_left">
+          <view class="conpon_left_price" wx:if="{{item.cardType==10}}">¥<text class="conpon_left_text" style="margin-left:6rpx">{{item.cardMoneyT}}</text></view>
+          <view class="conpon_left_price" wx:if="{{item.cardType==30}}"><text class="conpon_left_text" style="margin-right:6rpx">{{item.discountRatioT?item.discountRatioT:'-'}}</text>折</view>
+          <view class="conpon_left_dec">{{item.fullMoney?'订单满'+item.fullMoneyT+'元':'无门槛'}}</view>
+        </view>
+        <view class="conpon_center">
+          <view class="conpon_center_name">{{item.cardName}}</view>
+          <view class="conpon_center_dec">
+            {{item.cardType==10?'优惠券 ':item.cardType==20?'满减券 ':item.cardType==30?'折扣券 ':''}}{{item.validityType==1?item.startTime +' - '+ item.endTime:item.validityType==2?'领券之后当日生效，有效期'+item.validityDay+'天':item.validityType==3?'领券之后'+item.effectiveDay+'天生效，有效期'+item.validityDay+'天':''}}
+          </view>
+        </view>
+        <view wx:if="{{item.usetag}}" class="conpon_has_icon"><image class="has_icon_img" src="../../../image/yilingqu.png"></image></view>
+        <view wx:else class="conpon_right" bindtap="getCoupon" data-cardcode="{{item.cardCode}}">立即领取</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

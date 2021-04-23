@@ -1,0 +1,87 @@
+.deliveryTimeWrap{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.70);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 99999;
+}
+.content{
+  position: absolute;
+  bottom:0;
+  left:0;
+  width: 100%;
+  height: 688rpx;
+  background: #FFFFFF;
+  box-shadow: inset 0 -1rpx 0 0 #EBEBEB;
+}
+.title{
+  background: #FFFFFF;
+  height:88rpx;
+  text-align: center;
+  font-size: 34rpx;
+  color: #333333;
+  line-height: 88rpx;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.timesbox{
+  display: flex;
+}
+.timeLeft{
+  width: 300rpx;
+  height: 500rpx;
+  overflow-y: scroll;
+  flex-shrink: 0;
+  background: #F8F8F8;
+}
+.timeLeft view{
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+.timeLeft .active{
+  background: #ffffff;
+}
+.timeRight{
+  width:450rpx;
+  height: 500rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+  display:flex;
+}
+.timeQuanTum{
+  width:410rpx;
+  height:100%;
+}
+.timeQuanTum view{
+  height:100rpx;
+  line-height: 100rpx;
+  font-size: 28rpx;
+  color: #333333;
+  border-bottom: 1rpx solid #EBEBEB;
+}
+.timeQuanTum .active{
+  color: #F2922F;
+}
+.bottomButton{
+  display:flex;
+}
+.bottomButton view{
+  width:375rpx;
+  height:100rpx;
+  text-align:center;
+  font-size: 32rpx;
+  color: #FFFFFF;
+  line-height: 100rpx;
+}
+.bottomButton view:first-child{
+  background: #333333;
+}
+.bottomButton view:last-child{
+  background: #F2922F;
+}

@@ -25,14 +25,15 @@
         <text class="title">{{takeAddress}}</text>
       </view>
       <image src="../../image/ziti.png" class="distri"></image>
+      <image src="../../image/line.png" class="top_line"></image>
     </view>
     <view class="order_content">
+      <view class="timeor"><text>预计取货时间</text><view>{{newclaimTime}}</view></view>
       <view class="order_time">
         <view class="order_time_left">
           <view class="order_type">
             <image src="../../image/buyCarRectangle.png"></image><text>指尖拼团</text>
           </view>
-          <text class="timeor">预计取货时间：{{newclaimTime}}</text>
         </view>
         <text>共{{goodsunit}}件商品</text>
       </view>
@@ -91,23 +92,34 @@
           <image src="../../image/watercar.png"></image>
           收货地址
         </view>
-        <view class="water_order_name">
-          <text>{{wOrderName}}</text>
-          <text class="waterTel">{{wOrderTel}}</text>
+        <view class="order_center">
+          <view class="order_center_left">
+            <image src="../../image/weizi1.png"></image>
+          </view>
+          <view class="order_center_right">
+            <view class="water_order_name">
+              <text>{{wOrderName}}</text>
+              <text class="waterTel">{{wOrderTel}}</text>
+            </view>
+            <view class="water_order_address">{{wOrderAddress}}</view>
+          </view>
         </view>
-        <view class="water_order_address">{{wOrderAddress}}</view>
         <image src="../../image/peisong.png" class="distri"></image>
+        <image src="../../image/line.png" class="top_line"></image>
       </view>
       <block wx:for="{{waterList}}" wx:key="index">
         <view class="order_content">
+          <view class="timeor" catchtap="deliveryTime" data-waterid="{{item.waterStoreId}}">
+            <text>配送时间</text>
+            <view>
+              <text>{{item.deliverytime}}</text>
+              <image src="../../image/rightIcon.png"></image>
+            </view>
+          </view>
           <view class="order_time">
             <view class="order_time_left">
               <view class="order_type">
                 <image src="../../image/buyCarRectangle.png"></image><text>水管家</text>
-              </view>
-              <view class="timeor" catchtap="deliveryTime" data-waterid="{{item.waterStoreId}}">
-                配送时间：{{item.deliverytime}}
-                <image src="../../image/rightIcon.png"></image>
               </view>
             </view>
             <text>共{{item.goodnum}}件商品</text>
@@ -145,14 +157,17 @@
         </view>
       </block>
       <view class="order_content" wx:if="{{type==1}}">
+        <view class="timeor" catchtap="deliveryTime" data-waterid="{{item.waterStoreId}}">
+          <text>配送时间</text>
+          <view>
+            <text>{{waterticketTime}}</text>
+            <image src="../../image/rightIcon.png"></image>
+          </view>
+        </view>
         <view class="order_time">
           <view class="order_time_left">
             <view class="order_type">
               <image src="../../image/buyCarRectangle.png"></image><text>水管家</text>
-            </view>
-            <view class="timeor" catchtap="deliveryTime" data-waterid="{{item.waterStoreId}}">
-              配送时间：{{waterticketTime}}
-              <image src="../../image/rightIcon.png"></image>
             </view>
           </view>
           <text>共1件商品</text>
@@ -175,7 +190,7 @@
               </view>
               <input type="number" maxlength="4" value="{{waterticketnum}}" bindblur="goodInp" />
               <view class="liue" bindtap="goodAdd">
-                <image src="../../image/addbutton.png"></image>
+                <image src="../../image/addstore.png"></image>
               </view>
             </view>
           </view>
@@ -201,24 +216,32 @@
         收货地址
       </view>
       <view class="ecress" wx:if="{{wOrderAddress}}">
-        <view class="water_order_name">
-          <text>{{wOrderName}}</text>
-          <text class="waterTel">{{wOrderTel}}</text>
+        <view class="order_center">
+          <view class="order_center_left">
+            <image src="../../image/weizi1.png"></image>
+          </view>
+          <view class="order_center_right">
+            <view class="water_order_name">
+              <text>{{wOrderName}}</text>
+              <text class="waterTel">{{wOrderTel}}</text>
+            </view>
+            <view class="water_order_address">{{wOrderAddress}}</view>
+            <image src='/image/rightIcon.png' class='ecRigicon'></image>
+          </view>
         </view>
-        <view class="water_order_address">{{wOrderAddress}}</view>
-        <image src='/image/rightIcon.png' class='ecRigicon'></image>
       </view>
       <view class="smCouer smcouerActive" wx:if="{{waterList.length<1&&!wOrderAddress}}">
         <view class="notAddress">暂无收货地址</view>
         <view class="addAddress" catchtap="goAddress">去添加</view>
       </view>
       <image src="../../image/peisong.png" class="distri"></image>
+      <image src="../../image/line.png" class="top_line"></image>
     </view>
     <view class="order_content">
       <view class="order_time">
         <view class="order_time_left">
           <view class="order_type">
-            <image src="../../image/buyCarRectangle.png"></image><text>指尖商城</text>
+            <image src="../../image/buyCarRectangle.png"></image><text>更好甄选</text>
           </view>
           <text class="timeor ecTimer">全国直邮到家</text>
         </view>
@@ -227,6 +250,8 @@
       <view class="gooditem" wx:for="{{eCShopData}}" wx:key="index">
         <view class="gooditem_par">
           <image src="https://img.goola.cn/{{item.goodsPic}}" class="goodimg"></image>
+          <image src="../../image/sale.png" class="shopitemSale" wx:if="{{item.type==10}}"></image>
+          <!-- 限时折扣标识 -->
           <view class="Item_right">
             <view>
               <view class="goodname">{{item.storeGoodsName}}</view>
@@ -234,7 +259,10 @@
                 单价:￥{{numb.getNum(item.grouponPriceT)}}; 规格:{{item.storeGoodsSpecification}}; 数量:×{{item.goodsNum}}
               </view>
             </view>
-            <view class="goodprice">￥{{item.goodItem}}</view>
+            <view class="goodprice">
+              ￥{{item.goodItem}}
+              <text wx:if="{{item.type==10}}">￥{{item.originalPriceT}}</text>
+            </view>
           </view>
         </view>
       </view>
@@ -252,12 +280,8 @@
   <view class="groupOrder" wx:if="{{cloudData.length>0}}">
     <view class="header sm_head">
       <view class="header_tab">
-        <view class="header_tab_lr" bindtap="pickUp" wx:if="{{dispatch.smallDeliveryStatus==30||dispatch.smallDeliveryStatus==10}}">
-          <view class="header_tab_t {{smTabInd==1?'head_tab_active':''}}">自提</view>
-        </view>
-        <view class="header_tab_lr" bindtap="courier" wx:if="{{dispatch.smallDeliveryStatus==30||dispatch.smallDeliveryStatus==20}}">
-          <view class="header_tab_t {{smTabInd==2?'head_tab_active':''}}">商家配送</view>
-        </view>
+        <view class="header_tab_t {{smTabInd==1?'head_tab_active head_tab_active1':''}}" bindtap="pickUp" wx:if="{{dispatch.smallDeliveryStatus==30||dispatch.smallDeliveryStatus==10}}">自提</view>
+        <view class="header_tab_t {{smTabInd==2?dispatch.smallDeliveryStatus==20?'head_tab_active head_tab_active1':'head_tab_active head_tab_active2':''}}" bindtap="courier" wx:if="{{dispatch.smallDeliveryStatus==30||dispatch.smallDeliveryStatus==20}}">商家配送</view>
       </view>
       <!-- 自提 -->
       <view class="header smclaim" wx:if="{{smTabInd==1}}">
@@ -284,12 +308,19 @@
       </view>
       <!-- 配送 -->
       <view class="water_top pad" wx:if="{{smTabInd==2&&waterList.length<1&&eCShopData.length<1&&wOrderTel&&wOrderAddress}}" bindtap="goAddress">
-        <view class="water_order_name top0">
-          <text>{{wOrderName}}</text>
-          <text class="waterTel">{{wOrderTel}}</text>
+        <view class="order_center top0">
+          <view class="order_center_left">
+            <image src="../../image/weizi1.png"></image>
+          </view>
+          <view class="order_center_right">
+            <view class="water_order_name">
+              <text>{{wOrderName}}</text>
+              <text class="waterTel">{{wOrderTel}}</text>
+            </view>
+            <view class="water_order_address">{{wOrderAddress}}</view>
+            <image src='/image/rightIcon.png' class='ecRigicon smRigicon'></image>
+          </view>
         </view>
-        <view class="water_order_address">{{wOrderAddress}}</view>
-        <image src='/image/rightIcon.png' class='ecRigicon smRigicon'></image>
       </view>
       <view class="smCouer" wx:if="{{smTabInd==2&&eCShopData.length<1&&waterList.length<1&&!wOrderTel&&!wOrderAddress}}">
         <view class="notAddress">暂无收货地址</view>
@@ -297,18 +328,29 @@
       </view>
       <image src="../../image/ziti.png" class="distri" wx:if="{{smTabInd==1&&goodsList.length<1}}"></image>
       <image src="../../image/peisong.png" class="distri" wx:if="{{smTabInd==2&&waterList.length<1&&eCShopData.length<1}}"></image>
+      <image src="../../image/line.png" class="top_line" wx:if="{{(smTabInd==1&&goodsList.length<1)||(smTabInd==2&&waterList.length<1&&eCShopData.length<1)}}"></image>
     </view>
     <view class="order_content {{(smTabInd==1&&goodsList.length>0)||smTabInd==2&&(waterList.length>0||eCShopData.length>0)?'con_active':''}}">
+      <!--选择自提时间-->
+      <view class="timeor" catchtap="getPickUpTime" wx:if="{{smTabInd==1&&needPickUpTime}}">
+        <text>请选择自提时间</text>
+        <view>
+          <text wx:if="{{pickUpTime.date}}">{{pickUpTime.dates}} {{pickUpTime.hour}}:{{pickUpTime.minute}}</text>
+          <image src="../../image/rightIcon.png"></image>
+        </view>
+      </view>
+      <!--选择配送时间-->
+      <view class="timeor" catchtap="getCloudDeliveryTime" wx:if="{{distance&&smTabInd==2&&selectCloudDeliveryTime&&needPickUpTime}}">
+        <text>{{selectCloudDeliveryTime.defaultTime?'立即送出':'预定时间'}}</text>
+        <view>
+          <text wx:if="{{selectCloudDeliveryTime.defaultTime}}">约{{selectCloudDeliveryTime.today?'':selectCloudDeliveryTime.date+'（'+selectCloudDeliveryTime.week+'）'}}{{selectCloudDeliveryTime.startTime}}-{{selectCloudDeliveryTime.endTime}}送达</text>
+          <text wx:else>{{selectCloudDeliveryTime.today?'今日':selectCloudDeliveryTime.date}}（{{selectCloudDeliveryTime.week}}）{{selectCloudDeliveryTime.startTime}}-{{selectCloudDeliveryTime.endTime}}送达</text>
+          <image src="../../image/rightIcon.png"></image>
+        </view>
+      </view>
       <view class="order_time">
         <view class="order_time_left">
-          <view class="order_type">
-            <image src="../../image/buyCarRectangle.png"></image><text>指尖云店</text>
-          </view>
-          <view class="timeor" catchtap="getPickUpTime" wx:if="{{smTabInd==1}}">
-            <text wx:if="{{!orderInfor.pickUpTime.date}}">请选择自提时间</text>
-            <text wx:else>自提时间：{{orderInfor.pickUpTime.dates}} {{orderInfor.pickUpTime.hour}}:{{orderInfor.pickUpTime.minute}}</text>
-            <image src="../../image/rightIcon.png"></image>
-          </view>
+          <view class="order_time_name">{{cloudCommunityName}}</view>
           <text wx:if="{{!distance&&smTabInd==2}}" class="smTitle">不在配送范围内</text>
           <text wx:else></text>
         </view>
@@ -316,7 +358,8 @@
       </view>
       <view class="gooditem" wx:for="{{cloudData}}" wx:key="index">
         <view class="gooditem_par">
-          <image src="https://img.goola.cn/{{item.goodsPic}}" class="goodimg"></image>
+          <image wx:if="{{item.type==80}}" src="../../image/preSaleIcon.png" class="goodIcon"></image>
+          <image src="https://img.goola.cn/{{item.goodsCartPic?item.goodsCartPic:item.goodsPic}}" class="goodimg"></image>
           <view class="Item_right">
             <view>
               <view class="goodname">{{item.storeGoodsName}}</view>
@@ -325,9 +368,7 @@
               </view>
               <view class="saleItem" wx:if="{{item.type==20&&item.fullDecMoneyList&&item.fullDecMoneyList.length>0}}">
                 <!-- 满减活动 -->
-                <text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el">
-                  {{el.fullMoney}}减{{el.decMoney}}
-                </text>
+                <text wx:for="{{item.fullDecMoneyList}}" wx:for-item="el" wx:key="item">{{el.fullMoney}}减{{el.decMoney}}</text>
               </view>
               <view class="saleItem" wx:if="{{item.type==50}}">
                 <text>买一送一</text>
@@ -339,9 +380,7 @@
               </view>
               <view class="saleItem" wx:if="{{item.type==70&&item.manyPriManyFoldsList&&item.manyPriManyFoldsList.length>0}}">
                 <!-- 多件多价 -->
-                <text wx:for="{{item.manyPriManyFoldsList}}" wx:for-item="el" wx:for-index="i" wx:key="i">
-                  {{el.count}}件{{el.discount/10}}折
-                </text>
+                <text wx:for="{{item.manyPriManyFoldsList}}" wx:for-item="el" wx:for-index="i" wx:key="i">{{el.count}}件{{el.discount/10}}折</text>
               </view>
               <view class="saleItem" wx:if="{{item.type==80}}">
                 <text>好物预售</text>
@@ -431,6 +470,10 @@
         </view>
         <text class="goomon {{striping?'striping':''}}">￥{{numb.addTwoPoint(postage)}}</text>
       </view>
+      <view class="goode goodPre" wx:if="{{cloudArrivalTime}}">
+        <text wx:if="{{smTabInd==1}}">预售商品预计自提时间：<text>{{cloudArrivalTime}}</text></text>
+        <text wx:if="{{smTabInd==2}}">预售商品预计可配送时间：<text>{{cloudArrivalTime}}</text></text>
+      </view>
     </view>
   </view>
   <!-- 套餐订单 -->
@@ -438,7 +481,7 @@
     <view class="water_content">
       <view class="order_content">
         <view class="order_time">
-          <view class="timeor"></view>
+          <view></view>
           <text>共{{mealunit}}件商品</text>
         </view>
         <block wx:for="{{mealArr}}" wx:key="index">
@@ -453,7 +496,7 @@
               <view class="goodpricet">￥{{item.goodItem}}</view>
               <view class="mealDetail" bindtap="mealDetail" wx:if="{{item.mealGift.length>0}}" data-meals="{{item.skuId}}">
                 套餐详情
-                <image src="../../image/{{item.detailshow?'shoptop':'shopbottom'}}.png"></image>
+                <image src="../../image/shoptopnew.png" class="{{item.detailshow?'mealDetail_bottom':''}}"></image>
               </view>
             </view>
           </view>
@@ -505,20 +548,19 @@
           </view>
         </view>
         <view>
-          合计：￥
-          <text class="moneySum">{{numb.getNum(totalMoney)}}</text>
+          合计：￥<text class="moneySum">{{numb.getNum(totalMoney)}}</text>
         </view>
       </view>
       <view class="sub_right {{!submitTrue?'not_sub_right':''}}" bindtap="subOrder">提交订单</view>
     </view>
   </view>
   <view class="footbox"></view>
-  <!-- 调用支付 -->
-  <Topayfor wx:if="{{topay}}" bind:maskfalse="changeMask" orderInfor="{{orderInfor}}" ordergoods="{{goodsList}}" watergoods="{{waterList}}" mealgoods="{{mealArr}}" wticket="{{type==3?wticket:waterticketnum}}" eCShopData="{{eCShopData}}" cloudData="{{cloudData}}"></Topayfor>
   <!-- 获取手机号 -->
   <authorizationGetPhone wx:if="{{phoneShow&&!remindMask&&(goodsList.length>0||cloudData.length>0&&smTabInd&&smTabInd!=2)}}" bindclose="cancel" bindgetPhone="getphone"></authorizationGetPhone>
   <!-- 选择派送日期 -->
-  <deliveryTime wx:if="{{deliveryTime&&operateWeek.length>0&&businessTime.length>0}}" binddeliverycancel="deliverycancel" binddeliverysure="deliverysure" businessTime="{{businessTime}}" operateWeek="{{operateWeek}}"></deliveryTime>
+  <deliveryTime catchtouchmove="catchtouchmove" wx:if="{{deliveryTime&&operateWeek.length>0&&businessTime.length>0}}" binddeliverycancel="deliverycancel" binddeliverysure="deliverysure" businessTime="{{businessTime}}" operateWeek="{{operateWeek}}"></deliveryTime>
   <!-- 云店选择自提时间 -->
-  <pickUpTime wx:if="{{showPickUpTime}}" smallTakeTime="{{smallTakeTime}}" smallTakeWeek="{{smallTakeWeek}}" selectTimes="{{orderInfor.pickUpTime}}" bindpickupcancel="pickUpCancel" bindpickupsave="pickUpSave"></pickUpTime>
+  <pickUpTime catchtouchmove="catchtouchmove" wx:if="{{showPickUpTime}}" smallTakeTime="{{smallTakeTime}}" smallTakeWeek="{{smallTakeWeek}}" selectTimes="{{pickUpTime}}" bindpickupcancel="pickUpCancel" bindpickupsave="pickUpSave"></pickUpTime>
+  <!-- 云店选择配送时间 -->
+  <cloudDeliveryTime catchtouchmove="catchtouchmove" wx:if="{{showCloudDeliveryTime}}" postage="{{postage}}" deliveryTimeList="{{cloudDeliveryTime}}" selectTimes="{{selectCloudDeliveryTime}}" bindclouddeliverycancel="cloudDeliveryCancel" bindclouddeliverysave="cloudDeliverySave"></cloudDeliveryTime>
 </view>

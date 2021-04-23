@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "指尖云店",
+  "onReachBottomDistance":0
+}

@@ -37,7 +37,8 @@ Page({
     imgHttp:app.globalData.imgUrl,
     noData:false,
     orderList:null,//订单列表
-    noMore:false//没有下一页了
+    noMore:false,//没有下一页了
+    refundStatus:'',//退款状态：1：已退款，2：退款中，0：退款失败
   },
   //tab切换
   getOrderChange(e){
@@ -130,7 +131,8 @@ Page({
       param={
         pageNum: this.data.pageNum,
         pageSize: this.data.pageSize,
-        userId: this.data.userId
+        userId: this.data.userId,
+        refundStatus:this.data.refundStatus,
       };
     }else{
       param={
@@ -139,7 +141,8 @@ Page({
         userId: this.data.userId,
         orderStatus: this.data.orderStatus
       };
-    }
+    };
+
     service.getOrderList(
       param
     ).then((res)=>{
@@ -148,43 +151,45 @@ Page({
       //停止刷新
       t.stopPullDownRefresh();
       if(res.data.result==200){
-        if(res.data.data==null||(res.data.data&&res.data.data.list.length==0)&&t.data.pageNum==1){
+        if((res.data.data==null||(res.data.data&&res.data.data.list.length==0))&&t.data.pageNum==1){
           this.setData({
             orderList:null,
             noData:true
           });
           return;
         }
-        if(res.data.data.list.length<t.data.pageSize){
+        if(res.data.data==null||res.data.data.list.length<t.data.pageSize){
           this.setData({noMore:true});//没有更多了
         }
-        let orderList = t.data.orderList?[...t.data.orderList, ...res.data.data.list]:res.data.data.list;
-        orderList.map((item) => {
-          if (item.createTime) {
-            if (item.createTime.indexOf(".") != -1) {
-              item.createTime = item.createTime.slice(0, item.createTime.indexOf("."));
-              item.doneTime = item.doneTime?item.doneTime.slice(0, item.doneTime.indexOf(".")):"";
-              item.cancelTime = item.cancelTime?item.cancelTime.slice(0, item.cancelTime.indexOf(".")):"";
-            }
-          }
-          return item;
-        });
-        this.setData({
-          orderList:orderList
-        },()=>{
-          let list = this.data.orderList;
-          if(list&&list.length>0){
-            list.map((item,index)=>{//云店订单 多人拼团活动 待配送-配送 待收货-自提 并且没有拼团成功的活动生成分享图片
-              if(item.orderResource==40&&(item.orderStatus==20||item.orderStatus==30||item.orderStatus==31)&&item.groupCode&&item.groupStatus==1){
-                this.getShareImg(item,index);
+        if(res.data.data){
+          let orderList = t.data.orderList?[...t.data.orderList, ...res.data.data.list]:res.data.data.list;
+          orderList.map((item) => {
+            if (item.createTime) {
+              if (item.createTime.indexOf(".") != -1) {
+                item.createTime = item.createTime.slice(0, item.createTime.indexOf("."));
+                item.doneTime = item.doneTime?item.doneTime.slice(0, item.doneTime.indexOf(".")):"";
+                item.cancelTime = item.cancelTime?item.cancelTime.slice(0, item.cancelTime.indexOf(".")):"";
               }
-            })
-          }
-        });
-        if(!orderList||orderList.length==0){
-          this.setData({
-            noData:true
+            }
+            return item;
           });
+          this.setData({
+            orderList:orderList
+          },()=>{
+            let list = this.data.orderList;
+            if(list&&list.length>0){
+              list.map((item,index)=>{//云店订单 多人拼团活动 待配送-配送 待收货-自提 并且没有拼团成功的活动生成分享图片
+                if(item.orderResource==40&&(item.orderStatus==20||item.orderStatus==30||item.orderStatus==31)&&item.groupCode&&item.groupStatus==1){
+                  this.getShareImg(item,index);
+                }
+              })
+            }
+          });
+          if(t.data.pageNum==1&&(!orderList||orderList.length==0)){
+            this.setData({
+              noData:true
+            });
+          }
         }
       }else{
         wx.showToast({
@@ -316,6 +321,15 @@ Page({
     let t=this;
     let orderCode = e.currentTarget.dataset.ordercode;//订单单号
     let orderResource = e.currentTarget.dataset.orderresource;//订单来源 10-指尖电商 40-云店
+    let auditStatus = e.currentTarget.dataset.auditstatus;//订单审核状态
+    if (auditStatus==2){
+      wx.showToast({
+        title: '该订单正在审核退款中，不能确认收货',
+        icon: 'none',
+        duration: 2000
+      })
+      return;
+    }
     wx.showModal({
       content:'确定已收到货？',
       cancelColor:"#999999",
@@ -339,8 +353,11 @@ Page({
                   noData:false,
                   noMore:false//没有更多了
                 });
-                t.getOrderList(t.data.orderStatus);
-                t.getOrderNum();
+                setTimeout(()=>{
+                  t.pageNum=1;
+                  t.getOrderList(t.data.orderStatus);
+                  t.getOrderNum();
+                },500);
               }else{
                 wx.showToast({
                   title: res.data.message,
@@ -386,7 +403,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({orderStatus:options.index,userId:wx.getStorageSync("userId")});
+    this.setData({orderStatus:options.index?options.index:"",userId:wx.getStorageSync("userId")});
     //this.setData({orderStatus:0,userId:wx.getStorageSync("userId")});
   },
 
@@ -466,25 +483,27 @@ Page({
    */
   onShareAppMessage: function (res) {
     let item = res.target.dataset.item;//当前订单信息
-    if(res.from=="button"){//分享来自转发按钮
-      let shareImg = item.shareImg.replace(/^http(?=:)/i, 'https');
-      return {
-        title: `还差${item.surplusCount}人即可成团，快来一起拼吧！`, 
-        path: '/pages/cloudStoreDetail/index?storeGoodsId=' + item.orderItemList[0].goodsCode + '&activityCode=' + item.orderItemList[0].activityId + '&groupCode=' + item.groupCode + '&groupShare=true',
-        imageUrl: shareImg,
-        success: function (res) {
+    let shareCloundShop = {
+      cityName:item.cityName,
+      siteId:item.branchesId,
+      siteName:item.mecName,
+    };
+    let shareImg = item.shareImg&&item.shareImg.replace(/^http(?=:)/i, 'https');
+    return {
+      title: `还差${item.surplusCount}人即可成团，快来一起拼吧！`, 
+      path: '/pages/cloudStoreDetail/index?storeGoodsId=' + item.orderItemList[0].goodsCode + '&activityCode=' + item.orderItemList[0].activityId + '&groupCode=' + item.groupCode + '&userId='+ wx.getStorageSync("userId") +'&groupShare=true'+'&shareCloundShop=' + JSON.stringify(shareCloundShop),
+      imageUrl: shareImg,
+      success: function (res) {
 
-        },
-        fail: function (res) {
-          // 转发失败
-          wx.showToast({
-            title: '当前网络状态较差，请稍后重试',
-            icon: 'none',
-            duration: 2000
-          })
-        }
+      },
+      fail: function (res) {
+        // 转发失败
+        wx.showToast({
+          title: '当前网络状态较差，请稍后重试',
+          icon: 'none',
+          duration: 2000
+        })
       }
-      
     }
   }
 })

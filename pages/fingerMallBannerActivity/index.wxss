@@ -1,0 +1,171 @@
+.top_pic{
+  font-size: 0;
+}
+.top_pic image{
+ width:710rpx;
+ padding: 0 20rpx;
+ border-radius: 10rpx;
+}
+.activity_height{
+  height:88rpx;
+}
+.activity_title{
+  height:88rpx;
+  display: flex;
+  align-items: center;
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+}
+.activity_title image{
+  width:54rpx;
+  height:32rpx;
+}
+.activity_title image:last-child{
+  transform: rotate(180deg);
+}
+.activity_title text{
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  color: #333333;
+  margin:0 20.7rpx;
+  line-height: 32rpx;
+  word-break:keep-all;
+  white-space:nowrap;    
+}
+.goods_con{
+  display: flex;
+  flex-wrap:wrap;
+}
+.goods_list{
+  height:570rpx;
+  position:relative;
+  width:345rpx;
+  box-sizing: border-box;
+  margin-left: 20rpx;
+  margin-bottom: 20rpx;
+}
+.goods_pic{
+  width:300rpx;
+  height:300rpx;
+  margin:20rpx 23rpx 20rpx 22rpx;
+  border-radius: 10rpx;
+}
+.goods_name{
+  margin-left:20rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #333333;
+  /* line-height: 42rpx; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.goods_num{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 24rpx;
+  margin-top: 14rpx;
+  margin-left: 20rpx;
+}
+.goods_price{
+  font-size: 0;
+  position:absolute;
+  left:20rpx;
+  bottom:20rpx;
+}
+.discount_price{
+  color:#FF3B30;
+  font-size: 20rpx;
+  margin-top: 36rpx;
+  margin-bottom: 10rpx;
+}
+.price_symbol{
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #EF0000;
+  line-height: 28rpx;
+}
+.price{
+  font-family: PingFangSC-Medium;
+  font-size: 36rpx;
+  color: #EF0000;
+  line-height: 36rpx;
+}
+.badPrice{
+  font-family: PingFangSC-Regular;
+  font-size: 20rpx;
+  color: #999999;
+  line-height: 24rpx;
+  text-decoration: line-through;
+  margin-top: 6rpx;
+}
+.addbox{
+  width: 196rpx;
+  height: 102rpx;
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  right:-10rpx;
+  bottom:0;
+}
+.addbox .liue{
+  width: 62rpx;
+  height:102rpx;
+  box-sizing: border-box;
+  padding:30rpx 10rpx;
+}
+.addbox image{
+  width: 42rpx;
+  height:42rpx;
+}
+.addbox input{
+  width: 40rpx;
+  height: 42rpx;
+  text-align: center;
+  font-size: 28rpx;
+}
+.goods_bottom{
+  background: #F5F5F5;
+  height:20rpx;
+}
+.all_car{
+  position:fixed;
+  bottom:160rpx;
+  left:30rpx;
+}
+.all_car image{
+  width:90rpx;
+  height: 104rpx;
+}
+.all_car view{
+  border-radius: 50%;
+  background: #FF3B30;
+  position: absolute;
+  right:-8rpx;
+  top:0;
+  font-family: PingFangSC-Regular;
+  font-size: 16rpx;
+  color: #FFFFFF;
+  text-align: center;
+}
+.one_car{
+  width:28rpx;
+  height:28rpx;
+  line-height: 28rpx;
+}
+.more_car{
+  padding:4rpx 7rpx;
+}
+.bottom{
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 28rpx;
+  padding-top: 10rpx;
+  padding-bottom: 30rpx;
+  text-align: center;
+}

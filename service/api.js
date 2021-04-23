@@ -12,15 +12,11 @@ var env = "production";
 // var host = "https://pre-generalstore.gtexpress.cn";
 // var hostGroup = "https://pre-generalstore.gtexpress.cn/gt-group-wx-api";
 // var env = "pre";
-// 测试环境2
-// var host = "https://test02-generalstore.gtexpress.cn";
-// var hostGroup = "https://test02-generalstore.gtexpress.cn/gt-group-wx-api";
-// var env = "test";
-// 测试环境1
+// 测试环境
 // var host = "https://test-generalstore.gtexpress.cn";
 // var hostGroup = "https://test-generalstore.gtexpress.cn/gt-group-wx-api";
 // var env = "test";
-// 开发环境
+//开发环境
 // var host = "https://dev-generalstore.gtexpress.cn";
 // var hostGroup = "https://dev-generalstore.gtexpress.cn/gt-group-wx-api";
 // var env = "dev";
@@ -136,6 +132,35 @@ const API = {
   FINGERMALLGETGOODS: `${hostGroup}/mall/sku/querySkuInfoByClass`,//查询更好甄选（指尖电商）商品列表
   FINGERMALLCONFIRMRECEIPT: `${hostGroup}/ofcOrder/changeOrderStatues`,//更改更好甄选（指尖电商）订单状态 确认收货
   GETWXCODEUNLIMIT: `${hostGroup}/mall/sku/getwxacodeunlimit`,//获取指定页面小程序码
+  GET_REFUNDORDER:`${hostGroup}/ofcOrder/ofcOrderRefund`,//退款审核
+  GET_BUYAGAINCHECK:`${hostGroup}/ofcOrder/buyAgainCheck`,//再次购买商品校验
+  EDITOFCORDER:`${hostGroup}/ofcOrder/editOfcOrder` ,//订单详情修改地址
+  ADD_GOODSNUMLIST: `${hostGroup}/shoppingCart/saveShoppingCartList`,
+  CREATESMALLWXCODE: `${hostGroup}/small/createWxCode`,//获取云店商品详情小程序码
+  GETSMALLWXCODEUNLIMIT: `${hostGroup}/small/getwxacodeunlimit`,//通过云店商品详情页的参数获取实际需要的参数
+  GETSMALLGOODSSEARCHVOCABULARY:`${hostGroup}/small/getSmallGoodsSearchVocabulary`,//搜索词查询（微店商品）含用户搜索历史；含热门搜索
+  DELETESMALLGOODSSEARCHUSER:`${hostGroup}/small/deleteSmallGoodsSearchUser`,//删除用户搜索历史
+  GETSMALLGOODSSEARCHLIST:`${hostGroup}/small/getSmallGoodsSearchList`,//搜索微店商品列表
+  QUERYCARDLISTBYUSERANDGOODSANDSELECTSTATUS:`${hostGroup}/api/card/queryCardListByUserAndGoodsAndSelectStatus`,//优惠券未查看数量
+  QUERYCARDLISTBYUSERANDGOODSANDSTATUS:`${hostGroup}/api/card/queryCardListByUserAndGoodsAndStatus`,//查询卡券信息
+  QUERYSKUINFOTWO:`${hostGroup}/mall/sku/querySkuInfoTwo`,//查询更好甄选2个商品
+  QUERYCARDLISTBYSELECTSYSTEM:`${hostGroup}/api/card/queryCardListBySelectSystem`,//系统发放卡券弹框
+  QUERYCLOUDCARDLIST:`${hostGroup}/branchesMarketingCard/queryNotClaimedCardListByUserIdAndBranchesId`,//查询云店所有卡券列表 
+  QUERYBANNERCONFIGLIST:`${hostGroup}/mall/banner/getBannerConfig`,//查询更好甄选首页banner的配置列表
+  QUERYBANNERCONFIGDETAIL:`${hostGroup}/mall/banner/getBannerConfigDetail`,//查询更好甄选首页Banner配置详情
+  QUERYCELLECTBRANCH:`${hostGroup}/home/branches/colleBranches`,//查询收藏门店
+  CANCELCOLLEBRANCHES:`${hostGroup}/home/branches/cancelColleBranches`,//取消收藏接口
+  QUERYCOLLEBRANCHES:`${hostGroup}/home/branches/queryColleBranches`,//查询已收藏门店信息
+  GETSMALLCLASSLIST:`${hostGroup}/small/getSmallClassList`,//查询云店分组列表
+  QUERYCLOUDSTOREACTIVITE:`${hostGroup}/small/queryActivityGoodsList`,//查询云店活动列表
+  GETSELECTEDGOODS:`${hostGroup}/homePage/getSelectedGoods`,//获取精选商品列表
+  DISOUNTINLIMITEDTIME:`${hostGroup}/homePage/getDiscountInLimitedTime`,//获取限时折扣活动商品列表
+  GETGROUPTOGETHER:`${hostGroup}/homePage/getGroupTogether`,//获取云店多人拼团活动商品列表
+  GETGOODSPRESALE:`${hostGroup}/homePage/getGoodGoodsPresale`,//获取好物预售活动商品列表
+  GETALLFULLREDUCTION:`${hostGroup}/homePage/getAllFullReduction`,//获取全场满减活动商品列表
+  GETTWOFORONE:`${hostGroup}/homePage/getTwoForOne`,//获取买一送一活动商品列表
+  GETTWOHALFPRICE:`${hostGroup}/homePage/getTwoHalfPrice`,//获取第二件半价活动商品列表
+  GETMOREPIECEMOREDISCOUNT:`${hostGroup}/homePage/getMorePieceMoreDiscount`,//获取多件多折活动商品列表
 };
 module.exports =
 {

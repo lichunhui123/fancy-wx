@@ -1,0 +1,24 @@
+<view>
+    <view class="drawBack_desc">
+        <view class="desc_title">温馨提示：</view>
+        <view class="desc_content">
+            <view>1.限时特价等购买优惠可能一并取消；</view>
+            <view>2.如遇订单拆分、优惠券等不予返回，相关优惠一并取消；</view>
+            <view>3.订单一旦取消，无法恢复。</view>
+        </view>
+    </view>
+    <view class="drawBack_list">
+        <view>退款原因</view>
+        <view class="{{reasonId?'':'no_text'}}" bindtap="openReason">{{reason?reason:'请选择退款原因'}}<image src="../../image/rightIcon.png"></image></view>
+    </view>
+    <view class="drawBack_list">
+        <view>退款联系人</view>
+        <view>{{receiverName}}</view>
+    </view>
+    <view class="drawBack_list">
+        <view>联系电话</view>
+        <view>{{receiverPhone}}</view>
+    </view>
+    <view class="submit_btn {{submit?'active':''}}" bindtap="submit">申请退款</view>
+    <reason show="{{showReason}}" reasonId="{{reasonId}}" bind:sure="sureReason"></reason>
+</view>

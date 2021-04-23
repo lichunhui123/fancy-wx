@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "authorization-login": "/component/authorizationLogin/index",
+    "discountCoupon":"/component/discountCoupon/index",
+    "shoppingBag":"/component/shoppingBag/index"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarBackgroundColor":"#FF610D",
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "指尖云店",
+  "navigationBarTextStyle": "white",
+  "onReachBottomDistance":0
+}

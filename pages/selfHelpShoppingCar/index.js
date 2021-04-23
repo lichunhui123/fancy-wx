@@ -429,7 +429,7 @@ Page({
       }).catch(()=>{
         t.hasPay = false;
         wx.showToast({
-          title: res.data.message,
+          title: "当前网络状态较差，请稍后重试",
           icon: 'none',
           duration: 2000
         });

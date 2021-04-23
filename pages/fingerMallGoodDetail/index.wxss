@@ -8,6 +8,14 @@ html, page {
 .detailWrap {
   width: 100%;
 }
+.sale{
+  position: absolute;
+  top: 30rpx;
+  left: 0;
+  width: 184rpx;
+  height: 50rpx;
+  z-index: 9;
+}
 .swiper-content{
   width: 100%;
   height:750rpx;
@@ -393,70 +401,41 @@ html, page {
   left: 0;
   background: white;
 }
-.shareMask{
-  position: fixed;
-  top:0;
-  left:0;
-  background: rgba(0,0,0,0.70);
-  width:100%;
-  height:100%;
+/*头像和昵称的轮播*/
+.recordSwiper{
+  height:140rpx;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
 }
-.shareCon{
-  z-index: 2;
-  position: absolute;
-  bottom:128rpx;
-  left:30rpx;
-  width:690rpx;
-  padding:0 30rpx;
-  background: #ffffff;
-  border-radius: 6rpx;
-  box-sizing: border-box;
+.recordSwiperImg{
+  width:40rpx;
+  height:34rpx;
 }
-.shareBtn{
-  width:100%;
-  height:100rpx;
-  font-size: 32rpx;
+.recordSwiper_content{
+  font-size: 28rpx;
   color: #333333;
-  text-align: center;
-  line-height: 100rpx;  
-  background: #fff;
-  border-radius: 0;
+  line-height: 140rpx;
+  height:140rpx;
+  width: 335rpx;
 }
-.shareCon .shareBtn:first-of-type{
-  border-bottom: 1rpx solid #EBEBEB;
+.recordSwiper_content_item {
+  width: 100%;
 }
-.shareCancel{
-  z-index: 2;
-  position: absolute;
-  bottom:20rpx;
-  left:30rpx;
-  width:690rpx;
-  height:88rpx;
-  font-size: 32rpx;
-  color: #999999;
-  text-align: center;
-  line-height: 88rpx;
-  background: #ffffff;
-  border-radius: 6rpx;
+.content_swiper_item{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
 }
-.posterImage{
-  position: absolute;
-  width:556rpx;
-  height:772rpx;
-  left:97rpx;
-  bottom:310rpx;
-  border-radius: 12rpx;
+.recordSwiper_content_swiper{
+  height: 140rpx;
+  width: 100%;
 }
-.posterSave{
-  width:670rpx;
-  height:88rpx;
-  position: absolute;
-  bottom:172rpx;
-  left:40rpx;
-  background: #F2922F;
-  border-radius: 6rpx;
-  font-size: 32rpx;
-  color: #FFFFFF;
-  text-align: center;
-  line-height: 88rpx;
+ .content_swiper_item image{
+  width:80rpx;
+  height:80rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
 }

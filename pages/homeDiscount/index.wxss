@@ -92,10 +92,27 @@ html, page {
   justify-content: center;
   align-items: center;
 }
-.price{
-  font-size: 52rpx;
-  padding: 0 6rpx;
-  font-weight: 600;
+.ticket_left_con{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 86rpx;
+  height: 86rpx;
+}
+.ticket_left view:first-child{
+  font-size: 32rpx;
+  color: #F2922F;
+  line-height: 52rpx;
+  height:52rpx;
+}
+.ticket_left text{
+  font-size: 62rpx;
+}
+.ticket_left view:last-child{
+  font-size: 26rpx;
+  line-height: 26rpx;
+  color: #F2922F;
+  margin-top: 21rpx;
 }
 .ticket_right {
   width: 480rpx;
@@ -103,9 +120,6 @@ html, page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.mk{
-  font-size: 26rpx;
 }
 .ticket_right_con {
   width: 460rpx;
@@ -127,6 +141,7 @@ html, page {
   font-size: 28rpx;
   color: #333;
   margin-bottom: 10rpx;
+  width: 425rpx;
 }
 
 .ticket_type {

@@ -1,0 +1,17 @@
+<view class="reason" catchtouchmove="movetan">
+    <view class="mask_bg {{show?'show':'hide'}}"></view>
+    <view class="mask_con {{show?'mask_show':''}}">
+        <image class="reason_close" src="../../../image/close.png" bindtap="sure"></image>
+        <view class="reason_con">
+            <view class="reason_title">取消订单的原因（必选）：</view>
+            <view class="reason_list">
+                <view class="reason_item" wx:for="{{reasonList}}" wx:key="index"  data-id="{{item.id}}" bindtap="reasonClick">
+                    <view>{{item.text}}</view>
+                    <image  class="active" src="../../../image/reasonSelect.png" wx:if="{{item.select}}"></image>
+                    <view wx:else class="no_active"></view>
+                </view>
+            </view>
+        </view>
+        <view class="mask_bottom" bindtap="sure">确定</view>
+    </view>
+</view>

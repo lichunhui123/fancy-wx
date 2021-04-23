@@ -1,0 +1,44 @@
+<view>
+    <view>
+        <view class="result_con"  wx:if="{{refundStatus==1&&auditStatus==null}}">
+            <view class="success_img">
+                <image src="../../image/success.png"></image>
+            </view>
+            <view class="success_text">退款成功</view>
+            <view class="success_desc">您已成功申请退款，退款预计1~5个工作日原路径退回到您的账户中</view>
+            <view class="success_btn" bindtap="goHome">继续逛逛</view>
+        </view>
+        <view class="result_con" wx:if="{{refundStatus==0&&auditStatus==null}}">
+            <view class="success_img">
+                <image src="../../image/error.png"></image>
+            </view>
+            <view class="success_text">退款失败</view>
+            <view class="success_desc">您的订单退款失败，请您稍后再试</view>
+            <view class="success_btn" bindtap="goHome">继续逛逛</view>
+        </view>
+    </view>
+<view>
+    <view class="result_con" wx:if="{{auditStatus==2&&refundStatus!=null}}">
+        <view class="success_img" >
+            <image src="../../image/success.png"></image>
+        </view>
+        <view class="success_text">订单取消提交成功，待审核</view>
+        <view class="success_btn" bindtap="goHome">继续逛逛</view>
+    </view>
+    <view class="result_con" wx:if="{{auditStatus==0&&refundStatus!=null}}">
+        <view class="success_img">
+            <image src="../../image/error.png"></image>
+        </view>
+        <view class="success_text">您的申请未通过!</view>
+        <view class="success_btn" bindtap="goHome">继续逛逛</view>
+    </view>
+        <view class="result_con" wx:if="{{auditStatus==1&&refundStatus!=null}}">
+            <view class="success_img">
+                <image src="../../image/success.png"></image>
+            </view>
+            <view class="success_text">您的申请已通过!</view>
+            <view class="success_desc">退款预计1~5个工作日原路径退回到您的账户中</view>
+            <view class="success_btn" bindtap="goHome">继续逛逛</view>
+        </view>
+</view>
+</view>

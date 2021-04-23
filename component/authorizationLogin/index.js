@@ -15,8 +15,8 @@ Component({
     }
   },
   data: {
-    hasUserInfo:true,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    hasUserInfo:true,//是否可用最新的授权登录api
+    canIUseGetUserProfile: false,
     showGrowthValueToast:false,//显示积分成长值的提示
     growth:0,//成长值
     credits:0,//积分
@@ -25,6 +25,11 @@ Component({
 
   },
   ready(){
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
     //判断登录
     if(wx.getStorageSync("userId")&&wx.getStorageSync("userId")!=null){
       this.setData({
@@ -102,7 +107,6 @@ Component({
           var latitude = res.latitude;
           var longitude = res.longitude;
           that.setData({latitude,longitude});
-          that.ifGetUserinfo(latitude, longitude);
         },
         fail: function (res) {
           wx.showToast({
@@ -113,102 +117,83 @@ Component({
         }
       })
     },
-    // 判断是否授权
-    ifGetUserinfo: function () {
-      // 判断是否授权登录
-      if (this.data.canIUse) {
-        // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-        // 所以此处加入 callback 以防止这种情况
-        app.userInfoReadyCallback = res => {
-
-        }
-      } else {
-        // 在没有 open-type=getUserInfo 版本的兼容处理
-        app.userInfoReadyCallback = res => {
-          wx.getUserInfo({
-            success: res => {
-              app.globalData.userInfo = res.userInfo
-            }
-          })
-        }
-      }
-    },
     // 微信授权登录
     getUserInfo: function (e) {
-      const that = this;
-      if (e.detail.userInfo) {
-        wx.showLoading({title:"登录中..."});
-        var userInfo = e.detail.userInfo;
-        wx.setStorageSync('userInfo', userInfo);
-        app.globalData.userInfo = userInfo;
-        // 授权登录的时候请求后台
-        //请求后台获取用户数据
-        wx.login({
-          success: function (res) {
-            if (res.code) {
-              wx.getUserInfo({
-                success: function (res1) {
-                  let param={
-                    code: res.code,
-                    avatarUrl: userInfo.avatarUrl,
-                    nickName: userInfo.nickName,
-                    gender:userInfo.gender,//性别 0：未知  1：男  2：女
-                    encryptedData: res1.encryptedData,
-                    iv: res1.iv,
-                    latitude:that.data.latitude,
-                    longitude:that.data.longitude
-                  };
-                  if(that.properties.invitorUserId){//邀新有礼活动需要传递的邀请人ID
-                    param.invitorUserId = that.properties.invitorUserId;
-                  }
-                  if(that.properties.activityCode){//有邀新活动编码时
-                    param.inviteActivityCode = that.properties.activityCode;
-                  }
-                  service.getUser(
-                      param
-                  ).then(function (resp) {
-                    console.log(resp);
-                    wx.setStorageSync('openId', resp.data.data.openId);
-                    wx.setStorageSync('userId', resp.data.data.userId);
-                    let token = resp.data.data.token;
-                    wx.setStorageSync("token", token);
-                    if(resp.data.data.bnew&&resp.data.data.userId){//新用户注册
-                      //显示成长值和积分
-                      that.setData({
-                        showGrowthValueToast:true,
-                        growth:10,//成长值
-                      });
-                    }
-                    setTimeout(()=>{
-                      //成功回调函数
-                      wx.hideLoading();
-                      that.triggerEvent('loginSuccess', {userInfo:resp.data.data});
-                    },2000);
-                  }).catch(function (rec) {
-                    //wx.clearStorage();
-                    that.triggerEvent('loginError', null);
-                    wx.hideLoading();
-                    wx.showToast({
-                      title: '当前网络状态较差，请稍后重试',
-                      icon: 'none',
-                      duration: 2000
-                    })
-                  })
-                },
-                fail(err) {
-                  //wx.clearStorage();
-                  that.triggerEvent('loginError', null);
-                  wx.hideLoading();
-                  console.log("当前网络状态较差，请稍后重试");
-                }
-              })
-            }
+      wx.showLoading({title:"登录中..."});
+      if(this.data.canIUseGetUserProfile){
+        wx.getUserProfile({
+          desc: '授权登录', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+          success: (res1) => {
+            this.loginFn(res1);
+          },
+          fail:(res)=>{
+            console.log(res);
           }
         })
-      } else {
-
+      }else{
+        wx.getUserInfo({
+          success:(res1)=>{
+            this.loginFn(res1);
+          }
+        })
       }
-
     },
+    loginFn(res1){
+      const that = this;
+      let userInfo = res1.userInfo;
+      wx.setStorageSync('userInfo', userInfo);
+      app.globalData.userInfo = userInfo;
+      wx.login({
+        success:(res)=>{
+          let param={
+            code: res.code,
+            avatarUrl: userInfo.avatarUrl,
+            nickName: userInfo.nickName,
+            gender:userInfo.gender,//性别 0：未知  1：男  2：女
+            encryptedData: res1.encryptedData,
+            iv: res1.iv,
+            latitude:that.data.latitude,
+            longitude:that.data.longitude
+          };
+          if(that.properties.invitorUserId){//邀新有礼活动需要传递的邀请人ID
+            param.invitorUserId = that.properties.invitorUserId;
+          }
+          if(that.properties.activityCode){//有邀新活动编码时
+            param.inviteActivityCode = that.properties.activityCode;
+          }
+          // 授权登录的时候请求后台
+          service.getUser(
+            param
+          ).then(function (resp) {
+            console.log(resp);
+            wx.setStorageSync('openId', resp.data.data.openId);
+            wx.setStorageSync('userId', resp.data.data.userId);
+            let token = resp.data.data.token;
+            wx.setStorageSync("token", token);
+            if(resp.data.data.bnew&&resp.data.data.userId){//新用户注册
+              //显示成长值和积分
+              that.setData({
+                showGrowthValueToast:true,
+                growth:10,//成长值
+              });
+            }
+            setTimeout(()=>{
+              //成功回调函数
+              wx.hideLoading();
+              that.triggerEvent('loginSuccess', {userInfo:resp.data.data});
+            },2000);
+          }).catch(function (rec) {
+            //wx.clearStorage();
+            that.triggerEvent('loginError', null);
+            wx.hideLoading();
+            wx.showToast({
+              title: '当前网络状态较差，请稍后重试',
+              icon: 'none',
+              duration: 2000
+            })
+          })
+        }
+      })
+    }
   }
 });

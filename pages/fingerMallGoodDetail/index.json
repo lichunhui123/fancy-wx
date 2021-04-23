@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "authorization-login": "/component/authorizationLogin/index",
-    "canvasdrawer": "/component/canvasdrawer/canvasdrawer"
+    "create-poster-image": "/component/createPosterImage/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

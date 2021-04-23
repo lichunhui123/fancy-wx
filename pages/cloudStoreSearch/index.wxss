@@ -1,0 +1,248 @@
+html, page {
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+}
+.searchContent{
+  min-height: 100vh;
+  background: #ffffff;
+}
+.top{
+  display: flex;
+  justify-content: space-between;
+  padding: 9rpx 30rpx;
+  background: #fff;
+}
+.seachinp{
+  width: 610rpx;
+  height: 62rpx;
+  border-radius: 34rpx;
+  background: #eee;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #333;
+}
+.seachinp .searchIcon{
+  width: 40rpx;
+  height: 40rpx;
+  margin: 0rpx 10rpx 0rpx 20rpx;
+}
+.seachinp input{
+  width:464rpx;
+  height:100%;
+}
+.seachinp .deleteIcon{
+  width:36rpx;
+  height:36rpx;
+  padding:18rpx 20rpx;
+}
+.groupCard{
+  width: 44rpx;
+  height: 44rpx;
+  padding: 9rpx 0;
+}
+.rightBox{
+  position: relative;
+}
+.rightBox .title{
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  background: #FF3B30;
+  position: absolute;
+  top: -8rpx;
+  right: -14rpx;
+  font-size: 16rpx;
+  color: #FFFFFF;
+  line-height: 28rpx;
+  text-align: center;
+}
+ .searchWord{
+  font-size: 28rpx;
+  height:62rpx;
+  line-height: 62rpx;
+  color: #333333;
+}
+/*center*/
+.center{
+  padding: 30rpx 30rpx 0 30rpx;
+}
+.center_top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.center_left text{
+  font-family: PingFangSC-Medium;
+  font-size: 32rpx;
+  color: #333333;
+  line-height: 32rpx;
+}
+.center_right image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.label{
+display: flex;
+flex-wrap: wrap;
+padding-top: 24rpx;
+}
+.label view{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #333333;
+  padding: 15rpx 26rpx;
+  border-radius: 28rpx;
+  background: #F8F8F8;
+  margin-right:20rpx;
+  margin-bottom: 16rpx;
+}
+/*goodsContent*/
+.goodsContent{
+  background: #F8F8F8;
+  padding-top: 19rpx;
+}
+.goods_top{
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 24rpx;
+  padding: 28rpx 0 28rpx 30rpx ;
+}
+.goodsList{
+  display: flex;
+  padding: 10rpx;
+  flex-wrap: wrap;
+}
+.goodsItem {
+width: 345rpx;
+margin:0 10rpx 20rpx 10rpx ;
+background: #FFFFFF;
+border-radius: 10rpx;
+}
+.goodsPic{
+  width: 300rpx;
+  height: 300rpx;
+  padding: 20rpx 23rpx 13rpx 22rpx;
+}
+.goodsDetail{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 20rpx 20rpx 20rpx;
+  height: 240rpx;
+  position: relative;
+}
+.goodsName{
+ font-size: 28rpx;
+ line-height: 42rpx;
+ color: #333333;
+ display: -webkit-box;
+ max-height: 84rpx;
+ overflow: hidden;
+ -webkit-box-orient: vertical;
+ -webkit-line-clamp: 2;
+}
+.goodsSpec{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #999999;
+  margin-top: 7rpx;
+  margin-bottom: 4rpx;
+}
+.goodsIcon{
+  display: flex;
+  flex-wrap: wrap;
+}
+.goodsIcon text{
+  color: #FF3B30;
+  font-size: 20rpx;
+  line-height: 28rpx;
+  border:1rpx solid #FF3B30;
+  border-radius: 4rpx;
+  padding: 0 10rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
+}
+.goodsBtn{
+  color: #FF3B30;
+  font-size: 20rpx;
+  line-height: 20rpx;
+  margin-bottom: 10rpx;
+}
+.goodsPrice{
+  font-size: 28rpx;
+  color: #FF3B30;
+}
+.goodsPrice text:nth-child(1){
+  font-size: 36rpx;
+  color: #FF3B30;
+  line-height: 36rpx;
+}
+.goodsPrice text:nth-child(2){
+  font-size: 20rpx;
+  color: #999999;
+  line-height: 24rpx;
+  margin-left: 21rpx;
+  text-decoration: line-through;
+}
+.goodsShopp{
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  bottom:20rpx;
+  right: 20rpx;
+}
+.addbox{
+  width: 196rpx;
+  height: 102rpx;
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  right:0;
+  bottom:-10rpx;
+}
+.addbox .liue{
+  width: 62rpx;
+  height:102rpx;
+  box-sizing: border-box;
+  padding:30rpx 10rpx;
+}
+.addbox image{
+  width: 42rpx;
+  height:42rpx;
+}
+.addbox input{
+  width: 40rpx;
+  height: 42rpx;
+  text-align: center;
+  font-size: 28rpx;
+}
+.nologin{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding-top: 82rpx;
+}
+.nologin .goodnodata{
+  width: 450rpx;
+  height:450rpx;
+  margin-bottom: 20rpx;
+}
+.notitle{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #333333;
+}
+.noDataBackground{
+  background: #fff;
+}
+.hasDataBackground{
+  background: #F8F8F8;
+}

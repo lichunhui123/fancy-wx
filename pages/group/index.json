@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "shoppingBag": "/component/shoppingBag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

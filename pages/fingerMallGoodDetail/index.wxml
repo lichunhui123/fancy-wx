@@ -1,6 +1,7 @@
 <!--pages/groupGoodDetail/index.wxml-->
 <wxs module="numb" src="../../filter/filter.wxs"></wxs>
 <view class="detailWrap">
+  <image src="../../image/sale.png" class="sale" wx:if="{{goodsDetail.type==10}}"></image>
   <view>
     <view class="swiper-content">
       <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange">
@@ -42,17 +43,24 @@
             </button>
           </view>
       </view>
-      <view class="detailc3" wx:if="{{goodsDetail.iconList&&goodsDetail.iconList.length>0}}">
+      <view class="detailc3" wx:if="{{goodsDetail.weChatInfoList&&goodsDetail.weChatInfoList.length>0}}">
         <view class="detailc3_title">
           <text>购买记录</text>
           <view>已有
             <text class="yel">{{goodsDetail.buyHistoryNum}}</text> 人购买，商品共销售
             <text class="yel">{{goodsDetail.soldNum}}</text> 份</view>
         </view>
-        <view class="record">
-          <view wx:for="{{goodsDetail.iconList}}" wx:for-item="item" wx:key="{{item}}" wx:for-index="index" class="{{index==9?'recorimg':'recordimg'}}" wx:if="{{index<=9}}">
-            <image wx:if="{{index<9}}" src="{{item}}" class="avader" />
-            <image class="avator-img" wx:if="{{index==9}}" src="../../image/avatar-more.png" />
+        <view class="recordSwiper">
+          <image  class="recordSwiperImg" src="../../image/home_tip.png"></image>
+          <view class="recordSwiper_content">
+            <view class="recordSwiper_content_item">
+              <swiper  class="recordSwiper_content_swiper" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+                <swiper-item class="content_swiper_item" wx:for="{{goodsDetail.weChatInfoList}}" wx:key="index">
+                    <image src="{{item.icon}}" ></image>
+                    <view>{{item.name}}刚刚下单了</view>
+                </swiper-item>
+              </swiper>
+            </view>
           </view>
         </view>
       </view>
@@ -81,22 +89,9 @@
     <view class="tabbarIphone" wx:if="{{iphone}}"></view>
     <canvas canvas-id="shareImg" style="width:422px;height:317px;position:fixed; top: -999px; left: -999px;"></canvas>
   </view>
-  <!-- 分享弹窗 -->
-  <view class="shareMask" wx:if="{{showShare}}">
-    <view class="shareCon">
-      <button class="shareBtn" formType="submit" open-type="share">立即分享</button>
-      <view class="shareBtn" bindtap="getPoster">生成海报 保存分享</view>
-    </view>
-    <view class="shareCancel" bindtap="cancelShare">取消</view>
-  </view>
-  <!-- 分享弹窗 -->
-  <!-- 生成分享海报 -->
-  <view class="shareMask" wx:if="{{showPoster}}" bindtap="closePoster">
-    <image src="{{posterImage}}" class="posterImage" catchtap="cancelBubble"></image>
-    <canvasdrawer painting="{{painting}}" bind:getImage="posterGetImage" catchtap="cancelBubble"></canvasdrawer>
-    <view class="posterSave" catchtap="posterSave">保存图片</view>
-  </view>
-  <!-- 生成分享海报 -->
+  <!--分享弹层-->
+  <create-poster-image showShare="{{showShare}}" goodsInfo="{{goodsInfo}}" formdata="{{formdata}}" bind:cancelShare="cancelShare"></create-poster-image>
+  <!--分享弹层-->
   <!-- 用户授权登录 -->
   <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
   <!-- 用户授权登录 -->

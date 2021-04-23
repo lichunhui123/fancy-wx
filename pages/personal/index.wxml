@@ -4,7 +4,7 @@
         <view class="shape_code_text">会员码</view>
     </view>
     <view class="persoanl_top">
-      <image class="top_bg" src="../../image/personal_top.png"></image>
+      <image class="top_bg" src="../../image/list_bg.png"></image>
       <view class="personal_icon">
           <view class="icon_left">
             <image class="user_img" src="{{userInfo.icon?userInfo.icon:'../../image/footerLogo.png'}}"></image>
@@ -87,9 +87,13 @@
                         <view>联系客服</view>
                     </button>
                 </view>
-                <view class="service_item" bindtap="toHistoryOrderList">
-                    <image src="../../image/service06.png"></image>
-                    <view>历史订单</view>
+                <view class="service_item" bindtap="toselfshopping">
+                    <image src="../../image/selfshopping.png"></image>
+                    <view>自助购物</view>
+                </view>
+                <view class="service_item" bindtap="togroup">
+                    <image src="../../image/group.png"></image>
+                    <view>指尖拼团</view>
                 </view>
                 <view class="service_item" bindtap="goSetting">
                     <image src="../../image/service07.png"></image>

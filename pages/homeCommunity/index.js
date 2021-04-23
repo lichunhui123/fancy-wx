@@ -127,7 +127,7 @@ Page({
       }
     });
   },
-  //获取社区数据列表
+  //获取门店数据列表
   getcommunityData(){
     let cityName="";
     let longitude="";
@@ -221,13 +221,13 @@ Page({
       listData:data
     });
   },
-  //附近社区点击
+  //附近门店点击
   nearbyClick(e){
     var itdata = e.currentTarget.dataset.itdata;
-    //将点击的社区存入本地，方便再次进入
+    //将点击的门店存入本地，方便再次进入
     if(this.data.enterType==10){  //拼团业务
       wx.setStorageSync('presentAddress', itdata)
-      //记录上次的社区
+      //记录上次的门店
       let willhistoryData=this.data.presentAddress
       this.setData({
         presentAddress:itdata
@@ -235,14 +235,14 @@ Page({
         this.setData({
           historyAddress:willhistoryData
         })
-        //将历史的社区页存入本地，方便再次进入
+        //将历史的门店页存入本地，方便再次进入
         wx.setStorageSync('historyAddress', willhistoryData)
         this.homeback()
       })
     }
     if(this.data.enterType==20){  //云店业务
       wx.setStorageSync('currentCloudShop', itdata)
-      //记录上次的社区
+      //记录上次的门店
       let willhistoryData=this.data.currentCloudShop
       this.setData({
         currentCloudShop:itdata
@@ -250,13 +250,13 @@ Page({
         this.setData({
           historyCloudShop:willhistoryData
         })
-        //将历史的社区页存入本地，方便再次进入
+        //将历史的门店页存入本地，方便再次进入
         wx.setStorageSync('historyCloudShop', willhistoryData)
         this.homeback()
       })
     }
   },
-  //当前社区点击跳转到选择设置地址页面
+  //当前门店点击跳转到选择设置地址页面
   setAddress(){
     this.setData({
       setAddressCount: this.data.setAddressCount + 1
@@ -270,30 +270,30 @@ Page({
       })
     }
   },
-  //曾用社区点击
+  //曾用门店点击
   historyComm(e){
     var hisdata = e.currentTarget.dataset.hisdata
-    //将点击的社区存入本地，方便再次进入
+    //将点击的门店存入本地，方便再次进入
     if(this.data.enterType==10){  //拼团业务
       wx.setStorageSync('presentAddress', hisdata)
-      //记录上次的社区
+      //记录上次的门店
       let willhistoryData = this.data.presentAddress
       this.setData({
         presentAddress: hisdata,
         historyAddress: willhistoryData
       })
-        //将历史的社区页存入本地，方便再次进入
+        //将历史的门店页存入本地，方便再次进入
         wx.setStorageSync('historyAddress', willhistoryData)
     }
     if(this.data.enterType==20){  //云店业务
       wx.setStorageSync('currentCloudShop', hisdata)
-      //记录上次的社区
+      //记录上次的门店
       let willhistoryData = this.data.currentCloudShop
       this.setData({
         currentCloudShop: hisdata,
         historyCloudShop: willhistoryData
       })
-        //将历史的社区页存入本地，方便再次进入
+        //将历史的门店页存入本地，方便再次进入
         wx.setStorageSync('historyCloudShop', willhistoryData)
     }
     this.homeback()
@@ -309,7 +309,6 @@ Page({
         delta:1
       })
     }
-    
   },
   /**
    * 生命周期函数--监听页面加载

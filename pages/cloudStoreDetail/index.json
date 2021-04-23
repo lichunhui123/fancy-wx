@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "authorization-login": "/component/authorizationLogin/index"
+    "authorization-login": "/component/authorizationLogin/index",
+    "create-poster-image": "/component/createPosterImage/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

@@ -30,6 +30,12 @@ Page({
       return;
     }
     let data = e.currentTarget.dataset.itemdata
+    if(this.data.orderCode){//如果是订单详情页面点击进入的话此处需要跳转至确认地址修改页面
+      wx.navigateTo({
+        url: `/pages/personalEditOrder/index?orderCode=${this.data.orderCode}&addressInfo=${JSON.stringify(data)}`,
+      });
+      return;
+    }
     wx.setStorageSync('isaddress', data)
     this.setWaterOrderAmend()
     wx.navigateBack({})
@@ -186,14 +192,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options.source){
+    if(options.source){//从个人中心进入
       this.setData({
         source:options.source
       })
     }
-    if(options.ecChoose){
+    if(options.ecChoose){//从提交订单页面点击地址进入
       this.setData({
         ecChoose:options.ecChoose
+      })
+    }
+    if(options.orderCode){//从我的订单详情页面点击修改订单进入
+      this.setData({
+        orderCode:options.orderCode
       })
     }
   },

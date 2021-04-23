@@ -1,191 +1,604 @@
 <wxs module="numb" src="../../filter/filter.wxs"></wxs>
 <view>
-    <view class="header">
-        <view class="header_left" bindtap="nearSite">
-            <image src="../../image/weizi1.png" class="address_icon"></image>
-            <view class="head_title">{{selectAddress}}</view>
-            <view><image src="../../image/right_icon_new.png" class="right_icon"></image></view>
-        </view>
+  <!--头部-->
+  <view class="header">
+    <view class="header_top">
+      <view class="header_top_left" bindtap="nearSite">
+        <image class="site_icon" src="../../image/site_icon.png"></image>
+        <view class="branch_name">{{selectAddress}}</view>
+        <image class="header_top_left_icon" src="../../image/cloudListRight.png"></image>
+      </view>
+      <view class="header_top_right">
+         <view bindtap="goExpress">
+            <view class="express_icon"><image src="../../image/express_icon.png"></image></view>
+            <view class="header_top_right_text">收发快递</view>
+         </view>
+         <view bindtap="getReceiptBarcode">
+            <view class="member_icon"><image src="../../image/member_icon.png"></image></view>
+            <view class="header_top_right_text">会员码</view>
+         </view>
+      </view>
     </view>
-    <view class="swiper-content {{!notice.takeExpress&&!notice.sendExpress&&!notice.payWait&&!notice.receive?'swiper-content1':''}}">
-        <swiper autoplay="{{true}}" class="swiper" bindchange="swiperChange" circular="true">
-            <swiper-item class="swiper-item" wx:for="{{bannerConfig}}" wx:for-item="item" wx:key="index" bindtap="goThematicActivities" data-item="{{item}}" data-index="{{index}}">
-                <image src="{{imgUrl+item.headBannerPic}}" class="slide-image" mode="widthFix"></image>
-            </swiper-item>
-        </swiper>
-        <text class='swiper-num'>{{swiperNum+1}}/{{bannerConfig.length}}</text>
+    <view class="swiper-content">
+      <swiper autoplay="{{true}}" class="swiper" circular="true" current="{{swiperCurrent}}">
+        <swiper-item class="swiper-item" wx:for="{{bannerConfig}}" wx:for-item="item" wx:key="index" bindtap="goThematicActivities" data-item="{{item}}" data-index="{{index}}">
+          <image src="{{imgUrl+item.headBannerPic}}" class="slide-image" mode="widthFix"></image>
+        </swiper-item>
+      </swiper>
     </view>
     <view class="home_tip" wx:if="{{notice.takeExpress>0||notice.sendExpress>0||notice.payWait>0||notice.receive>0}}">
-        <image src="../../image/home_tip.png"></image>
-        <view class="home_tip_content">
-            <swiper autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
-                <swiper-item wx:if="{{notice.takeExpress>0}}">
-                    <view>您有待取快递哦！</view>
-                </swiper-item>
-                <swiper-item wx:if="{{notice.sendExpress>0}}">
-                    <view>代寄订单已发货！</view>
-                </swiper-item>
-                <swiper-item wx:if="{{notice.payWait>0}}" bindtap="goOrder" data-index="10">
-                    <view>您有订单待付款哦！</view>
-                </swiper-item>
-                <swiper-item wx:if="{{notice.receive>0}}" bindtap="goOrder" data-index="30">
-                    <view>您有订单待收货哦！</view>
-                </swiper-item>
-            </swiper>
-        </view>
+      <image src="../../image/home_tip_new.png"></image>
+      <view class="home_tip_content">
+        <swiper autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+          <swiper-item wx:if="{{notice.takeExpress>0}}">
+              <view>您有待取快递哦！</view>
+          </swiper-item>
+          <swiper-item wx:if="{{notice.sendExpress>0}}">
+              <view>代寄订单已发货！</view>
+          </swiper-item>
+          <swiper-item wx:if="{{notice.payWait>0}}" bindtap="goOrder" data-index="10">
+              <view>您有订单待付款哦！</view>
+          </swiper-item>
+          <swiper-item wx:if="{{notice.receive>0}}" bindtap="goOrder" data-index="30">
+              <view>您有订单待收货哦！</view>
+          </swiper-item>
+        </swiper>
+      </view>
     </view>
-    <view class="entrance_content">
-        <view class="entrance_top">
-            <view class="entrance_top_list opera" bindtap="takeSomething">
-                <image src="../../image/opera.png"></image>
-                <text>取快递</text>
-            </view>
-            <view class="entrance_top_list member" bindtap="getReceiptBarcode">
-                <image src="../../image/member.png"></image>
-                <text>会员码</text>
-            </view>
-            <view class="entrance_top_list discount" bindtap="discountTicket">
-                <image src="../../image/discount.png"></image><text>优惠券</text>
-            </view>
-        </view>
-        <view class="entrance_bottom">
-            <swiper class="entrance_swiper" bindchange="entranceChange" circular="true">
-                <swiper-item class="entrance_swiper_item">
-                    <view class="busitem" bindtap="goSmallShopPage"><image src="../../image/weidianIcon.png"></image><view>指尖云店</view></view>
-                    <view class="busitem" bindtap="goFingerMall"><image src="../../image/zhenxuan.png"></image><view>更好甄选</view></view>
-                    <view class="busitem" bindtap="goGroupPage"><image src="../../image/pintuantu.png"></image><view>指尖拼团</view></view>
-                    <view class="busitem" bindtap="goWater"><image src="../../image/watertu.png"></image><view>水管家</view></view>
-                    <view class="busitem" bindtap="goExpress"><image src="../../image/kuaitu.png"></image><view>我的快递</view></view>
-                </swiper-item>
-                <swiper-item class="entrance_swiper_item">
-                    <view class="busitem busitem01" bindtap="goSelfHelpPurchasing"><image src="../../image/zgou.png"></image><view>扫码自助购</view></view>
-                </swiper-item>
-            </swiper>
-            <view class="entrance_swiper_tab">
-                <view class="{{entranceNum==0?'active':''}}"></view>
-                <view class="{{entranceNum==1?'active':''}}"></view>
-            </view>
-        </view>
+  </view>
+  <!--云店，更好甄选，水点击tab-->
+  <view class="entrance_content {{(fingerMallDiscountList.length>0||fingerMallList.length>0)&&waterList.length>0?'entrance3':'entrance2'}}">
+    <view class="entrance_item {{anchorPointerType==1?'ec_active':''}}" bindtap="anchorPointer" data-type="1">
+      <view class="entrance_item_img en_img01">
+        <image src="../../image/{{anchorPointerType==1?'cloud_active':'cloud_default'}}.png"/>
+      </view>
+      <view class="entrance_item_text">
+        <view>指尖云店</view>
+        <view>自提/配送</view>
+      </view>
     </view>
-    <view class="module_content" wx:if="{{cloudStore.length>0||preSaleGoods.length>0||groupSaleGoods.length>0}}"><!-- -->
-        <view class="module_content_title">指尖云店<text>好物就在身边</text></view>
-        <!--云店好物预售-->
-        <view class="module_content_preSale" style="margin-bottom:30rpx;" wx:if="{{preSaleGoods.length>0}}">
-            <view class="preSale_top">
-                <image src="../../image/preSale_title.png"/>
-                <view class="preSale_time" wx:if="{{!hasStart}}">
-                    <view>距开始</view>
-                    <view class="preSale_time_con">{{countdownTime.hour}}</view>
-                    <view class="preSale_time_sym">:</view>
-                    <view class="preSale_time_con">{{countdownTime.minute}}</view>
-                    <view class="preSale_time_sym">:</view>
-                    <view class="preSale_time_con">{{countdownTime.second}}</view>
-                </view>
-            </view>
-            <view class="preSale_bottom">
-                <swiper class="preSale_content" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
-                    <swiper-item wx:for="{{preSaleGoods}}" wx:for-item="val" wx:key="index">
-                        <view class="preSale_list_par">
-                            <view class="preSale_list" wx:for="{{val}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}">
-                                <image class="preSale_img" src="{{imgUrl+item.goodsPic}}"/>
-                                <view class="preSale_title">{{item.goodsName}}</view>
-                                <view class="list_price">￥<text class="list_price_text1">{{numb.getNum(item.prePrice)}}</text><text class="list_price_text2">￥{{numb.getNum(item.showSalesPrice)}}</text></view>
-                            </view>
-                        </view>
-                    </swiper-item>
-                </swiper>
-                <view class="preSale_right" bindtap="goPreSale">
-                    <view>立即抢购</view>
-                    <image src="../../image/home_right.png"/>
-                </view>
-            </view>
-        </view>
-        <!--云店好货团团-->
-        <view class="module_content_group" style="margin-bottom:30rpx;" wx:if="{{groupSaleGoods.length>0}}">
-            <view class="group_top">
-                <image class="group_top_title" src="../../image/group_title.png"/>
-                <view class="goin" bindtap="goGroupSale">进去逛逛<image src="../../image/right_icon_new.png"></image></view>
-            </view>
-            <view class="group_list_par">
-                <view class="group_list" wx:for="{{groupSaleGoods}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}">
-                    <view class="group_tip"><image src="../../image/group_tip.png"/><view>{{item.groupCount}}人团</view></view>
-                    <image class="preSale_img" src="{{imgUrl+item.goodsPic}}"/>
-                    <view class="preSale_title">{{item.goodsName}}</view>
-                    <view class="list_price">￥<text class="list_price_text1">{{numb.getNum(item.prePrice)}}</text><text class="list_price_text2">￥{{numb.getNum(item.showSalesPrice)}}</text></view>
-                </view>
-            </view>
-        </view>
-        <view class="module_content_item" wx:if="{{cloudStore.length>0}}">
-            <image class="module_content_banner" src="{{imgUrl}}/mallImages/20200622/t7KaQ656bj6NjndXTaGkW6RyyYTTNj63.png"></image>
-            <view class="module_content_list_par">
-                <view class="module_content_list" wx:for="{{cloudStore}}" wx:for-item="item" wx:key="goodsCode" bindtap="cloudGoodsDetailClick" data-itdetail="{{item}}" wx:if="{{index<7}}">
-                    <view class="list_src"><image src="{{imgUrl+item.showGoodsPic}}"/></view>
-                    <view class="list_name">{{item.goodsName}}</view>
-                    <view class="list_price">¥<text class="list_price_text1">{{numb.getNum(item.showSalesPrice)}}</text><text class="list_price_text2" wx:if="{{item.showFriendlyPrice}}">¥{{numb.getNum(item.showFriendlyPrice)}}</text></view>
-                    <view class="list_buy" catchtap="cloudGoodsAddCar" data-goodsitem="{{item}}"><image src="../../image/shopp.png"></image></view>
-                </view>
-                <view class="module_content_list look_more" bindtap="goSmallShopPage" wx:if="{{cloudStore.length>7}}">
-                  <view>查看更多</view>
-                  <image src="../../image/more.png"/>
-                </view>
-            </view>
-        </view>
+    <view wx:if="{{fingerMallDiscountList.length>0||fingerMallList.length>0}}" class="entrance_item {{anchorPointerType==2?'ec_active':''}}" bindtap="anchorPointer" data-type="2">
+      <view class="entrance_item_img en_img02">
+        <image src="../../image/{{anchorPointerType==2?'finger_active':'finger_default'}}.png"/>
+      </view>
+      <view class="entrance_item_text">
+        <view>更好甄选</view>
+        <view>直邮到家</view>
+      </view>
     </view>
-    <view class="module_content" wx:if="{{datas.length>0||fingerMall.length>0}}">
-        <view class="module_content_title">更好甄选<text>全球好货直邮到家</text></view>
-        <view class="discount_time" wx:if="{{datas.length>0}}">
-            <view class="dis_title">
-                <view class="limit_title"><image src="../../image/limit_title.png"></image></view>
-                <view class="goin" bindtap="limitgoGroup">进去逛逛<image src="../../image/right_icon_new.png"></image></view>
-            </view>
-            <view class="xin">
-                <view class="xin_left"></view>
-                <view class="xin-list" bindtouchend="moveItem" bindtouchstart="moveStart">
-                    <block wx:for="{{datas}}" wx:key="key" wx:for-index="idx" >
-                        <view class="single" animation="{{item.animation}}"  style="z-index: {{item.zIndex}}"
-                              catchtap="moveClick" data-inda="{{item}}" >
-                            <view class="dis_con_it">
-                                <image src="{{imgUrl+numb.getImg(item.goodsPic)}}" class="dis_con_img"></image>
-                                <image src="../../image/disblack.png" class="dis_con_img1" wx:if="{{item.few!='few'}}"></image><image src="{{imgUrl+item.picDetail}}" class="dis_con_img1" wx:if="{{item.few=='few'}}"></image>
-                                <view class="dis_word">
-                                    <view class="dis_word_title"><text class="titley">{{item.storeGoodsName}}</text>
-                                        <view class="dis_word_title1" wx:if="{{item.few!='few'}}">规格:{{item.storeGoodsSpecification}}</view>
-                                    </view>
-                                    <view class="dis_word_box" wx:if="{{item.few!='few'}}">
-                                        <view class="word_box_title">指尖折扣价</view>
-                                        <view>￥<text class="b_title">{{item.discountPrice}}</text></view>
-                                        <view class="b_title1">￥{{numb.getNum(item.price)}}</view>
-                                    </view>
-                                </view>
-                                <view class="tianmi" wx:if="{{item.few!='few'}}"><image src="../../image/tianmi.png"></image><text>精选商品</text></view>
-                            </view>
-                        </view>
-                    </block>
-                </view>
-            </view>
-        </view>
-        <view class="fruit_con" wx:for="{{fingerMall}}" wx:key="index" wx:if="{{fingerMall.length>0}}">
-            <view class="fruit_img" bindtap="viewMore" data-itdetail="{{item}}" wx:if="{{item.classPic}}"><image src="https://img.goola.cn/{{item.classPic}}"></image></view>
-            <view class="fruit_goods">
-                <view class="fruit_item" wx:for="{{item.mallGoodsInfos}}" wx:key="index" wx:for-item="it" bindtap="fingerMallGoodsDetailClick" data-itdetail="{{it}}" wx:if="{{index<item.num*10}}">
-                    <image src="{{imgUrl+numb.getImg(it.goodsPics)}}"></image>
-                    <view class="fruit_center">
-                        <view class="fruit_center_name">{{it.skuName}}</view>
-                        <view class="fruit_center_spec" wx:if="{{it.spec}}">规格：{{it.spec}}</view>
-                    </view>
-                    <!--商品加入过活动的-->
-                    <view class="fruit_item_price" wx:if="{{it.activityId}}">￥<text>{{numb.getNum(it.discountPrice/100)}}</text><text>{{numb.getNum(it.salesPrice)}}</text></view>
-                    <!--商品没有加入活动-->
-                    <view class="fruit_item_price" wx:else>￥<text>{{numb.getNum(it.salesPrice)}}</text><text>￥{{numb.getNum(it.competitorPrice)}}</text></view>
-                    <view class="fruit_buy" catchtap="addCarClick" data-goodsitem="{{it}}"><image src="../../image/shopp.png"></image></view>
-                </view>
-            </view>
-            <view class="fruit_more" wx:if="{{item.mallGoodsInfos.length>10}}" bindtap="viewMore" data-itdetail="{{item}}"><text>查看更多</text><image src="../../image/rightIcon.png"/></view>
-        </view>
+    <view wx:if="{{waterList.length>0}}" class="entrance_item {{anchorPointerType==3?'ec_active':''}}" bindtap="anchorPointer" data-type="3">
+      <view class="entrance_item_img en_img03">
+        <image src="../../image/{{anchorPointerType==3?'water_active':'water_default'}}.png"/>
+      </view>
+      <view class="entrance_item_text">
+        <view>饮用水</view>
+        <view>极速送水到家</view>
+      </view>
     </view>
-    <view class="bottom" wx:if="{{fingerMall&&fingerMall.length>0}}">—— 不好意思，已经到底啦 ——</view>
-    <!--会员码-->
-    <member-mask receiptBarCode="{{receiptBarCode}}" bind:cancel="cancelmask" wx:if="{{crownShow}}"></member-mask>
-     <!-- 用户授权登录 -->
-    <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+  </view>
+  <!--查看附件门店-->
+  <view class="cloud_type" id="anchorPointer1">
+    <view class="cloud_none_text" 
+      wx:if="{{cloudType==''&&!nearHasCloud&&cloudStoreDiscount.length==0&&groupTogether.length==0&&preSale.length==0&&allFullReductionLen==0&&twoForOne.length==0&&twoHalfPrice.length==0&&morePieceMoreDiscount.length==0}}"
+    >附近暂无门店，敬请期待~ </view>
+    <view class="cloud_type_par" wx:else>
+      <view bindtap="cloudTypeChange" class="{{cloudType==''?'active':''}}" data-type="">全部</view>
+      <view bindtap="cloudTypeChange" class="{{cloudType==10?'active':''}}" data-type="10">自提</view>
+      <view bindtap="cloudTypeChange" class="{{cloudType==20?'active':''}}" data-type="20">配送</view>
+    </view>
+    <view class="right_btn" bindtap="goCloudStoreList">
+      <view class="right_btn_text">查看附近门店</view>
+      <image class="right_icon" src="../../image/right_icon_new.png"></image>
+    </view>
+  </view>
+  <!--精选商品-->
+  <view class="choiceness" wx:if="{{selectedGoodsLen>0}}">
+    <view class="choicenessTop">
+      <view class="choicenessTop_left">精选商品</view>
+      <view class="choicenessTop_right" bindtap="goCloudStoreActivity" data-type="1">
+        <text>更多</text>
+        <image src="../../image/cloudListRight.png"></image>
+      </view>
+    </view>
+    <!-- 精选商品大于等于四-->
+    <view class="choicenessList_four" wx:if="{{selectedGoodsLen>=4}}">
+      <swiper class="choiceness_content" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+        <swiper-item wx:for="{{selectedGoods}}" wx:key="index">
+          <view class="choiceness_par">
+            <view class="choiceness_count" wx:for="{{item}}" wx:for-item="val" wx:key="goodsCode" data-goods="{{val}}" bindtap="goGoodsGroupPage">
+              <view class="choiceness_img">
+                <image src="{{imgUrl}}{{val.goodsPic}}"></image>
+              </view>
+              <view class="goodsName">{{val.goodsName}}</view>
+              <view class="choicenessBranchName" wx:if="{{val.branchesName||val.spec}}">{{val.branchesName?val.branchesName:val.spec}}</view>
+              <view class="goodsPrice"><text>¥</text>{{val.salesPrice}}</view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <!-- 精选商品三个商品 choicenessList_three --><!-- 精选商品两个商品 choicenessList_two-->
+    <view class="{{selectedGoodsClass}}" wx:if="{{selectedGoodsLen==2||selectedGoodsLen==3}}">
+      <view class="choiceness_par">
+        <view class="choiceness_count" wx:for="{{selectedGoods}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+          <view class="choiceness_img"><image src="{{imgUrl}}{{item.goodsPic}}"></image></view>
+          <view class="goodsName">{{item.goodsName}}</view>
+          <view class="choicenessBranchName" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:item.spec}}</view>
+          <view class="goodsPrice"><text>¥</text>{{item.salesPrice}}</view>
+        </view>
+      </view>
+    </view>
+    <!-- 精选商品一个商品 -->
+    <view class="choicenessList_one" wx:if="{{selectedGoodsLen==1}}">
+      <view class="choiceness_par" wx:for="{{selectedGoods}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image class="goodsimg" src="{{imgUrl}}{{item.goodsPic}}"></image>
+        </view>
+        <view class="countright">
+          <view class="goodsName">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goodsPrice"><text>¥</text>{{item.salesPrice}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--收藏门店-->
+  <view class="current_branch" wx:if="{{colleBranches.length>0}}">
+    <swiper class="branch_swiper" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+      <swiper-item wx:for="{{colleBranches}}" wx:key="index">
+        <view class="current_branch_name">
+          <image src="../../image/cloudCollect.png"></image>
+          <view>{{item.mecName}}</view>
+        </view>
+        <view class="right_btn" bindtap="goCloudStoreHome" data-branchesid="{{item.branchesId}}">
+          <view class="right_btn_text">进去逛逛</view>
+          <image class="right_icon" src="../../image/right_icon_new.png"></image>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!--限时折扣-->
+  <view class="goodspre" wx:if="{{cloudStoreDiscount.length>0}}">
+    <view class="goodspre_top">
+      <view class="goodspre_left">限时折扣</view>
+      <view class="right_btn" bindtap="goCloudStoreActivity" data-type="2">
+        <view class="right_btn_text">更多</view>
+        <image class="right_icon" src="../../image/right_icon_new.png"></image>
+      </view>
+    </view>
+    <!-- 限时折扣四个 goodspre_bottomfour --> <!-- 限时折扣三个 goodspre_bottomthree--> <!-- 限时折扣两个 goodspre_bottomtwo-->
+    <view class="{{cloudStoreDiscountClass}}" wx:if="{{cloudStoreDiscount.length>1}}">
+      <view class="goods_list" wx:for="{{cloudStoreDiscount}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="goodsimg">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image>
+          <view class="discount_title">
+            <image src="../../image/down.png"></image>直降{{numb.getNum(item.cutPrice/100)}}元
+          </view>
+        </view>
+        <view class="goods_name">{{item.goodsName}}</view>
+        <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+        <view class="goods_price"><text>¥</text>{{numb.getNum(item.disCountPrice/100)}}</view>
+      </view>
+    </view>
+    <!-- 限时折扣一个 -->
+    <view class="goodspre_bottomone" wx:if="{{cloudStoreDiscount.length==1}}">
+      <view class="goods_listone" wx:for="{{cloudStoreDiscount}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image class="goodsimg" src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image>
+          <view class="discount_title"><image src="../../image/down.png"></image>直降{{numb.getNum(item.cutPrice/100)}}元</view>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.disCountPrice/100)}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 一起团 -->
+  <view class="activite_count" wx:if="{{groupTogether.length>0}}">
+    <view class='activite_top'>
+      <view class="activite_left">
+        <view class="word">一起团</view>
+        <view class="littletitle">拼着买.更便宜</view>
+      </view>
+      <view class="activite_right" bindtap="goCloudStoreActivity" data-type="3">
+          <view class="more">更多</view>
+          <view>
+            <image src="../../image/cloudListRight.png" class="bettericon"></image>
+          </view>
+      </view>
+      <view>
+        <image src="../../image/chengzi.png" class="orangeimg"></image>
+      </view>
+    </view>
+    <!--一起团四个 activite_bottomfour -->
+    <!--一起团三个 activite_bottomthree -->
+    <!--一起团两个 activite_bottomtwo -->
+    <view class="{{groupTogetherClass}}" wx:if="{{groupTogether.length>1}}">
+      <view class="activite_goods_par">
+        <view class="goodscount" wx:for="{{groupTogether}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+          <view class="goodsimg">
+            <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image>
+            <view class="goods_title">{{item.groupCount}}人团 已售{{item.soldCount}}件</view>
+          </view>
+          <view class="name">{{item.goodsName}}</view>
+          <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+          <view class="price"><text>¥</text>{{numb.getNum(item.prePrice)}}</view>
+        </view>
+      </view>
+    </view>  
+    <!-- 一起团一个 -->
+    <view class="activite_bottomone" wx:if="{{groupTogether.length==1}}">
+      <view class="goods_listone" wx:for="{{groupTogether}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}" class="goodsimg"></image>
+          <view class="goods_title">{{item.groupCount}}人团 已售{{item.soldCount}}件</view>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.prePrice)}}</view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!-- 超值好货预售 -->
+  <view class="goodspre" wx:if="{{preSale.length>0}}">
+    <view class="goodspre_top">
+      <view class="goodspre_left">超值好货预售<text class="goodspre_word">好东西·早发现</text></view>
+      <view class="right_btn" bindtap="goCloudStoreActivity" data-type="4">
+        <view class="right_btn_text">更多</view>
+        <image class="right_icon" src="../../image/right_icon_new.png"></image>
+      </view>
+    </view>
+    <!-- 超值预售四个 goodspre_bottomfour --> 
+    <!-- 超值预售三个 goodspre_bottomthree--> 
+    <!-- 超值预售两个 goodspre_bottomtwo-->
+    <view class="{{preSaleClass}}" wx:if="{{preSale.length>1}}">
+      <view class="goods_list" wx:for="{{preSale}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="goodsimg"><image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image></view>
+        <view class="goods_name">{{item.goodsName}}</view>
+        <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+        <view class="goods_price"><text>¥</text>{{numb.getNum(item.prePrice)}}</view>
+        <view class="goods_saleprice"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+      </view>
+    </view>
+    <!-- 超值预售一个 -->
+    <view class="goodspre_bottomone" wx:if="{{preSale.length==1}}">
+      <view class="goods_listone" wx:for="{{preSale}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}" class="goodsimg"></image>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.prePrice)}}</view>
+          <view class="goods_saleprice"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!--全场满减-->
+  <view class="activite_count fullReduction" wx:if="{{allFullReductionLen>0}}">
+    <view class='activite_top'>
+      <view class="activite_left">
+        <view class="word">全场满减</view>
+        <view class="littletitle">买的越多，减的越多</view>
+      </view>
+      <view class="activite_right" bindtap="goCloudStoreActivity" data-type="5">
+          <view class="more">更多</view>
+          <view>
+            <image src="../../image/cloudListRight.png" class="bettericon"></image>
+          </view>
+      </view>
+      <view>
+        <image src="../../image/fullreduct.png" class="orangeimg"></image>
+      </view>
+    </view>
+    <!--全场满减三个-->
+    <view class="activite_bottomthree" wx:if="{{allFullReductionLen>=3}}">
+      <swiper class="fullReduction_swiper" autoplay="{{true}}" circular="true" vertical="true" interval="3000" skip-hidden-item-layout="true">
+        <swiper-item wx:for="{{allFullReduction}}" wx:key="index">
+          <view class="activite_goods_par">
+            <view class="goodscount" wx:for="{{item}}" wx:for-item="val" wx:key="goodsCode" data-goods="{{val}}" bindtap="goGoodsGroupPage">
+              <view class="goodsimg">
+                <image src="{{imgUrl}}{{numb.getImg(val.goodsPic)}}"></image>
+              </view>
+              <view class="name">{{val.goodsName}}</view>
+              <view class="choicenessBranchName" wx:if="{{val.branchesName}}">{{val.branchesName}}</view>
+              <view class="price"><text>¥</text>{{numb.getNum(val.showSalesPrice)}}</view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>  
+    <!--全场满减两个-->
+    <view class="activite_bottomtwo" wx:if="{{allFullReductionLen==2}}">
+      <view class="activite_goods_par">
+        <view class="goodscount" wx:for="{{allFullReduction}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+          <view class="goodsimg">
+            <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image>
+          </view>
+          <view class="name">{{item.goodsName}}</view>
+          <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+          <view class="price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view>  
+    <!-- 全场满减一个 -->
+    <view class="activite_bottomone" wx:if="{{allFullReductionLen==1}}">
+      <view class="goods_listone" wx:for="{{allFullReduction}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}" class="goodsimg"></image>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!--买一送一-->
+  <view class="activite_count buyonegetone" wx:if="{{twoForOne.length>0}}">
+    <view class='activite_top'>
+      <view class="activite_left">
+        <view class="word">买一送一<text>极省</text></view>
+        <view class="littletitle">买同款赠同款</view>
+      </view>
+      <view class="activite_right" bindtap="goCloudStoreActivity" data-type="6">
+          <view class="more">更多</view>
+          <view>
+            <image src="../../image/cloudListRight.png" class="bettericon"></image>
+          </view>
+      </view>
+    </view>
+    <!--买一送一四个 activite_bottomfour -->
+    <!--买一送一三个 activite_bottomthree -->
+    <!--买一送一两个 activite_bottomtwo -->
+    <view class="{{twoForOneClass}}" wx:if="{{twoForOne.length>1}}">
+      <view class="activite_goods_par">
+        <view class="goodscount" wx:for="{{twoForOne}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+          <view class="goodsimg">
+            <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image>
+          </view>
+          <view class="name">{{item.goodsName}}</view>
+          <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+          <view class="price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view>  
+    <!-- 买一送一 一个 -->
+    <view class="activite_bottomone" wx:if="{{twoForOne.length==1}}">
+      <view class="goods_listone" wx:for="{{twoForOne}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}" class="goodsimg"></image>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!--第二件半价-->
+  <view class="goodspre secondHalf" wx:if="{{twoHalfPrice.length>0}}">
+    <view class="goodspre_top">
+      <view class="activite_left">
+        <view class="word">第二件半价<text>热抢</text></view>
+        <view class="littletitle">疯狂抢购中…</view>
+      </view>
+      <view class="right_btn" bindtap="goCloudStoreActivity" data-type="7">
+        <view class="right_btn_text">更多</view>
+        <image class="right_icon" src="../../image/right_icon_new.png"></image>
+      </view>
+    </view>
+    <!-- 第二件半价四个 goodspre_bottomfour --> 
+    <!-- 第二件半价三个 goodspre_bottomthree-->
+    <!-- 第二件半价两个 goodspre_bottomtwo-->
+    <view class="{{twoHalfPriceClass}}" wx:if="{{twoHalfPrice.length>1}}">
+      <view class="goods_list" wx:for="{{twoHalfPrice}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="goodsimg"><image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image></view>
+        <view class="goods_name">{{item.goodsName}}</view>
+        <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+        <view class="goods_price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+      </view>
+    </view>
+    <!-- 第二件半价一个 -->
+    <view class="goodspre_bottomone" wx:if="{{twoHalfPrice.length==1}}">
+      <view class="goods_listone" wx:for="{{twoHalfPrice}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}" class="goodsimg"></image>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!--多件多折-->
+  <view class="goodspre manymorediscount" wx:if="{{morePieceMoreDiscount.length>0}}">
+    <view class="goodspre_top">
+      <view class="activite_left">
+        <view class="word">多件多折</view>
+        <view class="littletitle">买的越多，价格越低</view>
+      </view>
+      <view class="right_btn" bindtap="goCloudStoreActivity" data-type="8">
+        <view class="right_btn_text">更多</view>
+        <image class="right_icon" src="../../image/right_icon_new.png"></image>
+      </view>
+    </view>
+    <!-- 多件多折四个 goodspre_bottomfour --> 
+    <!-- 多件多折三个 goodspre_bottomthree-->
+    <!-- 多件多折两个 goodspre_bottomtwo-->
+    <view class="{{morePieceMoreDiscountClass}}" wx:if="{{morePieceMoreDiscount.length>1}}">
+      <view class="goods_list" wx:for="{{morePieceMoreDiscount}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="goodsimg"><image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}"></image></view>
+        <view class="goods_name">{{item.goodsName}}</view>
+        <view class="choicenessBranchName" wx:if="{{item.branchesName}}">{{item.branchesName}}</view>
+        <view class="goods_price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+      </view>
+    </view>
+    <!-- 多件多折一个 -->
+    <view class="goodspre_bottomone" wx:if="{{morePieceMoreDiscount.length==1}}">
+      <view class="goods_listone" wx:for="{{morePieceMoreDiscount}}" wx:key="index" data-goods="{{item}}" bindtap="goGoodsGroupPage">
+        <view class="countleft">
+          <image src="{{imgUrl}}{{numb.getImg(item.goodsPic)}}" class="goodsimg"></image>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.goodsName}}</view>
+          <view class="spec" wx:if="{{item.branchesName||item.spec}}">{{item.branchesName?item.branchesName:"规格："+item.spec}}</view>
+          <view class="goods_price"><text>¥</text>{{numb.getNum(item.showSalesPrice)}}</view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!--饮用水-->
+  <view class="activite_count fullReduction waterBusiness" wx:if="{{waterList.length>0}}" id="anchorPointer3">
+    <view class='activite_top'>
+      <view class="activite_left">
+        <view class="word">饮用水</view>
+        <view class="littletitle">指尖水管家·极速送水到家</view>
+      </view>
+      <view class="activite_right" bindtap="goWater">
+          <view class="more">更多</view>
+          <view>
+            <image src="../../image/cloudListRight.png" class="bettericon"></image>
+          </view>
+      </view>
+    </view>
+    <!--饮用水三个activite_bottomthree--><!--饮用水两个activite_bottomtwo-->
+    <view class="{{waterListClass}}" wx:if="{{waterList.length>1}}">
+      <view class="activite_goods_par">
+        <view class="goodscount" wx:for="{{waterList}}" wx:key="index">
+          <view class="goodsimg">
+            <image src="{{imgUrl+numb.getImg(item.goodsPhotos)}}"></image>
+          </view>
+          <view class="name">{{item.skuName}}</view>
+          <view class="price"><text>¥</text>{{item.salesPrice}}</view>
+          <view class="addbox1par">
+            <view class="addbox1">
+              <view class="liue" wx:if="{{item.goodsNum>0}}" data-goods="{{item}}" data-type="minus" catchtap="updateCar">
+                  <image src="../../image/delbutton.png"></image>
+              </view>
+              <input class="addNumber" type="number" value="{{item.goodsNum}}" wx:if="{{item.goodsNum>0}}" data-goods="{{item}}" data-type="input" bindblur="updateCar" catchtap="stopinp"/>
+              <view class="liue" data-goods="{{item}}" data-type="add" catchtap="updateCar">
+                  <image src="../../image/addstore.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>  
+    <!--饮用水一个-->
+    <view class="activite_bottomone" wx:if="{{waterList.length==1}}">
+      <view class="goods_listone" wx:for="{{waterList}}" wx:key="index">
+        <view class="countleft">
+          <image src="{{imgUrl+numb.getImg(item.goodsPhotos)}}" class="goodsimg"></image>
+        </view>
+        <view class="countright">
+          <view class="goods_name">{{item.skuName}}</view>
+          <view class="spec">规格：{{item.goodsSpec}} </view>
+          <view class="goods_price"><text>¥</text>{{item.salesPrice}}</view>
+        </view>
+        <view class="addbox">
+          <view class="liue" wx:if="{{item.goodsNum>0}}" data-goods="{{item}}" data-type="minus" catchtap="updateCar">
+            <image src="../../image/delbutton.png"></image>
+          </view>
+          <input class="addNumber" type="number" value="{{item.goodsNum}}" wx:if="{{item.goodsNum>0}}" data-goods="{{item}}" data-type="input" bindblur="updateCar" catchtap="stopinp"/>
+          <view class="liue" data-goods="{{item}}" data-type="add" catchtap="updateCar">
+            <image src="../../image/addstore.png"></image>
+          </view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!--更好甄选-->
+  <view class="fingerMall" wx:if="{{fingerMallDiscountList.length>0||fingerMallList.length>0}}" id="anchorPointer2">
+    <view class="fingerMall_title"><text>更好甄选</text><text>基地直采·品牌超值折扣</text></view>
+    <view class="fingerMall_discount" wx:if="{{fingerMallDiscountList.length>0}}">
+      <view class="goodspre_top">
+        <view class="goodspre_left">限时折扣</view>
+        <view class="right_btn" bindtap="limitClick">
+          <view class="right_btn_text">进去逛逛</view>
+          <image class="right_icon" src="../../image/right_icon_new.png"></image>
+        </view>
+      </view>
+      <view class="xin">
+        <view class="xin_left"></view>
+        <view class="xin-list" bindtouchend="moveItem" bindtouchstart="moveStart">
+          <block wx:for="{{fingerMallDiscountList}}" wx:key="key" wx:for-index="idx" >
+            <view class="single" animation="{{item.animation}}"  style="z-index:{{item.zIndex}}"
+                catchtap="moveClick" data-inda="{{item}}" >
+              <view class="dis_con_it">
+                <image src="{{imgUrl+numb.getImg(item.goodsPic)}}" class="dis_con_img"></image>
+                <image src="{{imgUrl+item.picDetail}}" class="dis_con_img1" wx:if="{{item.few=='few'}}"></image>
+                <view class="dis_word" wx:if="{{item.few!='few'}}">
+                  <view class="dis_word_title"><text class="titley">{{item.storeGoodsName}}</text>
+                    <view class="dis_word_title1" wx:if="{{item.few!='few'}}">规格:{{item.storeGoodsSpecification}}</view>
+                  </view>
+                  <view class="dis_word_box" wx:if="{{item.few!='few'}}">
+                    <view class="word_box_title">指尖折扣价</view>
+                    <view>￥<text class="b_title">{{item.discountPrice}}</text></view>
+                    <view class="b_title1">￥{{numb.getNum(item.price)}}</view>
+                  </view>
+                </view>
+                <view class="tianmi" wx:if="{{item.few!='few'}}"><image src="../../image/activity_icon_new.png"></image><text>精选商品</text></view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <view class="fingerMall_list" wx:for="{{fingerMallList}}" wx:key="index" wx:if="{{fingerMallList.length>0}}">
+      <view class="fingerMall_item">
+        <view class="fingerMallImg" bindtap="viewMore" data-itdetail="{{item}}" wx:if="{{item.classPic}}">
+          <image src="{{imgUrl}}{{item.classPic}}"></image>
+        </view>
+        <view class="fingerMall_goods_par">
+          <view class="fingerMall_goods" wx:for="{{item.mallGoodsInfos}}" wx:key="index" wx:for-item="it" data-itdetail="{{it}}" wx:if="{{index<item.num*10}}" bindtap="fingerMallGoodsDetailClick">
+            <view class="fingerMall_goods_pic">
+              <image src="{{imgUrl+numb.getImg(it.goodsPics)}}"></image>
+            </view>
+            <view class="fingerMall_goods_con">
+              <view class="fingerMall_goods_name">
+                <view>{{it.skuName}}</view>
+                <view class="fingerMall_goods_dec" wx:if="{{it.spec}}">规格：{{it.spec}}</view>
+              </view>
+              <view class="fingerMall_goods_price">
+                <view><text>¥</text>{{it.activityId?it.discountPrice:it.salesPrice}}</view>
+                <view wx:if="{{it.activityId&&it.salesPrice>0||!it.activityId&&it.competitorPrice>0}}">¥{{it.activityId?it.salesPrice:it.competitorPrice}}</view>
+              </view>
+            </view>
+            <view class="addbox">
+              <view class="liue" wx:if="{{it.goodsNum>0}}" data-goods="{{it}}" data-type="minus" catchtap="updateCar">
+                <image src="../../image/delbutton.png"></image>
+              </view>
+              <input class="addNumber" type="number" value="{{it.goodsNum}}" wx:if="{{it.goodsNum>0}}" data-goods="{{it}}" data-type="input" bindblur="updateCar" catchtap="stopinp"/>
+              <view class="liue" data-goods="{{it}}" data-type="add" catchtap="updateCar">
+                <image src="../../image/addstore.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="lookbottom" wx:if="{{item.mallGoodsInfos.length>10}}" bindtap="viewMore" data-itdetail="{{item}}">
+          <view class="lookbottom_left">查看更多</view>
+          <view class="lookbottom_right"><image src="../../image/right_icon_new.png"></image></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="totop" bindtap="gotoTop" wx:if="{{toTopshow}}">
+    <image src="../../image/back-top1.png"></image>
+  </view>
+  <!--会员码-->
+  <member-mask receiptBarCode="{{receiptBarCode}}" bind:cancel="cancelmask" wx:if="{{crownShow}}" catchtouchmove="catchtouchmove"></member-mask>
+  <!-- 用户授权登录 -->
+  <authorization-login wx:if="{{showLogin}}" bind:loginSuccess="loginSuccess"></authorization-login>
+  <!--系统发放卡券 -->
+  <systemCard-mask coupondata="{{coupondata}}"  mecName="{{mecName}}" bind:cancel="closeBtn" wx:if="{{maskShow}}" catchtouchmove="catchtouchmove" bind:goCloudShop="goSmallShopPage"></systemCard-mask>
 </view>

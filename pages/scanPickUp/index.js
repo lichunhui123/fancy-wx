@@ -72,7 +72,7 @@ Page({
           });
         });
         console.log(list);
-        this.setData({list,buttonState:true,noData:false})
+        this.setData({list,noData:false})
       }else{
         this.setData({noData:true});
       }

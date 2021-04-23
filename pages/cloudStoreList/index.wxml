@@ -1,0 +1,147 @@
+<wxs module="numb" src="../../filter/filter.wxs"></wxs>
+<view class="locationWrap">
+  <image src="../../image/list_bg.png" class="head_img"></image>
+  <view class="search">
+    <view class="seachinp">
+        <image src="../../image/cloudSearch.png"></image>
+        <picker range="{{citydata}}" range-key="cityName" value="{{selectCity}}" bindchange="selectCity">
+          <text decode="true">{{cityName?cityName:'北京市'}}&nbsp;-&nbsp;</text>
+        </picker>
+        <text class="searchplace" bindtap="seachClick">请输入云店名称或取货地址</text>
+    </view>
+  </view>
+  <view class="cloudStoreList">
+      <!-- 当前云店 -->
+      <view class="header" wx:if="{{currentCloudShop}}">
+        <view class="header_top" >
+            <image src="../../image/leftwhite.png" class="collect_left"></image>
+            <text class="cloude_title">当前云店</text>
+            <image src="../../image/rightwhite.png" class="collect_right"></image>
+        </view>
+        <view class="current_comm">
+        <view class="current_comm_count">
+          <view class="current_comm_left">
+            <image wx:if="{{currentCloudShop.branchesImg}}" src="{{imgUrl}}{{currentCloudShop.branchesImg}}"></image>
+            <image wx:else src="../../image/cloudtu.png" class="cloudList_img"></image>
+          </view>
+          <view class="current_comm_right">
+            <view class="current_comm_branchId">{{currentCloudShop.siteName}}</view>
+            <text class="current_comm_type1" wx:if="{{currentCloudShop.smallDelivery}}">{{currentCloudShop.smallDelivery}}</text>
+            <view class="current_comm_address">地址：{{currentCloudShop.deliveryAddress}}</view>
+            <view class="current_bottom_activite" wx:if="{{currentCloudShop.activityStr}}">{{currentCloudShop.activityStr}}</view>
+          </view>
+          <view class="gobranch" bindtap="goCloudStore" data-branchid="{{currentCloudShop.siteId}}"><text>进店</text></view>
+        </view>
+        </view>
+      </view>
+      <!-- 已收藏云店 -->
+      <view class="collect" wx:if="{{collectData.length>0}}">
+        <view class="collect_count_top">
+          <image src="../../image/localeft.png" class="collect_left"></image>
+          <text class="collect_count_title">已收藏云店</text>
+          <image src="../../image/locaright.png" class="collect_right"></image>
+        </view>
+        <view class="collect_count" wx:for="{{collectData}}" wx:key="index" wx:if="{{index<loadMore}}">
+          <view class="collect_count_bottom" wx:if="{{item.orgState==2||item.orgState==1}}">
+            <view class="collect_bottom_left">
+              <image wx:if="{{item.branchesImg}}" src="{{imgUrl}}{{item.branchesImg}}"></image>
+              <image wx:else src="../../image/cloudtu.png" class="cloudList_img"></image>
+            </view>
+            <view class="collect_bottom_right">
+              <view class="collect_count_branchId">{{item.mecName}}</view>
+              <view class="current_comm_type" wx:if="{{item.orgState==1}}">
+                <view wx:if="{{item.smallDeliveryStatus}}">{{item.smallDeliveryStatus}}</view>
+                <text class="distance">距离您{{item.distance}}</text>
+              </view>
+              <view class="current_bottom_activite" wx:if="{{item.activityStr&&item.orgState==1}}">{{item.activityStr}}</view>
+              <view class="disbtn" wx:if="{{item.orgState==1}}">
+                <block  wx:for="{{item.cardList}}" wx:for-index="i" wx:key="i" wx:if="{{i<2}}">
+                  <view wx:if="{{item.cardType==10}}">
+                    <text class="moneyTitle">¥</text><text class="moneyShow marginRight">{{item.cardMoney/100}}</text>{{item.fullMoney?'满'+item.fullMoney/100+'元可用':'无门槛'}}</view>
+                  <view wx:if="{{item.cardType==30}}"><text class="moneyShow">{{item.discountRatio/100?item.discountRatio/100:'-'}}</text>折
+                    {{item.fullMoney?'满'+item.fullMoney/100+'元可用':'无门槛'}}</view>
+                </block>
+                <view wx:if="{{collectData.cardList.length>2}}">...</view>
+              </view>
+              <view class="openbtn" wx:if="{{item.orgState==2}}"><text>已关闭</text></view>
+            </view>
+          </view>
+          <image src="../../image/cloudCollect.png" class="cloudList_icon" wx:if="{{item.orgState==1?'cloudList_icon1':'cloudList_icon'}}" bindtap="noCollect" data-branchid="{{item.branchesId}}"></image>
+          <view class="gobranch" bindtap="goCloudStore" data-branchid="{{item.branchesId}}"><text>进店</text></view>
+        </view>
+        <view class="collect_lookmore" wx:if="{{loadMoreShow}}" bindtap="loadMore">
+          <view>查看更多</view>
+          <image src="../../image/right_icon_new.png" class="lookbottomimg"></image>
+        </view>
+      </view>
+      <!-- 曾用云店 -->
+      <view class="before_branch" wx:if="{{historyCloudShop}}">
+        <view class="collect_count_top">
+          <image src="../../image/localeft.png" class="collect_left"></image>
+          <text class="collect_count_title">曾用云店</text>
+          <image src="../../image/locaright.png" class="collect_right"></image>
+        </view>
+        <view class="before_count">
+          <view class="before_branch_bottom">
+            <view class="before_bottom_left">
+              <image wx:if="{{historyCloudShop.branchesImg}}" src="{{imgUrl}}{{historyCloudShop.branchesImg}}"></image>
+              <image wx:else src="../../image/cloudtu.png" class="cloudList_img"></image>
+            </view>
+            <view class="before_bottom_right">
+                <view class="before_bottom_branchId">{{historyCloudShop.siteName}}</view>
+                <view class="current_comm_type">
+                  <view wx:if="{{historyCloudShop.smallDelivery}}">{{historyCloudShop.smallDelivery}}</view>
+                  <text class="distance">距离您{{historyCloudShop.distance}}</text>
+                </view>
+                <view class="current_bottom_activite" wx:if="{{historyCloudShop.activityStr}}">{{historyCloudShop.activityStr}}</view>
+                <view class="disbtn">
+                  <block  wx:for="{{historyCloudShop.cardList}}" wx:for-index="i" wx:key="i" wx:if="{{i<2}}">
+                    <view wx:if="{{item.cardType==10}}">
+                      <text class="moneyTitle">¥</text><text class="moneyShow marginRight">{{item.cardMoney/100}}</text>{{item.fullMoney?'满'+item.fullMoney/100+'元可用':'无门槛'}}</view>
+                    <view wx:if="{{item.cardType==30}}"><text class="moneyShow">{{item.discountRatio/100?item.discountRatio/100:'-'}}</text>折
+                      {{item.fullMoney?'满'+item.fullMoney/100+'元可用':'无门槛'}}</view>
+                  </block>
+                  <view wx:if="{{historyCloudShop.cardList.length>2}}">...</view>
+                </view>
+            </view>
+            <view class="gobranch" bindtap="goCloudStore" data-branchid="{{historyCloudShop.siteId}}"><text>进店</text></view>
+          </view>
+        </view>
+        
+      </view>
+      <!-- 附近云店 -->
+      <view class="before_branch" wx:if="{{listData.length>0}}">
+        <view class="collect_count_top">
+          <image src="../../image/localeft.png" class="collect_left"></image>
+          <text class="collect_count_title">附近云店</text>
+          <image src="../../image/locaright.png" class="collect_right"></image>
+        </view>
+        <view class="before_count" wx:for="{{listData}}" wx:key="index" data-itdata="{{item}}">
+          <view class="before_branch_bottom">
+            <view class="before_bottom_left">
+              <image wx:if="{{item.branchesImg}}" src="{{imgUrl}}{{item.branchesImg}}"></image>
+              <image wx:else src="../../image/cloudtu.png" class="cloudList_img"></image>
+            </view>
+            <view class="before_bottom_right">
+                <view class="before_bottom_branchId">{{item.siteName}}</view>
+                <view class="current_comm_type">
+                  <view wx:if="{{item.smallDeliveryStatus}}">{{item.smallDeliveryStatus}}</view>
+                  <text class="distance">距离您{{item.distance}}</text>
+                </view>
+                <view class="current_bottom_activite">{{item.activityStr}}</view>
+                <view class="disbtn">
+                  <block wx:for="{{item.cardList}}" wx:for-item="val"  wx:for-index="i" wx:key="i" wx:if="{{i<2}}">
+                    <view wx:if="{{val.cardType==10}}">
+                      <text class="moneyTitle">¥</text><text class="moneyShow marginRight">{{val.cardMoney/100}}</text>{{val.fullMoney?'满'+val.fullMoney/100+'元可用':'无门槛'}}</view>
+                    <view wx:if="{{val.cardType==30}}"><text class="moneyShow">{{val.discountRatio/100?val.discountRatio/100:'-'}}</text>折
+                      {{val.fullMoney?'满'+val.fullMoney/100+'元可用':'无门槛'}}</view>
+                  </block>
+                  <view wx:if="{{item.cardList.length>2}}">...</view>
+                  </view>
+            </view>
+            <view class="gobranch" bindtap="goCloudStore"  data-branchid="{{item.siteId}}"><text>进店</text></view>
+          </view>
+        </view>
+      </view>
+  </view>
+</view>

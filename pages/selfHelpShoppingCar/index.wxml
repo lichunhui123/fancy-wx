@@ -13,7 +13,7 @@
                 <view class="attention_tip">注意：扫码后请尽快购买，否则30分钟后会自动清空哦！</view>
             </view>
             <view class="buyCar_con">
-                <view class="buyCar_list" wx:for="{{goodsList}}" wx:key="{{index}}">
+                <view class="buyCar_list" wx:for="{{goodsList}}" wx:key="index">
                 <view class="del_icon"><image bindtap="delete" data-skucode="{{item.skuCode}}" src="../../image/delIcon.png"/></view>
                 <view class="goods_selectIcon" bindtap="select" data-skucode="{{item.skuCode}}"><image data-skucode="{{item.skuCode}}" src="{{item.chiose?'../../image/afterSelect.png':'../../image/beforeSelect.png'}}"/></view>
                 <view class="goods_desc">
